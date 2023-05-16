@@ -33,7 +33,7 @@ const SidebarStyle = () => {
 	const studentMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{ title: "Request LoR", path: "/request-LoR", icon: <AiOutlineAudit /> },
-		{ title: "My Program", path: "/my-program", icon: <AiOutlineFolderOpen /> },
+		{ title: "My Program", path: "/my-programs", icon: <AiOutlineFolderOpen /> },
 		{ title: "Program Proposal", path: "/program-proposal", icon: <AiOutlineFile /> },
 		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
 	];
@@ -41,8 +41,8 @@ const SidebarStyle = () => {
 	const prodiMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{ title: "Verification LoR", path: "/verification-LoR", icon: <AiOutlineAudit /> },
-		{ title: "MBKM Program", path: "/mbkm-program", icon: <AiOutlineFolderOpen /> },
-		{ title: "Student", path: "/student", icon: <FaUserGraduate /> },
+		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
+		{ title: "Student", path: "/students", icon: <FaUserGraduate /> },
 		{ title: "Program Proposal", path: "/program-proposal", icon: <AiOutlineFile /> },
 		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
 	];
@@ -50,30 +50,34 @@ const SidebarStyle = () => {
 	const jurusanMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{ title: "Verification LoR", path: "/verification-LoR", icon: <AiOutlineAudit /> },
-		{ title: "MBKM Program", path: "/mbkm-program", icon: <AiOutlineFolderOpen /> },
-		{ title: "Study Program", path: "/study-program", icon: <AiOutlineFundProjectionScreen /> },
-		{ title: "Summary MBKM", path: "/mbkm-summary", icon: <FiFileText /> },
+		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
+		{
+			title: "Study Program",
+			path: "/study-programs",
+			icon: <AiOutlineFundProjectionScreen />,
+		},
+		{ title: "Summary MBKM", path: "/mbkm-summaries", icon: <FiFileText /> },
 		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
 	];
 
 	const mbkmTimMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
-		{ title: "Manage User", path: "/manage-user", icon: <BiUser /> },
-		{ title: "Semester", path: "/semester", icon: <FaRegListAlt /> },
-		{ title: "MBKM Program", path: "/mbkm-program", icon: <AiOutlineFolderOpen /> },
+		{ title: "Manage User", path: "/manage-users", icon: <BiUser /> },
+		{ title: "Semester", path: "/semesters", icon: <FaRegListAlt /> },
+		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
 		{ title: "Verification LoR", path: "/verification-LoR", icon: <AiOutlineAudit /> },
 		{
 			title: "Verification Program",
-			path: "/verification-program",
+			path: "/verification-programs",
 			icon: <AiOutlineFundProjectionScreen />,
 		},
 		{
 			title: "Study Program",
-			path: "/study-program",
+			path: "/study-programs",
 			icon: <AiOutlineFile />,
 		},
-		{ title: "Summary MBKM", path: "/mbkm-summary", icon: <FiFileText /> },
-		{ title: "Log Activity", path: "/log-activity", icon: <AiOutlineSearch /> },
+		{ title: "Summary MBKM", path: "/mbkm-summaries", icon: <FiFileText /> },
+		{ title: "Log Activity", path: "/log-activities", icon: <AiOutlineSearch /> },
 		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
 	];
 

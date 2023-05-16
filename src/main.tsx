@@ -3,12 +3,21 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./routers/home";
-import Contact from "./routers/contact";
-import About from "./routers/about";
 import ErrorPage from "./error-page";
 import Root from "./routers/root";
-import Menu from "./routers/menu";
-import DetailMenu from "./routers/menu/detail";
+import FaQ from "./routers/faq";
+import LogActivity from "./routers/log-activity";
+import MbkmProgram from "./routers/mbkm-program";
+import MbkmSummary from "./routers/mbkm-summary";
+import MyProgram from "./routers/my-program";
+import ProgramProposal from "./routers/program-proposal";
+import RequestLoR from "./routers/request-LoR";
+import Semester from "./routers/semester";
+import Student from "./routers/student";
+import StudyProgram from "./routers/study-program";
+import VerificationLoR from "./routers/verification-LoR";
+import VerificationProgram from "./routers/verification-program";
+import ManageUser from "./routers/manage-users";
 
 const router = createBrowserRouter([
 	{
@@ -21,20 +30,57 @@ const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: "/menu",
-				element: <Menu />,
+				path: "/faq",
+				element: <FaQ />,
 			},
 			{
-				path: "/menu/detail/:id",
-				element: <DetailMenu />,
+				path: "/log-activities",
+				element: <LogActivity />,
 			},
 			{
-				path: "/contact",
-				element: <Contact />,
+				path: "/mbkm-programs",
+				element: <MbkmProgram />,
 			},
 			{
-				path: "/about",
-				element: <About />,
+				path: "/mbkm-summaries",
+				element: <MbkmSummary />,
+			},
+			{
+				path: "/my-programs",
+				element: <MyProgram />,
+			},
+			{
+				path: "/program-proposal",
+				element: <ProgramProposal />,
+			},
+			{
+				path: "/request-LoR",
+				element: <RequestLoR />,
+			},
+
+			{
+				path: "/semesters",
+				element: <Semester />,
+			},
+			{
+				path: "/students",
+				element: <Student />,
+			},
+			{
+				path: "/study-programs",
+				element: <StudyProgram />,
+			},
+			{
+				path: "/verification-LoR",
+				element: <VerificationLoR />,
+			},
+			{
+				path: "/verification-programs",
+				element: <VerificationProgram />,
+			},
+			{
+				path: "/manage-users",
+				element: <ManageUser />,
 			},
 		],
 	},
