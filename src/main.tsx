@@ -18,6 +18,7 @@ import StudyProgram from "./routers/study-program";
 import VerificationLoR from "./routers/verification-LoR";
 import VerificationProgram from "./routers/verification-program";
 import ManageUser from "./routers/manage-users";
+import CreateRequestLoR from "./routers/request-LoR/create-request-LoR.view";
 
 const router = createBrowserRouter([
 	{
@@ -57,7 +58,10 @@ const router = createBrowserRouter([
 				path: "/request-LoR",
 				element: <RequestLoR />,
 			},
-
+			{
+				path: "/request-LoR/create",
+				element: <CreateRequestLoR />,
+			},
 			{
 				path: "/semesters",
 				element: <Semester />,
