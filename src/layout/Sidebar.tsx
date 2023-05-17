@@ -10,25 +10,16 @@ import {
 	AiOutlineSearch,
 } from "react-icons/ai";
 import { BiMenu, BiUser } from "react-icons/bi";
-import {
-	FaCarSide,
-	FaQuestion,
-	FaRegListAlt,
-	FaStamp,
-	FaUserGraduate,
-	FaUsers,
-} from "react-icons/fa";
+import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { RiCloseLine } from "react-icons/ri";
-import { FiActivity, FiFileText } from "react-icons/fi";
-import { BsQuestion, BsQuestionCircle } from "react-icons/bs";
+import { FiFileText } from "react-icons/fi";
+import { BsQuestionCircle } from "react-icons/bs";
 import { RootContext } from "../utils/contextApi";
 
 const SidebarStyle = () => {
 	const [open, setOpen] = useState(false);
 	const location = useLocation();
 	const { role }: any = useContext(RootContext);
-
-	console.log(role);
 
 	const studentMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
@@ -108,58 +99,49 @@ const SidebarStyle = () => {
 			break;
 	}
 
-	// if (session.role === "super admin") {
-	// 	Menus.push({ title: "Admin", path: "/admin", icon: <MdVpnKey /> });
-	// 	Menus.push({ title: "Settings", path: "/settings", icon: <AiTwotoneSetting /> });
-	// }
 	return (
-		<>
-			<div
+		<div className="border-2 border-black-200">
+			<ul
 				className={`${
 					open ? "w-60" : "w-fit"
-				} sm:block relative h-screen duration-100 border-r border-gray-200 dark:border-gray-600 p-5 dark:bg-slate-800`}
+				} sm:block relative h-screen duration-100 p-2 border-gray-200`}
 			>
 				<li
-					className={`flex items-center gap-x-6 p-2 my-1 text-base font-normal rounded-lg cursor-pointer dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700`}
+					onClick={() => setOpen(!open)}
+					className={`flex items-center gap-x-6 p-2 my-1 text-base font-normal rounded-lg cursor-pointer hover:bg-gray-200`}
 				>
 					{open ? (
 						<>
-							<RiCloseLine
-								className="text-3xl text-gray-500"
-								onClick={() => setOpen(!open)}
-							/>
+							<RiCloseLine className="text-3xl text-gray-500" />
 							<small>Close</small>
 						</>
 					) : (
 						<BiMenu onClick={() => setOpen(!open)} className="text-3xl text-gray-500" />
 					)}
 				</li>
-
-				<ul className="pt-1">
-					{MENUS.map((menu, index) => {
-						const currentPath = menu.path;
-						const isActive = location.pathname === currentPath;
-						return (
-							<Link to={menu.path} key={index}>
-								<li
-									className={`flex items-center text-gray-500 gap-x-6 p-3 my-1 text-base font-normal rounded-lg cursor-pointer dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700
-                        ${isActive && "bg-gray-100 dark:bg-gray-700 text-teal-500"}`}
+				{MENUS.map((menu, index) => {
+					const currentPath = menu.path;
+					const isActive = location.pathname === currentPath;
+					return (
+						<Link to={menu.path} key={index}>
+							<li
+								className={`flex items-center text-gray-500 my-1 gap-x-2 p-3 text-base font-normal rounded-lg cursor-pointer hover:bg-gray-200
+                        ${isActive && "bg-yellow-100 text-gray"}`}
+							>
+								<span className="text-xl">{menu.icon}</span>
+								<span
+									className={`${
+										!open && "hidden"
+									} origin-left duration-100 text-sm hover:block`}
 								>
-									<span className="text-2xl">{menu.icon}</span>
-									<span
-										className={`${
-											!open && "hidden"
-										} origin-left duration-100 text-sm hover:block`}
-									>
-										{menu.title}
-									</span>
-								</li>
-							</Link>
-						);
-					})}
-				</ul>
-			</div>
-		</>
+									{menu.title}
+								</span>
+							</li>
+						</Link>
+					);
+				})}
+			</ul>
+		</div>
 	);
 };
 

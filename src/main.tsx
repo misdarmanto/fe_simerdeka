@@ -11,14 +11,14 @@ import MbkmProgram from "./routers/mbkm-program";
 import MbkmSummary from "./routers/mbkm-summary";
 import MyProgram from "./routers/my-program";
 import ProgramProposal from "./routers/program-proposal";
-import RequestLoR from "./routers/request-LoR";
+import RequestLoR from "./routers/registration-LoR/index";
 import Semester from "./routers/semester";
 import Student from "./routers/student";
 import StudyProgram from "./routers/study-program";
 import VerificationLoR from "./routers/verification-LoR";
 import VerificationProgram from "./routers/verification-program";
 import ManageUser from "./routers/manage-users";
-import CreateRequestLoR from "./routers/request-LoR/create-request-LoR.view";
+import CreateRequestLoR from "./routers/registration-LoR/create-request-LoR.view";
 
 const router = createBrowserRouter([
 	{

@@ -14,7 +14,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="bg-white border-gray-200 mx-2 px-2 pr-10 py-2.5 rounded dark:bg-gray-800">
+		<nav className="bg-white border-2 border-black-200 mx-2 px-2 pr-10 py-2.5 rounded">
 			<div className="container flex justify-between items-center mx-auto">
 				<div className="flex items-center mx-auto">
 					<span className="text-xl font-medium whitespace-nowrap dark:text-white text-gray-500">
@@ -41,6 +41,14 @@ const Navbar = () => {
 							Tim MBKM
 						</Dropdown.Item>
 					</Dropdown>
+
+					<img
+						className="p-1 w-12 h-12 mx-2 rounded-full cursor-pointer"
+						src={
+							"http://sso.itera.ac.id/assets/img/20220919205123_misdar_120400070_student_itera_ac_id.jpg"
+						}
+						alt="avatar"
+					/>
 					{/* <UserPopUp name={session.adminName} email={session.email} photo={session.photo}>
 						<img
 							className="p-1 w-10 h-10 mx-2 rounded-full ring-2 ring-teal-500 cursor-pointer dark:ring-gray-500"
