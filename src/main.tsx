@@ -19,8 +19,11 @@ import VerificationLoR from "./routers/verification-LoR";
 import VerificationProgram from "./routers/verification-program";
 import ManageUser from "./routers/manage-users";
 import CreateRequestLoR from "./routers/registration-LoR/create-request-LoR.view";
+import Login from "./routers/auth/login";
+import Register from "./routers/auth/register";
+import DetailRequestLoR from "./routers/registration-LoR/detail-request-LoR.view";
 
-const router = createBrowserRouter([
+const privateRouter = createBrowserRouter([
 	{
 		path: "/",
 		element: <Root />,
@@ -63,6 +66,10 @@ const router = createBrowserRouter([
 				element: <CreateRequestLoR />,
 			},
 			{
+				path: "/request-LoR/detail/:requestLoRId",
+				element: <DetailRequestLoR />,
+			},
+			{
 				path: "/semesters",
 				element: <Semester />,
 			},
@@ -90,8 +97,26 @@ const router = createBrowserRouter([
 	},
 ]);
 
+const publicRouter = createBrowserRouter([
+	{
+		path: "/",
+		// element: <Login />,
+		errorElement: <ErrorPage />,
+		children: [
+			{
+				path: "/login",
+				element: <Login />,
+			},
+			{
+				path: "/register",
+				element: <Register />,
+			},
+		],
+	},
+]);
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>
-		<RouterProvider router={router} />
+		<RouterProvider router={true ? privateRouter : publicRouter} />
 	</React.StrictMode>
 );

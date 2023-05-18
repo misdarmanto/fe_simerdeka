@@ -1,23 +1,29 @@
 import axios from "axios";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Button, FileInput, Label, Select, TextInput, Textarea } from "flowbite-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { storage } from "../../configs/firebase";
+import { uploadImageToFirebase } from "../../utils/firebase";
+import { CONFIG } from "../../configs";
 
 const CreateRequestLoR = () => {
 	const [studentName, setStudentName] = useState<string>("");
 	const [studentNim, setStudentNim] = useState<string>("");
-	const [studentTranskrip, setStudentTranskrip] = useState<string>("http://example.com/file");
-	const [dosenWali, setDosenWali] = useState<string>("Joko");
-	const [suratPersetujuanDosenWali, setSuratPersetujuanDosenWali] =
-		useState<string>("http://example.com/file");
+	const [studentTranskrip, setStudentTranskrip] = useState<string>("");
+	const [dosenWali, setDosenWali] = useState<string>("");
+	const [suratPersetujuanDosenWali, setSuratPersetujuanDosenWali] = useState<string>("");
 	const [programName, setProgramName] = useState<string>("");
 	const [programCorrelationDescription, setprogramCorrelationDescription] = useState<string>("");
+
+	const navigate = useNavigate();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		try {
 			const data = {
-				user_id: "ssss",
-				student_id: "sdssd",
+				user_id: Date.now().toString(),
+				student_id: Date.now().toString(),
 				student_name: studentName,
 				student_nim: studentName,
 				student_transkrip: studentTranskrip,
@@ -27,16 +33,39 @@ const CreateRequestLoR = () => {
 				program_correlation_description: programCorrelationDescription,
 			};
 			console.log(data);
-			const result = await axios.post("http://localhost:8000/registration-LoR", data);
-
-			console.log(result);
+			const result = await axios.post(CONFIG.base_url_api + "/registration-LoR", data);
+			navigate("/request-LoR");
 		} catch (error: any) {
+			console.error(error.message);
+		}
+	};
+
+	const handleUploadSuratPersetujuanDosen = async (event: any) => {
+		const file = event.target.files[0];
+		const imageRef = ref(storage, "request-Lor/" + file.name);
+		try {
+			const url = await uploadImageToFirebase({ imageRef, file });
+			console.log(url);
+			setSuratPersetujuanDosenWali(url);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleUploadStudentTranskrip = async (event: any) => {
+		const file = event.target.files[0];
+		const imageRef = ref(storage, "request-Lor/" + file.name);
+		try {
+			const url = await uploadImageToFirebase({ imageRef, file });
+			console.log(url);
+			setStudentTranskrip(url);
+		} catch (error) {
 			console.error(error);
 		}
 	};
 
 	return (
-		<div className="bg-white border border-gray-200 rounded-lg shadow  m-5 p-20">
+		<div className="bg-white border border-2 border-gray-200 rounded-lg m-5 p-10">
 			<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 				<div>
 					<div className="mb-2 block">
@@ -68,12 +97,12 @@ const CreateRequestLoR = () => {
 					<div className="mb-2 block">
 						<Label htmlFor="dosen-wali" value="Dosen Wali" />
 					</div>
-					<Select id="dosen-wali" required={true}>
-						<option>Dosen 1</option>
-						<option>Dosen 2</option>
-						<option>Dosen 3</option>
-						<option>Dosen 4</option>
-						<option>Dosen 5</option>
+					<Select onChange={(e) => setDosenWali(e.target.value)} required={true}>
+						<option value="dosen 1">Dosen 1</option>
+						<option value="dosen 2">Dosen 2</option>
+						<option value="dosen 3">Dosen 3</option>
+						<option value="dosen 4">Dosen 4</option>
+						<option value="dosen 5">Dosen 5</option>
 					</Select>
 				</div>
 				<div>
@@ -95,12 +124,9 @@ const CreateRequestLoR = () => {
 				<div>
 					<div className="mb-2 block">
 						<Label
-							htmlFor="t"
+							htmlFor="comment"
 							value="Keterkaitan Capaian Pembelajaran Program MBKM dengan Program Studi "
 						/>
-					</div>
-					<div className="mb-2 block">
-						<Label htmlFor="comment" value="Your message" />
 					</div>
 					<Textarea
 						value={programCorrelationDescription}
@@ -114,18 +140,20 @@ const CreateRequestLoR = () => {
 					<div className="mb-2 block">
 						<Label htmlFor="file" value="Surat Persetujuan Dosen Wali" />
 					</div>
-					<FileInput id="file" />
+					<FileInput id="file" onChange={handleUploadSuratPersetujuanDosen} />
 				</div>
 				<div>
 					<div className="mb-2 block">
 						<Label htmlFor="file" value="Transkrip semester 1-4 " />
 					</div>
-					<FileInput id="file" />
+					<FileInput id="file" onChange={handleUploadStudentTranskrip} />
 				</div>
 
-				<Button type="submit" className="mt-10">
-					Submit
-				</Button>
+				<div className="flex justify-end">
+					<Button type="submit" className="mt-10 w-32 bg-yellow-400 hover:bg-yellow-500">
+						Submit
+					</Button>
+				</div>
 			</form>
 		</div>
 	);

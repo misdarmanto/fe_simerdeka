@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 const listInfo = [
 	{
 		title: "Pertukaran Pelajar",
@@ -35,6 +38,13 @@ const listInfo = [
 ];
 
 const Home = () => {
+	const navigation = useNavigate();
+	const isAuth = true;
+	useEffect(() => {
+		if (!isAuth) {
+			navigation("/login");
+		}
+	}, []);
 	return (
 		<div className="flex flex-col md:flex-row">
 			<div className="bg-white border border-gray-200 rounded-lg shadow md:w-3/5 m-5 p-8">

@@ -14,7 +14,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="bg-white border-2 border-black-200 mx-2 px-2 pr-10 py-2.5 rounded">
+		<nav className="bg-white border-2 border-black-200  pr-10 py-2.5 rounded">
 			<div className="container flex justify-between items-center mx-auto">
 				<div className="flex items-center mx-auto">
 					<span className="text-xl font-medium whitespace-nowrap dark:text-white text-gray-500">

@@ -90,7 +90,7 @@ export const Table = ({ header, table }: { header: TableHeader[]; table: TableAt
 							""
 						)}
 						{/* Mobile only  */}
-						<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg block md:hidden">
+						<div className="shadow 7uoverflow-hidden border-b border-gray-200 sm:rounded-lg block md:hidden">
 							{table.data.items?.map((value: any, i: number) => (
 								<div key={i} className={`my-2 bg-gray-300 pr-2 pb-2 rounded-lg`}>
 									<div className="bg-white rounded-lg">

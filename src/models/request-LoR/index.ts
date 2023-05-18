@@ -1,4 +1,4 @@
-export interface RegistrationLoR {
+export interface LoRTypes {
 	registration_lor_id?: string;
 	user_id: string;
 	student_id: string;
@@ -10,4 +10,10 @@ export interface RegistrationLoR {
 	program_name: string;
 	program_correlation_description: string;
 	registration_status: "waiting" | "process" | "accepted" | "rejected";
+}
+
+export interface RegistrationLoRTypes extends LoRTypes {}
+
+export interface LoRParamsTypes {
+	requestLoRId: string;
 }

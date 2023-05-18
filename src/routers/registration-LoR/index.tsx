@@ -1,19 +1,17 @@
 import axios from "axios";
-import { Table } from "flowbite-react";
+import { Button, Pagination, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { AiOutlineFileAdd } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { RegistrationLoR } from "../../models/request-LoR";
+import { RegistrationLoRTypes } from "../../models/request-LoR";
 
 const RequestLoR = () => {
 	const navigate = useNavigate();
 
-	const [listRoL, setListRoL] = useState<RegistrationLoR[]>([]);
+	const [listRoL, setListRoL] = useState<RegistrationLoRTypes[]>([]);
 
 	const fecthData = async () => {
 		const result = await axios.get("http://localhost:8000/registration-LoR/all");
 		setListRoL(result.data.data.items);
-		console.log(result.data.data.items);
 	};
 
 	useEffect(() => {
@@ -21,28 +19,51 @@ const RequestLoR = () => {
 	}, []);
 
 	return (
-		<div className="bg-white border border-gray-200 rounded-lg shadow m-5 p-8">
-			{/* <div className="flex items-center justify-center w-full">
-				<label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50">
-					<div className="flex flex-col items-center justify-center pt-5 pb-6">
-						<AiOutlineFileAdd
-							fontSize={40}
-							color="gray"
-							onClick={() => navigate("/request-LoR/create")}
-						/>
-					</div>
-				</label>
-			</div> */}
+		<div className="bg-white border border-gray-200 rounded-lg py-2">
+			<div className="flex justify-between items-center px-2">
+				<Button
+					onClick={() => navigate("/request-LoR/create")}
+					className="bg-yellow-400 hover:bg-yellow-500 my-2"
+				>
+					Create
+				</Button>
 
-			<Table hoverable={true}>
+				<div className="relative">
+					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+						<svg
+							aria-hidden="true"
+							className="w-5 h-5 text-gray-500 dark:text-gray-400"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+								clip-rule="evenodd"
+							></path>
+						</svg>
+					</div>
+					<input
+						type="text"
+						id="simple-search"
+						className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						placeholder="Search"
+						required
+					/>
+				</div>
+			</div>
+
+			<Table hoverable={true} className="shadow-none">
 				<Table.Head>
 					<Table.HeadCell>No</Table.HeadCell>
 					<Table.HeadCell>Nama</Table.HeadCell>
 					<Table.HeadCell>Nim</Table.HeadCell>
-					<Table.HeadCell>Prodi</Table.HeadCell>
+					<Table.HeadCell>Status</Table.HeadCell>
+					<Table.HeadCell>Nama Program</Table.HeadCell>
 					<Table.HeadCell>Action</Table.HeadCell>
 				</Table.Head>
-				<Table.Body className="divide-y">
+				<Table.Body className="divide-y shadow-none">
 					{listRoL.map((item, index) => (
 						<Table.Row
 							key={index}
@@ -53,9 +74,15 @@ const RequestLoR = () => {
 							</Table.Cell>
 							<Table.Cell>{item.student_name}</Table.Cell>
 							<Table.Cell>{item.student_nim}</Table.Cell>
+							<Table.Cell>{item.registration_status}</Table.Cell>
 							<Table.Cell>{item.program_name}</Table.Cell>
 							<Table.Cell>
-								<a className="font-medium text-blue-600 hover:underline dark:text-blue-500">
+								<a
+									onClick={() =>
+										navigate(`/request-LoR/detail/${item.registration_lor_id}`)
+									}
+									className="font-medium text-yellow-400 hover:underline cursor-pointer"
+								>
 									Detail
 								</a>
 							</Table.Cell>
@@ -63,6 +90,7 @@ const RequestLoR = () => {
 					))}
 				</Table.Body>
 			</Table>
+			<Pagination currentPage={1} totalPages={100} onPageChange={() => {}} />
 		</div>
 	);
 };
