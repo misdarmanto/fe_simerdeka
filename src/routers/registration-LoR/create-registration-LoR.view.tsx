@@ -43,7 +43,7 @@ const CreateRegistrationLoR = () => {
 				path: "/registration-LoR",
 				body: data,
 			});
-			navigate("/registration_LoR");
+			navigate("/registration-LoR");
 		} catch (error: any) {
 			console.error(error.message);
 		}

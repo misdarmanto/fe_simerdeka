@@ -21,6 +21,8 @@ import Register from "./routers/auth/register";
 import RegistrationLoR from "./routers/registration-LoR/index";
 import CreateRegistrationLoR from "./routers/registration-LoR/create-registration-LoR.view";
 import DetailRegistrationLoR from "./routers/registration-LoR/detail-registration-LoR.view";
+import CreateMbkmProgram from "./routers/mbkm-program/create-program";
+import DetailProgram from "./routers/mbkm-program/detail-program";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -43,6 +45,14 @@ const privateRouter = createBrowserRouter([
 			{
 				path: "/mbkm-programs",
 				element: <MbkmProgram />,
+			},
+			{
+				path: "/mbkm-programs/create",
+				element: <CreateMbkmProgram />,
+			},
+			{
+				path: "/mbkm-programs/:programId",
+				element: <DetailProgram />,
 			},
 			{
 				path: "/mbkm-summaries",

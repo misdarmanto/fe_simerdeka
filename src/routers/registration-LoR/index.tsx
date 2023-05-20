@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Breadcrumb, Button, Pagination, Table, TextInput } from "flowbite-react";
+import { Badge, Breadcrumb, Button, Pagination, Table, TextInput } from "flowbite-react";
 import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LoRTypes } from "../../models/request-LoR";
@@ -78,12 +78,46 @@ const RegistrationLoR = () => {
 		},
 
 		{
-			title: "Status",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "status"} className="md:px-6 md:py-3 break-all">
-					{data.registration_status}
-				</td>
-			),
+			title: "assign to",
+			data: (data: any, index: number): ReactElement => {
+				if (data.registration_lor_assign_to_akademik) {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="info" className="w-20 text-center">
+								akademik
+							</Badge>
+						</td>
+					);
+				}
+
+				if (data.registration_lor_assign_to_jurusan) {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="info" className="w-20 text-center">
+								jurusan
+							</Badge>
+						</td>
+					);
+				}
+
+				if (data.registration_lor_assign_to_prodi) {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="info" className="w-20 text-center">
+								prodi
+							</Badge>
+						</td>
+					);
+				}
+
+				return (
+					<td key={index + "status"} className="md:px-6 md:py-3 break-all">
+						<Badge color="warning" className="w-20">
+							{data.registration_status}
+						</Badge>
+					</td>
+				);
+			},
 		},
 		{
 			title: "Action",
@@ -118,7 +152,7 @@ const RegistrationLoR = () => {
 				icon={BASE_MENU_ICON.LoRIcon}
 			/>
 
-			<div className="flex flex-col md:flex-row justify-between mb-1 md:px-0">
+			<div className="flex flex-col md:flex-row justify-between md:px-0">
 				<div className="flex items-center">
 					<div className="w-full mr-2 flex flex-row justify-between md:justify-start">
 						<select
@@ -150,79 +184,3 @@ const RegistrationLoR = () => {
 };
 
 export default RegistrationLoR;
-
-{
-	/* <div className="bg-white border border-gray-200 rounded-lg py-2">
-				<div className="flex justify-between items-center px-2">
-					<ButtonStyle
-						title="Buat"
-						color="dark"
-						onClick={() => navigate("/request-LoR/create")}
-					/>
-
-					<div className="relative">
-						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-							<svg
-								aria-hidden="true"
-								className="w-5 h-5 text-gray-500 dark:text-gray-400"
-								fill="currentColor"
-								viewBox="0 0 20 20"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									fill-rule="evenodd"
-									d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-									clip-rule="evenodd"
-								></path>
-							</svg>
-						</div>
-						<input
-							type="text"
-							id="simple-search"
-							className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-							placeholder="Search"
-							required
-						/>
-					</div>
-				</div>
-
-				<Table hoverable={true} className="shadow-none">
-					<Table.Head>
-						<Table.HeadCell>No</Table.HeadCell>
-						<Table.HeadCell>Name</Table.HeadCell>
-						<Table.HeadCell>NIM</Table.HeadCell>
-						<Table.HeadCell>Status</Table.HeadCell>
-						<Table.HeadCell>Program</Table.HeadCell>
-						<Table.HeadCell>Action</Table.HeadCell>
-					</Table.Head>
-					<Table.Body className="divide-y shadow-none">
-						{listLoR.map((item, index) => (
-							<Table.Row
-								key={index}
-								className="bg-white dark:border-gray-700 dark:bg-gray-800"
-							>
-								<Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-									{index + 1}
-								</Table.Cell>
-								<Table.Cell>{item.student_name}</Table.Cell>
-								<Table.Cell>{item.student_nim}</Table.Cell>
-								<Table.Cell>{item.registration_status}</Table.Cell>
-								<Table.Cell>{item.program_name}</Table.Cell>
-								<Table.Cell>
-									<ButtonStyle
-										title="Detail"
-										color="light"
-										onClick={() =>
-											navigate(
-												`/request-LoR/detail/${item.registration_lor_id}`
-											)
-										}
-									/>
-								</Table.Cell>
-							</Table.Row>
-						))}
-					</Table.Body>
-				</Table>
-				<Pagination currentPage={1} totalPages={100} onPageChange={() => {}} />
-			</div> */
-}

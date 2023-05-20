@@ -5,10 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RootContext } from "../../utils/contextApi";
-import { UserTypes } from "../../models/auth";
 import { BiCalendar } from "react-icons/bi";
 
-const DetailRegistrationLoR = () => {
+const DetailProgram = () => {
 	const [LoR, setLoR] = useState<LoRTypes>();
 	const { registrationLoRId } = useParams();
 	const { currentUser }: any = useContext(RootContext);
@@ -193,4 +192,4 @@ const ListItemStyle = ({
 	);
 };
 
-export default DetailRegistrationLoR;
+export default DetailProgram;
