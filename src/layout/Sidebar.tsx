@@ -23,7 +23,11 @@ const SidebarStyle = () => {
 
 	const studentMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
-		{ title: "Request LoR", path: "/request-LoR", icon: <AiOutlineAudit /> },
+		{
+			title: "Registration LoR",
+			path: "/registration-LoR",
+			icon: <AiOutlineAudit />,
+		},
 		{ title: "My Program", path: "/my-programs", icon: <AiOutlineFolderOpen /> },
 		{ title: "Program Proposal", path: "/program-proposal", icon: <AiOutlineFile /> },
 		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
@@ -31,7 +35,11 @@ const SidebarStyle = () => {
 
 	const prodiMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
-		{ title: "Verification LoR", path: "/verification-LoR", icon: <AiOutlineAudit /> },
+		{
+			title: "Verification LoR",
+			path: "/verification-LoR",
+			icon: <AiOutlineAudit />,
+		},
 		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
 		{ title: "Student", path: "/students", icon: <FaUserGraduate /> },
 		{ title: "Program Proposal", path: "/program-proposal", icon: <AiOutlineFile /> },
@@ -40,7 +48,11 @@ const SidebarStyle = () => {
 
 	const jurusanMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
-		{ title: "Verification LoR", path: "/verification-LoR", icon: <AiOutlineAudit /> },
+		{
+			title: "Verification LoR",
+			path: "/verification-LoR",
+			icon: <AiOutlineAudit />,
+		},
 		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
 		{
 			title: "Study Program",
@@ -56,7 +68,11 @@ const SidebarStyle = () => {
 		{ title: "Manage User", path: "/manage-users", icon: <BiUser /> },
 		{ title: "Semester", path: "/semesters", icon: <FaRegListAlt /> },
 		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
-		{ title: "Verification LoR", path: "/verification-LoR", icon: <AiOutlineAudit /> },
+		{
+			title: "Verification LoR",
+			path: "/verification-LoR",
+			icon: <AiOutlineAudit />,
+		},
 		{
 			title: "Verification Program",
 			path: "/verification-programs",
@@ -116,7 +132,10 @@ const SidebarStyle = () => {
 							<small>Close</small>
 						</>
 					) : (
-						<BiMenu onClick={() => setOpen(!open)} className="text-3xl text-gray-500" />
+						<BiMenu
+							onClick={() => setOpen(!open)}
+							className="text-3xl text-gray-500"
+						/>
 					)}
 				</li>
 				{MENUS.map((menu, index) => {

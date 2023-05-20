@@ -22,7 +22,13 @@ export interface TableHeader {
 	title: string;
 }
 
-export const Table = ({ header, table }: { header: TableHeader[]; table: TableAttributes }) => {
+export const TableStyle = ({
+	header,
+	table,
+}: {
+	header: TableHeader[];
+	table: TableAttributes;
+}) => {
 	return (
 		<>
 			<div className="flex flex-col">
@@ -52,7 +58,9 @@ export const Table = ({ header, table }: { header: TableHeader[]; table: TableAt
 									{table.data.items?.map((value: any, i: number) => (
 										<tr
 											key={i}
-											className={`${i % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
+											className={`${
+												i % 2 === 0 ? "bg-white" : "bg-gray-50"
+											}`}
 										>
 											{header.map((head, j) => {
 												if (typeof head.data !== "string") {
@@ -92,11 +100,17 @@ export const Table = ({ header, table }: { header: TableHeader[]; table: TableAt
 						{/* Mobile only  */}
 						<div className="shadow 7uoverflow-hidden border-b border-gray-200 sm:rounded-lg block md:hidden">
 							{table.data.items?.map((value: any, i: number) => (
-								<div key={i} className={`my-2 bg-gray-300 pr-2 pb-2 rounded-lg`}>
+								<div
+									key={i}
+									className={`my-2 bg-gray-300 pr-2 pb-2 rounded-lg`}
+								>
 									<div className="bg-white rounded-lg">
 										<div className={`flex justify-end px-4 pt-2`}>
 											{header.map((head, j) => {
-												if (head.action && typeof head.data == "function") {
+												if (
+													head.action &&
+													typeof head.data == "function"
+												) {
 													return head.data(value, i);
 												} else {
 													return "";
@@ -155,7 +169,11 @@ export const Table = ({ header, table }: { header: TableHeader[]; table: TableAt
 	);
 };
 
-const setVisiblePages = (visibleRadius: number, currentPage: number, maxPages: number) => {
+const setVisiblePages = (
+	visibleRadius: number,
+	currentPage: number,
+	maxPages: number
+) => {
 	const visiblePages = [];
 
 	let start = currentPage - visibleRadius;
@@ -190,19 +208,23 @@ const setVisiblePages = (visibleRadius: number, currentPage: number, maxPages: n
 };
 
 export const Pagination = ({ table }: { table: any }) => {
-	let visiblePages = setVisiblePages(1, table.data.current_page, table.data.total_pages);
+	let visiblePages = setVisiblePages(
+		1,
+		table.data.current_page,
+		table.data.total_pages
+	);
 	const filters = objectToQueryString(table.filter);
 	const pagesComponents = [];
 	if (visiblePages[0] >= 2) {
 		pagesComponents.push(
 			<Link to={`/${table.link}?page=0&size=${table.size}&${filters}`}>
-				<button className="z-10 bg-white border-teal-500 text-teal-500 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+				<button className="z-10 bg-white border-gray-300 text-gray-300 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
 					1
 				</button>
 			</Link>
 		);
 		pagesComponents.push(
-			<span className="relative inline-flex items-center px-4 py-2 border border-teal-500 bg-white text-sm font-medium text-teal-500">
+			<span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-300">
 				...
 			</span>
 		);
@@ -214,9 +236,9 @@ export const Pagination = ({ table }: { table: any }) => {
 					key={`${index}-center`}
 					className={`z-10 ${
 						table.data.current_page + 1 == page
-							? "bg-teal-200 border-teal-500"
-							: "bg-whitw-50 border-teal-500"
-					}  text-teal-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium`}
+							? "bg-gray-200 border-gray-300"
+							: "bg-whitw-50 border-gray-300"
+					}  text-gray-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium`}
 				>
 					{page}
 				</button>
@@ -226,7 +248,7 @@ export const Pagination = ({ table }: { table: any }) => {
 	if (table.data.current_page <= table.data.total_pages - 3) {
 		if (table.data.current_page <= table.data.total_pages - 3) {
 			pagesComponents.push(
-				<span className="relative inline-flex items-center px-4 py-2 border border-teal-500 bg-white text-sm font-medium text-teal-500">
+				<span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-300">
 					...
 				</span>
 			);
@@ -237,7 +259,7 @@ export const Pagination = ({ table }: { table: any }) => {
 					table.size
 				}&${filters}`}
 			>
-				<button className="relative inline-flex items-center px-4 py-2 border border-teal-500 bg-white text-sm font-medium text-teal-500">
+				<button className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-300">
 					{table.data.total_pages}
 				</button>
 			</Link>
@@ -248,9 +270,9 @@ export const Pagination = ({ table }: { table: any }) => {
 			<div className="flex-1 flex justify-start sm:hidden">
 				{table.page != 0 ? (
 					<Link
-						to={`/${table.link}?page=${table.page != 0 ? table.page - 1 : 0}&size=${
-							table.size
-						}&${filters}`}
+						to={`/${table.link}?page=${
+							table.page != 0 ? table.page - 1 : 0
+						}&size=${table.size}&${filters}`}
 					>
 						<button className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
 							Sebelumnya

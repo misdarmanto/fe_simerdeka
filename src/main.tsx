@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import Home from "./routers/home";
 import ErrorPage from "./error-page";
 import Root from "./routers/root";
@@ -11,17 +12,17 @@ import MbkmProgram from "./routers/mbkm-program";
 import MbkmSummary from "./routers/mbkm-summary";
 import MyProgram from "./routers/my-program";
 import ProgramProposal from "./routers/program-proposal";
-import RequestLoR from "./routers/registration-LoR/index";
 import Semester from "./routers/semester";
 import Student from "./routers/student";
 import StudyProgram from "./routers/study-program";
 import VerificationLoR from "./routers/verification-LoR";
 import VerificationProgram from "./routers/verification-program";
 import ManageUser from "./routers/manage-users";
-import CreateRequestLoR from "./routers/registration-LoR/create-request-LoR.view";
 import Login from "./routers/auth/login";
 import Register from "./routers/auth/register";
-import DetailRequestLoR from "./routers/registration-LoR/detail-request-LoR.view";
+import RegistrationLoR from "./routers/registration-LoR/index";
+import CreateRegistrationLoR from "./routers/registration-LoR/create-registration-LoR.view";
+import DetailRegistrationLoR from "./routers/registration-LoR/detail-registration-LoR.view";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -58,16 +59,16 @@ const privateRouter = createBrowserRouter([
 				element: <ProgramProposal />,
 			},
 			{
-				path: "/request-LoR",
-				element: <RequestLoR />,
+				path: "/registration-LoR",
+				element: <RegistrationLoR />,
 			},
 			{
-				path: "/request-LoR/create",
-				element: <CreateRequestLoR />,
+				path: "/registration-LoR/create",
+				element: <CreateRegistrationLoR />,
 			},
 			{
-				path: "/request-LoR/detail/:requestLoRId",
-				element: <DetailRequestLoR />,
+				path: "/registration-LoR/detail/:registrationLoRId",
+				element: <DetailRegistrationLoR />,
 			},
 			{
 				path: "/semesters",
