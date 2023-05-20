@@ -10,14 +10,14 @@ export interface GetTableDataTypes {
 }
 
 export const getHeaders = () => {
+	const user = localStorage.getItem(CONFIG.local_storage_key) || "";
+	const result: { userId: string; role: string } = JSON.parse(user);
 	return {
-		"x-user-id":
-			localStorage.getItem(CONFIG.local_storage_key) ||
-			"e7c9b63d-bb5a-4b6f-9fd5-9fcbd0b17b56",
+		"x-user-id": result.userId,
 	};
 };
 
-export class ServiceApi {
+export class ServiceHttp {
 	private baseUrl = CONFIG.base_url_api;
 
 	public async get({ path }: { path: string }) {

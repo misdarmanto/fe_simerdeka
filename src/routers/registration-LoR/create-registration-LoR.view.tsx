@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { storage } from "../../configs/firebase";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import { CONFIG } from "../../configs";
-import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
+import { ServiceHttp } from "../../services/api";
 
 const CreateRegistrationLoR = () => {
 	const [studentName, setStudentName] = useState<string>("");
@@ -36,11 +37,13 @@ const CreateRegistrationLoR = () => {
 				program_correlation_description: programCorrelationDescription,
 			};
 			console.log(data);
-			const result = await axios.post(
-				CONFIG.base_url_api + "/registration-LoR",
-				data
-			);
-			navigate("/request-LoR");
+
+			const httpService = new ServiceHttp();
+			await httpService.post({
+				path: "/registration-LoR",
+				body: data,
+			});
+			navigate("/registration_LoR");
 		} catch (error: any) {
 			console.error(error.message);
 		}
@@ -178,12 +181,7 @@ const CreateRegistrationLoR = () => {
 					</div>
 
 					<div className="flex justify-end">
-						<Button
-							type="submit"
-							className="mt-10 w-32 bg-yellow-400 hover:bg-yellow-500"
-						>
-							Submit
-						</Button>
+						<ButtonStyle title="Submit" type="submit" color="dark" />
 					</div>
 				</form>
 			</div>

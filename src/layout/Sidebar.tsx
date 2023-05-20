@@ -36,8 +36,8 @@ const SidebarStyle = () => {
 	const prodiMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{
-			title: "Verification LoR",
-			path: "/verification-LoR",
+			title: "Registration LoR",
+			path: "/registration-LoR",
 			icon: <AiOutlineAudit />,
 		},
 		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
@@ -49,8 +49,8 @@ const SidebarStyle = () => {
 	const jurusanMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{
-			title: "Verification LoR",
-			path: "/verification-LoR",
+			title: "Registration LoR",
+			path: "/registration-LoR",
 			icon: <AiOutlineAudit />,
 		},
 		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
@@ -63,14 +63,14 @@ const SidebarStyle = () => {
 		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
 	];
 
-	const mbkmTimMenus = [
+	const akademikMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{ title: "Manage User", path: "/manage-users", icon: <BiUser /> },
 		{ title: "Semester", path: "/semesters", icon: <FaRegListAlt /> },
 		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
 		{
-			title: "Verification LoR",
-			path: "/verification-LoR",
+			title: "Registration LoR",
+			path: "/registration-LoR",
 			icon: <AiOutlineAudit />,
 		},
 		{
@@ -108,8 +108,8 @@ const SidebarStyle = () => {
 		case "jurusan":
 			MENUS = jurusanMenus;
 			break;
-		case "mbkmTim":
-			MENUS = mbkmTimMenus;
+		case "akademik":
+			MENUS = akademikMenus;
 			break;
 		default:
 			break;

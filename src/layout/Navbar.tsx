@@ -4,13 +4,28 @@ import { IoMdNotifications } from "react-icons/io";
 import Drawer from "./Drawer";
 import { Dropdown } from "flowbite-react";
 import { RootContext } from "../utils/contextApi";
+import { LIST_USER } from "../data/users";
+import { UserCredentialTypes, UserTypes } from "../models/auth";
+import { CONFIG } from "../configs";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 	const [openDrawer, setOpenDrawer] = useState(false);
-	const { role, setRole }: any = useContext(RootContext);
+	const { role, setRole, currentUser }: any = useContext(RootContext);
+	const navigate = useNavigate();
 
-	const handleSelectRole = (role: string) => {
-		setRole(role);
+	const handleSaveUserCredential = (userRole: string) => {
+		const user = LIST_USER.find((user: UserCredentialTypes) => {
+			return user.role === userRole;
+		});
+		localStorage.setItem(CONFIG.local_storage_key, JSON.stringify(user));
+	};
+
+	const handleSelectRole = (userRole: string) => {
+		handleSaveUserCredential(userRole);
+		setRole(userRole);
+		navigate("/");
+		window.location.reload();
 	};
 
 	return (
@@ -18,7 +33,7 @@ const Navbar = () => {
 			<div className="container flex justify-between items-center mx-auto">
 				<div className="flex items-center mx-auto">
 					<span className="text-xl font-medium whitespace-nowrap dark:text-white text-gray-500">
-						Welcome, {role}
+						Welcome, {currentUser.user_name}
 					</span>
 				</div>
 
@@ -27,7 +42,7 @@ const Navbar = () => {
 						onClick={() => setOpenDrawer(!openDrawer)}
 						className="text-3xl mx-2 sm:mr-5 text-gray-500 cursor-pointer hover:bg-gray-200 rounded-full"
 					/>
-					<Dropdown inline={true} label="select role" dismissOnClick={true}>
+					<Dropdown inline={true} label={role} dismissOnClick={true}>
 						<Dropdown.Item onClick={() => handleSelectRole("mahasiswa")}>
 							Mahasiswa
 						</Dropdown.Item>
@@ -37,8 +52,8 @@ const Navbar = () => {
 						<Dropdown.Item onClick={() => handleSelectRole("jurusan")}>
 							Jurusan
 						</Dropdown.Item>
-						<Dropdown.Item onClick={() => handleSelectRole("mbkmTim")}>
-							Tim MBKM
+						<Dropdown.Item onClick={() => handleSelectRole("akademik")}>
+							Akadmik
 						</Dropdown.Item>
 					</Dropdown>
 

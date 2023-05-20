@@ -1,5 +1,7 @@
+import { Timeline } from "flowbite-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BiCalendar } from "react-icons/bi";
 
 const listInfo = [
 	{
@@ -46,35 +48,74 @@ const Home = () => {
 		}
 	}, []);
 	return (
-		<div className="flex flex-col md:flex-row">
-			<div className="bg-white border border-gray-200 rounded-lg shadow md:w-3/5 m-5 p-8">
-				<p className="mb-3 text-lg text-gray-500 md:text-xl">
-					MERDEKA BELAJAR KAMPUS MERDEKA
-				</p>
-				<p className="text-gray-500 text-sm">
-					ITERA sebagai Kampus Merdeka selalu berusaha memberikan kesempatan bagi segenap
-					sivitas akademika untuk mengasah kemampuan sesuai bakat dan minat. Dengan
-					langsung terjun ke lingkungan masyarakat , ITERA lewat program Kampus Merdeka
-					juga selalu berusaha untuk membantu memecahkan permasalahan di masyarakat
-					sebagai bentuk pengabdian
-				</p>
-
-				<ul className=" space-y-4 text-gray-500 list-inside mt-10">
-					<li>
-						Program Kegiatan Merdeka Belajar Kampus Merdeka terdapat 8 Program, yaitu:
-						<ol className="pl-5 mt-2 space-y-1 list-decimal list-inside">
-							{listInfo.map((item, index) => (
-								<li key={index} className="my-5">
-									{item.title} <br /> <small>{item.text}</small>
-								</li>
-							))}
-						</ol>
-					</li>
-				</ul>
-			</div>
-			<div className="bg-white border border-gray-200 rounded-lg shadow md:w-2/6 m-5"></div>
+		<div className="bg-white border border-gray-200 rounded-lg shadow m-5 p-8">
+			<Timeline horizontal={true}>
+				<Timeline.Item>
+					<Timeline.Point icon={BiCalendar} />
+					<Timeline.Content>
+						<Timeline.Title>Flowbite Library v1.0.0</Timeline.Title>
+						<Timeline.Time>Released on December 2, 2021</Timeline.Time>
+						<Timeline.Body>
+							Get started with dozens of web components and interactive
+							elements.
+						</Timeline.Body>
+					</Timeline.Content>
+				</Timeline.Item>
+				<Timeline.Item>
+					<Timeline.Point icon={BiCalendar} />
+					<Timeline.Content>
+						<Timeline.Title>Flowbite Library v1.2.0</Timeline.Title>
+						<Timeline.Time>Released on December 23, 2021</Timeline.Time>
+						<Timeline.Body>
+							Get started with dozens of web components and interactive
+							elements.
+						</Timeline.Body>
+					</Timeline.Content>
+				</Timeline.Item>
+				<Timeline.Item>
+					<Timeline.Point icon={BiCalendar} />
+					<Timeline.Content>
+						<Timeline.Title>Flowbite Library v1.3.0</Timeline.Title>
+						<Timeline.Time>Released on January 5, 2022</Timeline.Time>
+						<Timeline.Body>
+							Get started with dozens of web components and interactive
+							elements.
+						</Timeline.Body>
+					</Timeline.Content>
+				</Timeline.Item>
+			</Timeline>
 		</div>
 	);
 };
 
 export default Home;
+
+// <div className="flex flex-col md:flex-row">
+// 	<div className="bg-white border border-gray-200 rounded-lg shadow md:w-3/5 m-5 p-8">
+// 		<p className="mb-3 text-lg text-gray-500 md:text-xl">
+// 			MERDEKA BELAJAR KAMPUS MERDEKA
+// 		</p>
+// 		<p className="text-gray-500 text-sm">
+// 			ITERA sebagai Kampus Merdeka selalu berusaha memberikan kesempatan
+// 			bagi segenap sivitas akademika untuk mengasah kemampuan sesuai bakat
+// 			dan minat. Dengan langsung terjun ke lingkungan masyarakat , ITERA
+// 			lewat program Kampus Merdeka juga selalu berusaha untuk membantu
+// 			memecahkan permasalahan di masyarakat sebagai bentuk pengabdian
+// 		</p>
+
+// 		<ul className=" space-y-4 text-gray-500 list-inside mt-10">
+// 			<li>
+// 				Program Kegiatan Merdeka Belajar Kampus Merdeka terdapat 8
+// 				Program, yaitu:
+// 				<ol className="pl-5 mt-2 space-y-1 list-decimal list-inside">
+// 					{listInfo.map((item, index) => (
+// 						<li key={index} className="my-5">
+// 							{item.title} <br /> <small>{item.text}</small>
+// 						</li>
+// 					))}
+// 				</ol>
+// 			</li>
+// 		</ul>
+// 	</div>
+// 	<div className="bg-white border border-gray-200 rounded-lg shadow md:w-2/6 m-5"></div>
+// </div>;

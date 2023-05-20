@@ -15,8 +15,6 @@ import ProgramProposal from "./routers/program-proposal";
 import Semester from "./routers/semester";
 import Student from "./routers/student";
 import StudyProgram from "./routers/study-program";
-import VerificationLoR from "./routers/verification-LoR";
-import VerificationProgram from "./routers/verification-program";
 import ManageUser from "./routers/manage-users";
 import Login from "./routers/auth/login";
 import Register from "./routers/auth/register";
@@ -82,14 +80,7 @@ const privateRouter = createBrowserRouter([
 				path: "/study-programs",
 				element: <StudyProgram />,
 			},
-			{
-				path: "/verification-LoR",
-				element: <VerificationLoR />,
-			},
-			{
-				path: "/verification-programs",
-				element: <VerificationProgram />,
-			},
+
 			{
 				path: "/manage-users",
 				element: <ManageUser />,
