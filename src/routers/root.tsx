@@ -13,25 +13,25 @@ const Root = () => {
 	const [currentUser, setCurrentUser] = useState<UserTypes>();
 	const [isLoading, setIsLoading] = useState(true);
 
-	const fecthCurrentUser = async (userId: string) => {
-		const serviceHttp = new ServiceHttp();
-		const result = await serviceHttp.get({
-			path: "/users/me/" + userId,
-		});
-		setCurrentUser(result);
-		console.log(result);
-	};
+	// const fecthCurrentUser = async (userId: string) => {
+	// 	const serviceHttp = new ServiceHttp();
+	// 	const result = await serviceHttp.get({
+	// 		path: "/users/me/" + userId,
+	// 	});
+	// 	setCurrentUser(result);
+	// 	console.log(result);
+	// };
 
 	const checkUserAuth = async () => {
 		const userCredential = localStorage.getItem(CONFIG.local_storage_key);
 		if (!userCredential) {
 			localStorage.setItem(CONFIG.local_storage_key, JSON.stringify(LIST_USER[0]));
-			setRole(LIST_USER[0].role);
-			await fecthCurrentUser(LIST_USER[0].userId);
+			setRole(LIST_USER[0].user_role);
+			setCurrentUser(LIST_USER[0]);
 		} else {
-			const user: UserCredentialTypes = JSON.parse(userCredential + "");
-			setRole(user.role);
-			await fecthCurrentUser(user.userId);
+			const user: UserTypes = JSON.parse(userCredential + "");
+			setRole(user.user_role);
+			setCurrentUser(user);
 		}
 		setIsLoading(false);
 	};

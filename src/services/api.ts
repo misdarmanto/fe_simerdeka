@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CONFIG } from "../configs";
+import { UserTypes } from "../models/auth";
 
 export interface GetTableDataTypes {
 	url: string;
@@ -11,9 +12,9 @@ export interface GetTableDataTypes {
 
 export const getHeaders = () => {
 	const user = localStorage.getItem(CONFIG.local_storage_key) || "";
-	const result: { userId: string; role: string } = JSON.parse(user);
+	const result: UserTypes = JSON.parse(user);
 	return {
-		"x-user-id": result.userId,
+		"x-user-id": result.user_id,
 	};
 };
 

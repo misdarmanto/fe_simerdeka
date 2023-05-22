@@ -1,23 +1,22 @@
-import { FileInput, Label, ListGroup, Textarea, Timeline } from "flowbite-react";
+import { FileInput, Label, Textarea, Timeline } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
 import { LoRTypes } from "../../models/request-LoR";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RootContext } from "../../utils/contextApi";
-import { UserTypes } from "../../models/auth";
 import { BiCalendar } from "react-icons/bi";
 
-const DetailRegistrationLoR = () => {
+const RecomendationLetterDetail = () => {
 	const [LoR, setLoR] = useState<LoRTypes>();
-	const { registrationLoRId } = useParams();
+	const { recomendationLetterId } = useParams();
 	const { currentUser }: any = useContext(RootContext);
 	const navigation = useNavigate();
 	const httpService = new ServiceHttp();
 
 	const fecthData = async () => {
 		const result = await httpService.get({
-			path: `/registration-LoR/detail/${registrationLoRId}`,
+			path: `/recomendation-letter/detail/${recomendationLetterId}`,
 		});
 		setLoR(result);
 	};
@@ -45,14 +44,14 @@ const DetailRegistrationLoR = () => {
 		}
 
 		await httpService.patch({
-			path: `/registration-LoR/change-status`,
+			path: `/recomendation-letter/change-status`,
 			body: {
-				registration_lor_id: registrationLoRId,
+				registration_lor_id: recomendationLetterId,
 				assign_to: assignTo,
 			},
 		});
 
-		navigation("/registration-LoR");
+		navigation("/recomendation-letter");
 	};
 
 	useEffect(() => {
@@ -64,11 +63,11 @@ const DetailRegistrationLoR = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/registration-LoR",
-						title: "Registration LoR",
+						link: "/recomendation-letter",
+						title: "Surat Rekomendasi",
 					},
 					{
-						link: "/registration-LoR" + registrationLoRId,
+						link: "/recomendation-letter" + recomendationLetterId,
 						title: "Detail",
 					},
 				]}
@@ -184,7 +183,7 @@ const ListItemStyle = ({
 			<dt className="mb-1 text-gray-500">{title}</dt>
 			{url ? (
 				<a href={url} target="blank">
-					{url}
+					<ButtonStyle color="light" title="lihat file" />
 				</a>
 			) : (
 				<dd className="text-sm font-semibold">{description}</dd>
@@ -193,4 +192,4 @@ const ListItemStyle = ({
 	);
 };
 
-export default DetailRegistrationLoR;
+export default RecomendationLetterDetail;

@@ -1,17 +1,14 @@
-import axios from "axios";
-import { Badge, Breadcrumb, Button, Pagination, Table, TextInput } from "flowbite-react";
+import { Badge, TextInput } from "flowbite-react";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LoRTypes } from "../../models/request-LoR";
 import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
-import { toMoney } from "../../utils";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 
-const RegistrationLoR = () => {
+const RecomendationLetterList = () => {
 	const navigate = useNavigate();
 
 	const [listLoR, setListLoR] = useState<any>();
@@ -21,7 +18,7 @@ const RegistrationLoR = () => {
 	const fecthData = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/registration-LoR/all",
+			url: CONFIG.base_url_api + "/recomendation-letter/all",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -31,7 +28,7 @@ const RegistrationLoR = () => {
 		});
 
 		setListLoR({
-			link: "registration-LoR/all",
+			link: "recomendation-letter/all",
 			data: result,
 			page: 0,
 			size: 10,
@@ -80,7 +77,7 @@ const RegistrationLoR = () => {
 		},
 
 		{
-			title: "assign to",
+			title: "di teruskan ke",
 			data: (data: any, index: number): ReactElement => {
 				if (data.registration_lor_assign_to_akademik) {
 					return (
@@ -127,7 +124,9 @@ const RegistrationLoR = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/registration-LoR/detail/${data.registration_lor_id}`}>
+						<Link
+							to={`/recomendation-letter/detail/${data.registration_lor_id}`}
+						>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>
@@ -143,11 +142,11 @@ const RegistrationLoR = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/registration-LoR",
-						title: "Registration LoR",
+						link: "/recomendation-letter",
+						title: "Surat Rekomendasi",
 					},
 					{
-						link: "/registration-LoR",
+						link: "/recomendation-letter",
 						title: "List",
 					},
 				]}
@@ -171,9 +170,9 @@ const RegistrationLoR = () => {
 					</div>
 					{currentUser.user_role === "mahasiswa" && (
 						<ButtonStyle
-							title="Create"
+							title="Buat"
 							color="light"
-							onClick={() => navigate("/registration-LoR/create")}
+							onClick={() => navigate("/recomendation-letter/create")}
 						/>
 					)}
 				</div>
@@ -187,4 +186,4 @@ const RegistrationLoR = () => {
 	);
 };
 
-export default RegistrationLoR;
+export default RecomendationLetterList;

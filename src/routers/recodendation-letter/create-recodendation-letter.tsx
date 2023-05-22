@@ -1,15 +1,13 @@
-import axios from "axios";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { Button, FileInput, Label, Select, TextInput, Textarea } from "flowbite-react";
+import { ref } from "firebase/storage";
+import { FileInput, Label, Select, TextInput, Textarea } from "flowbite-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../configs/firebase";
 import { uploadImageToFirebase } from "../../utils/firebase";
-import { CONFIG } from "../../configs";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 
-const CreateRegistrationLoR = () => {
+const RecomendationLetterCreate = () => {
 	const [studentName, setStudentName] = useState<string>("");
 	const [studentNim, setStudentNim] = useState<string>("");
 	const [studentTranskrip, setStudentTranskrip] = useState<string>("");
@@ -40,10 +38,10 @@ const CreateRegistrationLoR = () => {
 
 			const httpService = new ServiceHttp();
 			await httpService.post({
-				path: "/registration-LoR",
+				path: "/recomendation-letter",
 				body: data,
 			});
-			navigate("/registration-LoR");
+			navigate("/recomendation-letter");
 		} catch (error: any) {
 			console.error(error.message);
 		}
@@ -78,12 +76,12 @@ const CreateRegistrationLoR = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/registration-LoR",
-						title: "Registration LoR",
+						link: "/recomendation-letter",
+						title: "Surat Rekomendasi",
 					},
 					{
-						link: "/registration-LoR/create",
-						title: "Create",
+						link: "/recomendation-letter/create",
+						title: "Buat",
 					},
 				]}
 				icon={BASE_MENU_ICON.LoRIcon}
@@ -189,4 +187,4 @@ const CreateRegistrationLoR = () => {
 	);
 };
 
-export default CreateRegistrationLoR;
+export default RecomendationLetterCreate;

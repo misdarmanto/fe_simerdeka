@@ -18,14 +18,17 @@ import StudyProgram from "./routers/study-program";
 import ManageUser from "./routers/manage-users";
 import Login from "./routers/auth/login";
 import Register from "./routers/auth/register";
-import RegistrationLoR from "./routers/registration-LoR/index";
-import CreateRegistrationLoR from "./routers/registration-LoR/create-registration-LoR.view";
-import DetailRegistrationLoR from "./routers/registration-LoR/detail-registration-LoR.view";
+import RegistrationLoR from "./routers/recodendation-letter/recomendation-letter-list";
+import CreateRegistrationLoR from "./routers/recodendation-letter/create-recodendation-letter";
+import DetailRegistrationLoR from "./routers/recodendation-letter/detail-detail-recomendation-letter";
 import CreateMbkmProgram from "./routers/mbkm-program/create-program";
 import DetailProgram from "./routers/mbkm-program/detail-program";
 import DetailMyProgram from "./routers/my-program/detail-my-program";
 import CreateSemester from "./routers/semester/create-semester";
 import DetailSemester from "./routers/semester/detail-semester";
+import RecomendationLetterList from "./routers/recodendation-letter/recomendation-letter-list";
+import RecomendationLetterCreate from "./routers/recodendation-letter/create-recodendation-letter";
+import RecomendationLetterDetail from "./routers/recodendation-letter/detail-detail-recomendation-letter";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -74,16 +77,16 @@ const privateRouter = createBrowserRouter([
 				element: <ProgramProposal />,
 			},
 			{
-				path: "/registration-LoR",
-				element: <RegistrationLoR />,
+				path: "/recomendation-letter",
+				element: <RecomendationLetterList />,
 			},
 			{
-				path: "/registration-LoR/create",
-				element: <CreateRegistrationLoR />,
+				path: "/recomendation-letter/create",
+				element: <RecomendationLetterCreate />,
 			},
 			{
-				path: "/registration-LoR/detail/:registrationLoRId",
-				element: <DetailRegistrationLoR />,
+				path: "/recomendation-letter/detail/:recomendationLetterId",
+				element: <RecomendationLetterDetail />,
 			},
 			{
 				path: "/semesters",

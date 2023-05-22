@@ -16,8 +16,8 @@ const Navbar = () => {
 	const navigate = useNavigate();
 
 	const handleSaveUserCredential = (userRole: string) => {
-		const user = LIST_USER.find((user: UserCredentialTypes) => {
-			return user.role === userRole;
+		const user = LIST_USER.find((user: UserTypes) => {
+			return user.user_role === userRole;
 		});
 		localStorage.setItem(CONFIG.local_storage_key, JSON.stringify(user));
 	};

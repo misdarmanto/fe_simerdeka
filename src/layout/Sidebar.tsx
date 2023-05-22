@@ -24,8 +24,8 @@ const SidebarStyle = () => {
 	const studentMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{
-			title: "Registration LoR",
-			path: "/registration-LoR",
+			title: "Surat Rekomendasi",
+			path: "/recomendation-letter",
 			icon: <AiOutlineAudit />,
 		},
 		{ title: "My Program", path: "/my-programs", icon: <AiOutlineFolderOpen /> },
@@ -36,8 +36,8 @@ const SidebarStyle = () => {
 	const prodiMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{
-			title: "Registration LoR",
-			path: "/registration-LoR",
+			title: "Surat Rekomendasi",
+			path: "/recomendation-letter",
 			icon: <AiOutlineAudit />,
 		},
 		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
@@ -49,8 +49,8 @@ const SidebarStyle = () => {
 	const jurusanMenus = [
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{
-			title: "Registration LoR",
-			path: "/registration-LoR",
+			title: "Surat Rekomendasi",
+			path: "/recomendation-letter",
 			icon: <AiOutlineAudit />,
 		},
 		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
@@ -69,8 +69,8 @@ const SidebarStyle = () => {
 		{ title: "Semester", path: "/semesters", icon: <FaRegListAlt /> },
 		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
 		{
-			title: "Registration LoR",
-			path: "/registration-LoR",
+			title: "Surat Rekomendasi",
+			path: "/recomendation-letter",
 			icon: <AiOutlineAudit />,
 		},
 		{
