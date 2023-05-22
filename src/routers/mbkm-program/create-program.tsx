@@ -6,6 +6,9 @@ import { storage } from "../../configs/firebase";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
+import { LIST_USER } from "../../data/users";
+import { UserTypes } from "../../models/auth";
+import { UserCredentialTypes } from "../../models/auth";
 
 const CreateMbkmProgram = () => {
 	const [programName, setProgramName] = useState<string>("");
@@ -14,6 +17,11 @@ const CreateMbkmProgram = () => {
 	const [programType, setProgramType] = useState<string>("");
 	const [programSyllabus, setProgramSyllabus] = useState<string>("");
 	const [programSksConversion, setProgramSksConversion] = useState<number>();
+	const [programUserId, setProgramUserId] = useState<UserCredentialTypes>();
+
+	const students = LIST_USER.filter(
+		(item: UserCredentialTypes) => item.role === "mahasiswa"
+	);
 
 	const navigate = useNavigate();
 
@@ -21,7 +29,7 @@ const CreateMbkmProgram = () => {
 		event.preventDefault();
 		try {
 			const data = {
-				program_user_id: Date.now().toString(),
+				program_user_id: programUserId,
 				program_name: programName,
 				program_description: programDescription,
 				program_owner: programOwner,
@@ -108,6 +116,22 @@ const CreateMbkmProgram = () => {
 							placeholder="konversi sks..."
 							required={true}
 						/>
+					</div>
+
+					<div id="select">
+						<div className="mb-2 block">
+							<Label htmlFor="select student" value="select student" />
+						</div>
+						<Select
+							onChange={(e) => setProgramType(e.target.value)}
+							required={true}
+						>
+							{students.map((student) => (
+								<option key={student.userId} value={student.userId}>
+									Budi
+								</option>
+							))}
+						</Select>
 					</div>
 
 					<div id="select">

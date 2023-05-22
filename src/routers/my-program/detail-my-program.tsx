@@ -4,14 +4,14 @@ import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { ProgramTypes } from "../../models/program";
 
-const DetailProgram = () => {
+const DetailMyProgram = () => {
 	const [programs, setPrograms] = useState<ProgramTypes>();
 	const { programId } = useParams();
 	const httpService = new ServiceHttp();
 
 	const fecthData = async () => {
 		const result = await httpService.get({
-			path: `/programs/detail/${programId}`,
+			path: `/programs/my-programs/detail/${programId}`,
 		});
 		setPrograms(result);
 	};
@@ -89,4 +89,4 @@ const ListItemStyle = ({
 	);
 };
 
-export default DetailProgram;
+export default DetailMyProgram;

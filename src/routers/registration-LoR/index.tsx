@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Badge, Breadcrumb, Button, Pagination, Table, TextInput } from "flowbite-react";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LoRTypes } from "../../models/request-LoR";
 import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
@@ -9,12 +9,14 @@ import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { toMoney } from "../../utils";
 import { TableHeader, TableStyle } from "../../components/table/Table";
+import { RootContext } from "../../utils/contextApi";
 
 const RegistrationLoR = () => {
 	const navigate = useNavigate();
 
 	const [listLoR, setListLoR] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
+	const { currentUser }: any = useContext(RootContext);
 
 	const fecthData = async () => {
 		const httpService = new ServiceHttp();
@@ -167,11 +169,13 @@ const RegistrationLoR = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					<ButtonStyle
-						title="Create"
-						color="light"
-						onClick={() => navigate("/registration-LoR/create")}
-					/>
+					{currentUser.user_role === "mahasiswa" && (
+						<ButtonStyle
+							title="Create"
+							color="light"
+							onClick={() => navigate("/registration-LoR/create")}
+						/>
+					)}
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />

@@ -1,17 +1,19 @@
 import { TextInput } from "flowbite-react";
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
+import { RootContext } from "../../utils/contextApi";
 
 const MbkmProgram = () => {
 	const navigate = useNavigate();
 
 	const [listProgram, setListProgram] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
+	const { currentUser }: any = useContext(RootContext);
 
 	const fecthData = async () => {
 		const httpService = new ServiceHttp();
@@ -34,6 +36,8 @@ const MbkmProgram = () => {
 				search: "",
 			},
 		});
+
+		console.log(result);
 
 		setIsLoading(false);
 	};
@@ -64,12 +68,23 @@ const MbkmProgram = () => {
 		},
 
 		{
+			title: "Program Type",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
+					{data.program_type.length > 10
+						? data.program_type.slice(0, 10) + "....."
+						: data.program_type}
+				</td>
+			),
+		},
+
+		{
 			title: "Action",
 			action: true,
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/mbkm-programs/detail/${data.program_id}`}>
+						<Link to={`/mbkm-programs/${data.program_id}`}>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>
@@ -111,11 +126,13 @@ const MbkmProgram = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					<ButtonStyle
-						title="Create"
-						color="light"
-						onClick={() => navigate("/mbkm-programs/create")}
-					/>
+					{currentUser.user_role === "akademik" && (
+						<ButtonStyle
+							title="Create"
+							color="light"
+							onClick={() => navigate("/mbkm-programs/create")}
+						/>
+					)}
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />

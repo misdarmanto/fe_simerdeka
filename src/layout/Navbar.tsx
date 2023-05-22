@@ -8,6 +8,7 @@ import { LIST_USER } from "../data/users";
 import { UserCredentialTypes, UserTypes } from "../models/auth";
 import { CONFIG } from "../configs";
 import { useNavigate } from "react-router-dom";
+import Logo from "../assets/logos/bgw_simerdeka.jpeg";
 
 const Navbar = () => {
 	const [openDrawer, setOpenDrawer] = useState(false);
@@ -29,12 +30,10 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="bg-white border-2 border-black-200  pr-10 py-2.5 rounded">
+		<nav className="bg-white border-2 border-black-200  pr-10 rounded">
 			<div className="container flex justify-between items-center mx-auto">
 				<div className="flex items-center mx-auto">
-					<span className="text-xl font-medium whitespace-nowrap dark:text-white text-gray-500">
-						Welcome, {currentUser.user_name}
-					</span>
+					<img className="p-1 mx-2" src={Logo} alt="Logo" />
 				</div>
 
 				<div className="flex justify-end items-center pt-4 sm:mr-5">
@@ -60,7 +59,7 @@ const Navbar = () => {
 					<img
 						className="p-1 w-12 h-12 mx-2 rounded-full cursor-pointer"
 						src={
-							"http://sso.itera.ac.id/assets/img/20220919205123_misdar_120400070_student_itera_ac_id.jpg"
+							"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjYmlp9JDeNMaFZzw9S3G1dVztGqF_2vq9nA&usqp=CAU"
 						}
 						alt="avatar"
 					/>
