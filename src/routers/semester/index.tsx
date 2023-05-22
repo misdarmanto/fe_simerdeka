@@ -64,6 +64,15 @@ const Semester = () => {
 		},
 
 		{
+			title: "Semester Type",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "semester type"} className="md:px-6 md:py-3 break-all">
+					{data.semester_type}
+				</td>
+			),
+		},
+
+		{
 			title: "Created By",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
@@ -89,7 +98,7 @@ const Semester = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/semesters/${data.program_id}`}>
+						<Link to={`/semesters/detail/${data.semester_id}`}>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>

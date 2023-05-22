@@ -24,6 +24,8 @@ import DetailRegistrationLoR from "./routers/registration-LoR/detail-registratio
 import CreateMbkmProgram from "./routers/mbkm-program/create-program";
 import DetailProgram from "./routers/mbkm-program/detail-program";
 import DetailMyProgram from "./routers/my-program/detail-my-program";
+import CreateSemester from "./routers/semester/create-semester";
+import DetailSemester from "./routers/semester/detail-semester";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -86,6 +88,14 @@ const privateRouter = createBrowserRouter([
 			{
 				path: "/semesters",
 				element: <Semester />,
+			},
+			{
+				path: "/semesters/create",
+				element: <CreateSemester />,
+			},
+			{
+				path: "/semesters/detail/:semesterId",
+				element: <DetailSemester />,
 			},
 			{
 				path: "/students",
