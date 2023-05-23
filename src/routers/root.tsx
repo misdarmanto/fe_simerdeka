@@ -7,6 +7,7 @@ import { ServiceHttp } from "../services/api";
 import { CONFIG } from "../configs";
 import { UserCredentialTypes, UserTypes } from "../models/auth";
 import { LIST_USER } from "../data/users";
+import { Footer } from "flowbite-react";
 
 const Root = () => {
 	const [role, setRole] = useState<string>();
@@ -48,9 +49,14 @@ const Root = () => {
 				<SidebarStyle />
 				<div className="grow bg-gray-100">
 					<Navbar />
-					<div className="m-5">
+					<div className="m-5 h-screen">
 						<Outlet />
 					</div>
+					<Footer container={true}>
+						<div className="w-full text-center">
+							<Footer.Copyright by="simerdeka™" year={2023} />
+						</div>
+					</Footer>
 				</div>
 			</div>
 		</RootContext.Provider>

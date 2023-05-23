@@ -29,6 +29,10 @@ import DetailSemester from "./routers/semester/detail-semester";
 import RecomendationLetterList from "./routers/recodendation-letter/recomendation-letter-list";
 import RecomendationLetterCreate from "./routers/recodendation-letter/create-recodendation-letter";
 import RecomendationLetterDetail from "./routers/recodendation-letter/detail-detail-recomendation-letter";
+import CreateAcademicProgram from "./routers/academic-program/create-academic-program";
+import AcademicProgramCreat from "./routers/academic-program/create-academic-program";
+import AcademicProgramList from "./routers/academic-program/list-academic-program";
+import AcademicProgramDetail from "./routers/academic-program/detail-academic-program";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -57,8 +61,20 @@ const privateRouter = createBrowserRouter([
 				element: <CreateMbkmProgram />,
 			},
 			{
-				path: "/mbkm-programs/:programId",
+				path: "/mbkm-programs/deatail/:programId",
 				element: <DetailProgram />,
+			},
+			{
+				path: "/mbkm-programs/academic",
+				element: <AcademicProgramList />,
+			},
+			{
+				path: "/mbkm-programs/academic/create",
+				element: <AcademicProgramCreat />,
+			},
+			{
+				path: "/mbkm-programs/academic/:programId",
+				element: <AcademicProgramDetail />,
 			},
 			{
 				path: "/mbkm-summaries",

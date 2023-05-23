@@ -67,7 +67,11 @@ const SidebarStyle = () => {
 		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
 		{ title: "Manage User", path: "/manage-users", icon: <BiUser /> },
 		{ title: "Semester", path: "/semesters", icon: <FaRegListAlt /> },
-		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
+		{
+			title: "MBKM Program",
+			path: "/mbkm-programs/academic",
+			icon: <AiOutlineFolderOpen />,
+		},
 		{
 			title: "Surat Rekomendasi",
 			path: "/recomendation-letter",
