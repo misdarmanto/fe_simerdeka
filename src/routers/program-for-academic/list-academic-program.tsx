@@ -8,7 +8,9 @@ import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 
-const MyProgram = () => {
+const AcademicProgramList = () => {
+	const navigate = useNavigate();
+
 	const [listProgram, setListProgram] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const { currentUser }: any = useContext(RootContext);
@@ -34,6 +36,9 @@ const MyProgram = () => {
 				search: "",
 			},
 		});
+
+		console.log(result);
+
 		setIsLoading(false);
 	};
 
@@ -52,23 +57,50 @@ const MyProgram = () => {
 		},
 
 		{
-			title: "Name",
+			title: "Nama Program",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.program_name.length > 10
-						? data.program_name.slice(0, 10) + "....."
-						: data.program_name}
+					{data.academic_program_name.length > 10
+						? data.academic_program_name.slice(0, 10) + "....."
+						: data.academic_program_name}
 				</td>
 			),
 		},
 
 		{
-			title: "Program Type",
+			title: "Jenis Program",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.program_type.length > 10
-						? data.program_type.slice(0, 10) + "....."
-						: data.program_type}
+					{data.academic_program_type.length > 10
+						? data.academic_program_type.slice(0, 10) + "....."
+						: data.academic_program_type}
+				</td>
+			),
+		},
+
+		{
+			title: "Semester",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
+					{data.semester.semester_name}
+				</td>
+			),
+		},
+
+		{
+			title: "Jurusan",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
+					{data.list_of_major.major_name}
+				</td>
+			),
+		},
+
+		{
+			title: "Dibuat Pada",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "created-on"} className="md:px-6 md:py-3 break-all">
+					{data.created_on}
 				</td>
 			),
 		},
@@ -79,7 +111,7 @@ const MyProgram = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/my-programs/${data.program_id}`}>
+						<Link to={`/mbkm-programs/academic/${data.program_id}`}>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>
@@ -121,6 +153,12 @@ const MyProgram = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
+
+					<ButtonStyle
+						title="Create"
+						color="light"
+						onClick={() => navigate("/mbkm-programs/academic/create")}
+					/>
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />
@@ -132,4 +170,4 @@ const MyProgram = () => {
 	);
 };
 
-export default MyProgram;
+export default AcademicProgramList;

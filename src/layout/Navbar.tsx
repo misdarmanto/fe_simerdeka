@@ -15,16 +15,18 @@ const Navbar = () => {
 	const { role, setRole, currentUser }: any = useContext(RootContext);
 	const navigate = useNavigate();
 
-	const handleSaveUserCredential = (userRole: string) => {
+	console.log(currentUser);
+
+	const handleSaveUserCredential = (selectedUser: UserTypes) => {
 		const user = LIST_USER.find((user: UserTypes) => {
-			return user.user_role === userRole;
+			return user.user_id === selectedUser.user_id;
 		});
 		localStorage.setItem(CONFIG.local_storage_key, JSON.stringify(user));
 	};
 
-	const handleSelectRole = (userRole: string) => {
-		handleSaveUserCredential(userRole);
-		setRole(userRole);
+	const handleSelectRole = (user: UserTypes) => {
+		handleSaveUserCredential(user);
+		setRole(user.user_role);
 		navigate("/");
 		window.location.reload();
 	};
@@ -41,19 +43,16 @@ const Navbar = () => {
 						onClick={() => setOpenDrawer(!openDrawer)}
 						className="text-3xl mx-2 sm:mr-5 text-gray-500 cursor-pointer hover:bg-gray-200 rounded-full"
 					/>
-					<Dropdown inline={true} label={role} dismissOnClick={true}>
-						<Dropdown.Item onClick={() => handleSelectRole("mahasiswa")}>
-							Mahasiswa
-						</Dropdown.Item>
-						<Dropdown.Item onClick={() => handleSelectRole("prodi")}>
-							Prodi
-						</Dropdown.Item>
-						<Dropdown.Item onClick={() => handleSelectRole("jurusan")}>
-							Jurusan
-						</Dropdown.Item>
-						<Dropdown.Item onClick={() => handleSelectRole("akademik")}>
-							Akadmik
-						</Dropdown.Item>
+					<Dropdown
+						inline={true}
+						label={currentUser.user_name}
+						dismissOnClick={true}
+					>
+						{LIST_USER.map((user: UserTypes) => (
+							<Dropdown.Item onClick={() => handleSelectRole(user)}>
+								{user.user_name}
+							</Dropdown.Item>
+						))}
 					</Dropdown>
 
 					<img

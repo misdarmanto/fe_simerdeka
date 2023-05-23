@@ -4,7 +4,7 @@ import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { ProgramTypes } from "../../models/program";
 
-const AcademicProgramDetail = () => {
+const JurusanProgramDetail = () => {
 	const [programs, setPrograms] = useState<ProgramTypes>();
 	const { programId } = useParams();
 	const httpService = new ServiceHttp();
@@ -25,11 +25,11 @@ const AcademicProgramDetail = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/my-programs",
+						link: "/mbkm-programs/jurusan",
 						title: "My Programs",
 					},
 					{
-						link: "/my-programs" + programId,
+						link: "/mbkm-programs/jurusan" + programId,
 						title: "Detail",
 					},
 				]}
@@ -89,4 +89,4 @@ const ListItemStyle = ({
 	);
 };
 
-export default AcademicProgramDetail;
+export default JurusanProgramDetail;

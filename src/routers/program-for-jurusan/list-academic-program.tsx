@@ -8,7 +8,7 @@ import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 
-const AcademicProgramList = () => {
+const JurusanProgramList = () => {
 	const navigate = useNavigate();
 
 	const [listProgram, setListProgram] = useState<any>();
@@ -127,11 +127,11 @@ const AcademicProgramList = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/mbkm-programs",
+						link: "/mbkm-programs/jurusan",
 						title: "MBKM Program",
 					},
 					{
-						link: "/mbkm-programs",
+						link: "/mbkm-programs/jurusan",
 						title: "List",
 					},
 				]}
@@ -153,13 +153,12 @@ const AcademicProgramList = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					{currentUser.user_role === "akademik" && (
-						<ButtonStyle
-							title="Create"
-							color="light"
-							onClick={() => navigate("/mbkm-programs/academic/create")}
-						/>
-					)}
+
+					<ButtonStyle
+						title="Create"
+						color="light"
+						onClick={() => navigate("/mbkm-programs/academic/create")}
+					/>
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />
@@ -171,4 +170,4 @@ const AcademicProgramList = () => {
 	);
 };
 
-export default AcademicProgramList;
+export default JurusanProgramList;

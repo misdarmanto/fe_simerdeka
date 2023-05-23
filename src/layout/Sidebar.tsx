@@ -40,7 +40,11 @@ const SidebarStyle = () => {
 			path: "/recomendation-letter",
 			icon: <AiOutlineAudit />,
 		},
-		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
+		{
+			title: "MBKM Program",
+			path: "/mbkm-programs/prodi",
+			icon: <AiOutlineFolderOpen />,
+		},
 		{ title: "Student", path: "/students", icon: <FaUserGraduate /> },
 		{ title: "Program Proposal", path: "/program-proposal", icon: <AiOutlineFile /> },
 		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
@@ -53,7 +57,11 @@ const SidebarStyle = () => {
 			path: "/recomendation-letter",
 			icon: <AiOutlineAudit />,
 		},
-		{ title: "MBKM Program", path: "/mbkm-programs", icon: <AiOutlineFolderOpen /> },
+		{
+			title: "MBKM Program",
+			path: "/mbkm-programs/jurusan",
+			icon: <AiOutlineFolderOpen />,
+		},
 		{
 			title: "Study Program",
 			path: "/study-programs",
@@ -92,6 +100,22 @@ const SidebarStyle = () => {
 		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
 	];
 
+	const biroMenus = [
+		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
+		{
+			title: "MBKM Program",
+			path: "/mbkm-programs/academic",
+			icon: <AiOutlineFolderOpen />,
+		},
+		{
+			title: "Surat Rekomendasi",
+			path: "/recomendation-letter",
+			icon: <AiOutlineAudit />,
+		},
+		{ title: "Log Activity", path: "/log-activities", icon: <AiOutlineSearch /> },
+		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
+	];
+
 	type MenuTypes = {
 		title: string;
 		path: string;
@@ -114,6 +138,9 @@ const SidebarStyle = () => {
 			break;
 		case "akademik":
 			MENUS = akademikMenus;
+			break;
+		case "biro":
+			MENUS = biroMenus;
 			break;
 		default:
 			break;

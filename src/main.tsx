@@ -29,10 +29,16 @@ import DetailSemester from "./routers/semester/detail-semester";
 import RecomendationLetterList from "./routers/recodendation-letter/recomendation-letter-list";
 import RecomendationLetterCreate from "./routers/recodendation-letter/create-recodendation-letter";
 import RecomendationLetterDetail from "./routers/recodendation-letter/detail-detail-recomendation-letter";
-import CreateAcademicProgram from "./routers/academic-program/create-academic-program";
-import AcademicProgramCreat from "./routers/academic-program/create-academic-program";
-import AcademicProgramList from "./routers/academic-program/list-academic-program";
-import AcademicProgramDetail from "./routers/academic-program/detail-academic-program";
+import CreateAcademicProgram from "./routers/program-for-academic/create-academic-program";
+import AcademicProgramCreat from "./routers/program-for-academic/create-academic-program";
+import AcademicProgramList from "./routers/program-for-academic/list-academic-program";
+import AcademicProgramDetail from "./routers/program-for-academic/detail-academic-program";
+import JurusanProgramCreat from "./routers/program-for-jurusan/create-jurusan-program";
+import JurusanProgramList from "./routers/program-for-jurusan/list-academic-program";
+import JurusanProgramDetail from "./routers/program-for-jurusan/detail-academic-program";
+import ProdiProgramList from "./routers/program-for-prodi/list-prodi-program";
+import ProdiProgramCreat from "./routers/program-for-prodi/create-prodi-program";
+import ProdiProgramDetail from "./routers/program-for-prodi/detail-prodi-program";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -64,6 +70,8 @@ const privateRouter = createBrowserRouter([
 				path: "/mbkm-programs/deatail/:programId",
 				element: <DetailProgram />,
 			},
+
+			//academic program
 			{
 				path: "/mbkm-programs/academic",
 				element: <AcademicProgramList />,
@@ -76,6 +84,38 @@ const privateRouter = createBrowserRouter([
 				path: "/mbkm-programs/academic/:programId",
 				element: <AcademicProgramDetail />,
 			},
+
+			//jurusan program
+			{
+				path: "/mbkm-programs/jurusan",
+				element: <JurusanProgramList />,
+			},
+			{
+				path: "/mbkm-programs/academic/create",
+				element: <JurusanProgramCreat />,
+			},
+			{
+				path: "/mbkm-programs/academic/:programId",
+				element: <JurusanProgramDetail />,
+			},
+
+			//prodi program
+
+			{
+				path: "/mbkm-programs/prodi",
+				element: <ProdiProgramList />,
+			},
+			{
+				path: "/mbkm-programs/prodi/create",
+				element: <ProdiProgramCreat />,
+			},
+			{
+				path: "/mbkm-programs/prodi/:programId",
+				element: <ProdiProgramDetail />,
+			},
+
+			//mbkm summary
+
 			{
 				path: "/mbkm-summaries",
 				element: <MbkmSummary />,

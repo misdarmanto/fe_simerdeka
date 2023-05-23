@@ -3,9 +3,8 @@ import Navbar from "../layout/Navbar";
 import SidebarStyle from "../layout/Sidebar";
 import { RootContext } from "../utils/contextApi";
 import { useEffect, useState } from "react";
-import { ServiceHttp } from "../services/api";
 import { CONFIG } from "../configs";
-import { UserCredentialTypes, UserTypes } from "../models/auth";
+import { UserTypes } from "../models/auth";
 import { LIST_USER } from "../data/users";
 import { Footer } from "flowbite-react";
 
