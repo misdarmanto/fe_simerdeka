@@ -15,6 +15,9 @@ export const getHeaders = () => {
 	const result: UserTypes = JSON.parse(user);
 	return {
 		"x-user-id": result.user_id,
+		"x-major-id": result.major_id,
+		"x-study-program-id": result.study_program_id,
+		"x-user-role": result.user_role,
 	};
 };
 

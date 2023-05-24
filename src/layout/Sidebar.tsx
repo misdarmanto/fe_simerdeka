@@ -127,16 +127,16 @@ const SidebarStyle = () => {
 	const ROLE: string = role;
 
 	switch (ROLE) {
-		case "mahasiswa":
+		case "student":
 			MENUS = studentMenus;
 			break;
-		case "prodi":
+		case "study_program":
 			MENUS = prodiMenus;
 			break;
-		case "jurusan":
+		case "major":
 			MENUS = jurusanMenus;
 			break;
-		case "akademik":
+		case "academic":
 			MENUS = akademikMenus;
 			break;
 		case "biro":
@@ -151,7 +151,7 @@ const SidebarStyle = () => {
 			<ul
 				className={`${
 					open ? "w-60" : "w-fit"
-				} sm:block relative h-screen duration-100 p-2 border-gray-200`}
+				} sm:block relative min-h-screen duration-100 p-2 border-gray-200`}
 			>
 				<li
 					onClick={() => setOpen(!open)}

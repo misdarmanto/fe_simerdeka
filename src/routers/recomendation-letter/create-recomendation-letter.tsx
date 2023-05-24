@@ -1,16 +1,24 @@
 import { ref } from "firebase/storage";
 import { FileInput, Label, Select, TextInput, Textarea } from "flowbite-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../configs/firebase";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
+import { RootContext } from "../../utils/contextApi";
+import {
+	RecomendationLetterCreateRequestTypes,
+	RecomendationLetterTypes,
+} from "../../models/recomendation-letter";
+import { UserTypes } from "../../models/auth";
 
 const RecomendationLetterCreate = () => {
-	const [studentName, setStudentName] = useState<string>("");
-	const [studentNim, setStudentNim] = useState<string>("");
-	const [studentTranskrip, setStudentTranskrip] = useState<string>("");
+	const { currentUser }: any = useContext(RootContext);
+	const user: UserTypes = currentUser;
+
+	const [recomendatationStudentTranskrip, setRecomendatationStudentTranskrip] =
+		useState<string>("");
 	const [dosenWali, setDosenWali] = useState<string>("");
 	const [suratPersetujuanDosenWali, setSuratPersetujuanDosenWali] =
 		useState<string>("");
@@ -23,16 +31,15 @@ const RecomendationLetterCreate = () => {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		try {
-			const data = {
-				user_id: Date.now().toString(),
-				student_id: Date.now().toString(),
-				student_name: studentName,
-				student_nim: studentName,
-				student_transkrip: studentTranskrip,
-				dosen_wali: dosenWali,
-				surat_persetujuan_dosen_wali: suratPersetujuanDosenWali,
-				program_name: programName,
-				program_correlation_description: programCorrelationDescription,
+			const data: RecomendationLetterCreateRequestTypes = {
+				major_id: user.major_id || "",
+				study_program_id: user.study_program_id || "",
+				student_id: user.user_id,
+				recomendation_letter_student_transkrip: recomendatationStudentTranskrip,
+				recomendation_letter_dosen_wali: dosenWali,
+				recomendation_letter_approval_letter: suratPersetujuanDosenWali,
+				recomendation_letter_program_name: programName,
+				recomendation_letter_program_correlation: programCorrelationDescription,
 			};
 			console.log(data);
 
@@ -59,13 +66,13 @@ const RecomendationLetterCreate = () => {
 		}
 	};
 
-	const handleUploadStudentTranskrip = async (event: any) => {
+	const handleUploadrecomendatationStudentTranskrip = async (event: any) => {
 		const file = event.target.files[0];
 		const imageRef = ref(storage, "request-Lor/" + file.name);
 		try {
 			const url = await uploadImageToFirebase({ imageRef, file });
 			console.log(url);
-			setStudentTranskrip(url);
+			setRecomendatationStudentTranskrip(url);
 		} catch (error) {
 			console.error(error);
 		}
@@ -88,32 +95,6 @@ const RecomendationLetterCreate = () => {
 			/>
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-					<div>
-						<div className="mb-2 block">
-							<Label htmlFor="name" value="Nama" />
-						</div>
-						<TextInput
-							value={studentName}
-							onChange={(e) => setStudentName(e.target.value)}
-							type="text"
-							placeholder="nama..."
-							required={true}
-						/>
-					</div>
-
-					<div>
-						<div className="mb-2 block">
-							<Label htmlFor="nim" value="NIM" />
-						</div>
-						<TextInput
-							value={studentNim}
-							onChange={(e) => setStudentNim(e.target.value)}
-							type="text"
-							placeholder="NIM..."
-							required={true}
-						/>
-					</div>
-
 					<div id="select">
 						<div className="mb-2 block">
 							<Label htmlFor="dosen-wali" value="Dosen Wali" />
@@ -175,7 +156,10 @@ const RecomendationLetterCreate = () => {
 						<div className="mb-2 block">
 							<Label htmlFor="file" value="Transkrip semester 1-4 " />
 						</div>
-						<FileInput id="file" onChange={handleUploadStudentTranskrip} />
+						<FileInput
+							id="file"
+							onChange={handleUploadrecomendatationStudentTranskrip}
+						/>
 					</div>
 
 					<div className="flex justify-end">

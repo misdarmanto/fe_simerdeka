@@ -48,11 +48,11 @@ const Root = () => {
 				<SidebarStyle />
 				<div className="grow bg-gray-100">
 					<Navbar />
-					<div className="m-5 h-screen">
+					<div className="m-5 min-h-screen">
 						<Outlet />
 					</div>
 					<Footer container={true}>
-						<div className="w-full text-center">
+						<div className="text-center">
 							<Footer.Copyright by="simerdeka™" year={2023} />
 						</div>
 					</Footer>

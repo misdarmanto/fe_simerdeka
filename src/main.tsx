@@ -18,17 +18,17 @@ import StudyProgram from "./routers/study-program";
 import ManageUser from "./routers/manage-users";
 import Login from "./routers/auth/login";
 import Register from "./routers/auth/register";
-import RegistrationLoR from "./routers/recodendation-letter/recomendation-letter-list";
-import CreateRegistrationLoR from "./routers/recodendation-letter/create-recodendation-letter";
-import DetailRegistrationLoR from "./routers/recodendation-letter/detail-detail-recomendation-letter";
+import RegistrationLoR from "./routers/recomendation-letter/recomendation-letter-list";
+import CreateRegistrationLoR from "./routers/recomendation-letter/create-recomendation-letter";
+import DetailRegistrationLoR from "./routers/recomendation-letter/detail-detail-recomendation-letter";
 import CreateMbkmProgram from "./routers/mbkm-program/create-program";
 import DetailProgram from "./routers/mbkm-program/detail-program";
 import DetailMyProgram from "./routers/my-program/detail-my-program";
 import CreateSemester from "./routers/semester/create-semester";
 import DetailSemester from "./routers/semester/detail-semester";
-import RecomendationLetterList from "./routers/recodendation-letter/recomendation-letter-list";
-import RecomendationLetterCreate from "./routers/recodendation-letter/create-recodendation-letter";
-import RecomendationLetterDetail from "./routers/recodendation-letter/detail-detail-recomendation-letter";
+import RecomendationLetterList from "./routers/recomendation-letter/recomendation-letter-list";
+import RecomendationLetterCreate from "./routers/recomendation-letter/create-recomendation-letter";
+import RecomendationLetterDetail from "./routers/recomendation-letter/detail-detail-recomendation-letter";
 import CreateAcademicProgram from "./routers/program-for-academic/create-academic-program";
 import AcademicProgramCreat from "./routers/program-for-academic/create-academic-program";
 import AcademicProgramList from "./routers/program-for-academic/list-academic-program";
@@ -91,11 +91,11 @@ const privateRouter = createBrowserRouter([
 				element: <JurusanProgramList />,
 			},
 			{
-				path: "/mbkm-programs/academic/create",
+				path: "/mbkm-programs/jurusan/create",
 				element: <JurusanProgramCreat />,
 			},
 			{
-				path: "/mbkm-programs/academic/:programId",
+				path: "/mbkm-programs/jurusan/:programId",
 				element: <JurusanProgramDetail />,
 			},
 

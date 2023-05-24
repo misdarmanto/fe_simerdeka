@@ -11,7 +11,7 @@ import { RootContext } from "../../utils/contextApi";
 const RecomendationLetterList = () => {
 	const navigate = useNavigate();
 
-	const [listLoR, setListLoR] = useState<any>();
+	const [listOfRecomendationLetter, setListOfRecomendationLetter] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const { currentUser }: any = useContext(RootContext);
 
@@ -27,7 +27,8 @@ const RecomendationLetterList = () => {
 			},
 		});
 
-		setListLoR({
+		console.log(result);
+		setListOfRecomendationLetter({
 			link: "recomendation-letter/all",
 			data: result,
 			page: 0,
@@ -55,12 +56,12 @@ const RecomendationLetterList = () => {
 		},
 
 		{
-			title: "Name",
+			title: "Nama Mahasiswa",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student_name.length > 10
-						? data.student_name.slice(0, 10) + "....."
-						: data.student_name}
+					{data.student.student_name.length > 10
+						? data.student.student_name.slice(0, 10) + "....."
+						: data.student.student_name}
 				</td>
 			),
 		},
@@ -69,17 +70,81 @@ const RecomendationLetterList = () => {
 			title: "NIM",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
-					{data.student_nim.length > 10
-						? data.student_nim.slice(0, 10) + "..."
-						: data.student_nim}
+					{data.student.student_nim.length > 10
+						? data.student.student_nim.slice(0, 10) + "..."
+						: data.student.student_nim}
 				</td>
 			),
 		},
 
 		{
+			title: "Jurusan",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
+					{data.student.major_name.length > 10
+						? data.student.major_name.slice(0, 10) + "..."
+						: data.student.major_name}
+				</td>
+			),
+		},
+
+		{
+			title: "Prodi",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
+					{data.student.study_program_name.length > 10
+						? data.student.study_program_name.slice(0, 10) + "..."
+						: data.student.study_program_name}
+				</td>
+			),
+		},
+
+		{
+			title: "Nama Program",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "program-name"} className="md:px-6 md:py-3 break-all">
+					{data.recomendation_letter_program_name.length > 10
+						? data.recomendation_letter_program_name.slice(0, 10) + "....."
+						: data.recomendation_letter_program_name}
+				</td>
+			),
+		},
+
+		{
+			title: "Status",
+			data: (data: any, index: number): ReactElement => {
+				if (data.recomendation_letter_status === "rejected") {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="failure" className="w-20 text-center">
+								ditolak
+							</Badge>
+						</td>
+					);
+				}
+				if (data.recomendation_letter_status === "accepted") {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="success" className="w-20 text-center">
+								selesai
+							</Badge>
+						</td>
+					);
+				}
+				return (
+					<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+						<Badge color="warning" className="w-20 text-center">
+							menunggu
+						</Badge>
+					</td>
+				);
+			},
+		},
+
+		{
 			title: "di teruskan ke",
 			data: (data: any, index: number): ReactElement => {
-				if (data.registration_lor_assign_to_akademik) {
+				if (data.recomendation_letter_assign_to_biro) {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -89,7 +154,17 @@ const RecomendationLetterList = () => {
 					);
 				}
 
-				if (data.registration_lor_assign_to_jurusan) {
+				if (data.recomendation_letter_assign_to_academic) {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="info" className="w-20 text-center">
+								LP3M
+							</Badge>
+						</td>
+					);
+				}
+
+				if (data.recomendation_letter_assign_to_major) {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -99,7 +174,7 @@ const RecomendationLetterList = () => {
 					);
 				}
 
-				if (data.registration_lor_assign_to_prodi) {
+				if (data.recomendation_letter_assign_to_study_program) {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -112,7 +187,7 @@ const RecomendationLetterList = () => {
 				return (
 					<td key={index + "status"} className="md:px-6 md:py-3 break-all">
 						<Badge color="warning" className="w-20">
-							{data.registration_status}
+							{data.recomendation_letter_status}
 						</Badge>
 					</td>
 				);
@@ -125,7 +200,7 @@ const RecomendationLetterList = () => {
 				<td key={index + "action"}>
 					<div>
 						<Link
-							to={`/recomendation-letter/detail/${data.registration_lor_id}`}
+							to={`/recomendation-letter/detail/${data.recomendation_letter_id}`}
 						>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
@@ -168,7 +243,7 @@ const RecomendationLetterList = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					{currentUser.user_role === "mahasiswa" && (
+					{currentUser.user_role === "student" && (
 						<ButtonStyle
 							title="Buat"
 							color="light"
@@ -181,7 +256,7 @@ const RecomendationLetterList = () => {
 				</div>
 			</div>
 
-			<TableStyle header={header} table={listLoR} />
+			<TableStyle header={header} table={listOfRecomendationLetter} />
 		</div>
 	);
 };

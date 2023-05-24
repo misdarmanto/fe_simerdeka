@@ -18,7 +18,7 @@ const JurusanProgramList = () => {
 	const fecthData = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/academic-programs/all",
+			url: CONFIG.base_url_api + "/major-programs/all",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -28,7 +28,7 @@ const JurusanProgramList = () => {
 		});
 
 		setListProgram({
-			link: "/academic-programs/all",
+			link: "/major-programs/all",
 			data: result,
 			page: 0,
 			size: 10,
@@ -157,7 +157,7 @@ const JurusanProgramList = () => {
 					<ButtonStyle
 						title="Create"
 						color="light"
-						onClick={() => navigate("/mbkm-programs/academic/create")}
+						onClick={() => navigate("/mbkm-programs/jurusan/create")}
 					/>
 				</div>
 				<div className="mt-1 w-full md:w-1/5">

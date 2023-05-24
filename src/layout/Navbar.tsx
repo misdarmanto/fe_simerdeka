@@ -39,10 +39,10 @@ const Navbar = () => {
 				</div>
 
 				<div className="flex justify-end items-center pt-4 sm:mr-5">
-					<IoMdNotifications
+					{/* <IoMdNotifications
 						onClick={() => setOpenDrawer(!openDrawer)}
 						className="text-3xl mx-2 sm:mr-5 text-gray-500 cursor-pointer hover:bg-gray-200 rounded-full"
-					/>
+					/> */}
 					<Dropdown
 						inline={true}
 						label={currentUser.user_name}

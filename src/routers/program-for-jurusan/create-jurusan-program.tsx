@@ -1,40 +1,47 @@
 import { Label, Select, TextInput } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { AcademicProgramTypes } from "../../models/academic-program";
-import { listProgramType } from "../../data/program-type";
+import { UserTypes } from "../../models/auth";
+import { RootContext } from "../../utils/contextApi";
 
 const JurusanProgramCreat = () => {
-	const [listOfMajorName, setListOfMajorName] = useState<string[]>([]);
-	const [listOfSemester, setListOfSemester] = useState<string[]>([]);
+	const [listOfStudyPrograms, setListOfStudyPrograms] = useState<string[]>([]);
+	const [listOfProgramFromAcademic, setListOfProgramFromAcademic] = useState<string[]>(
+		[]
+	);
 
 	const [academicProgramName, setAcademicProgramName] = useState<string>("");
 	const [academicProgramType, setAcademicProgramType] = useState<string>("");
 	const [academicProgramMajorId, setAcademicProgramMajorId] = useState<string>("");
 	const [semesterId, setSemesterId] = useState<string>("");
 
+	const { currentUser }: any = useContext(RootContext);
+	const user: UserTypes = currentUser;
+
 	const navigate = useNavigate();
 	const httpService = new ServiceHttp();
 
-	const fecthMajor = async () => {
+	const fecthStudyPrograms = async () => {
 		const result = await httpService.get({
-			path: "/itera/majors",
+			path: `/itera/study-programs?major_id=${user.major_id}`,
 		});
+		console.log("_______");
 		console.log(result);
 		if (result) {
-			setListOfMajorName(result);
+			setListOfStudyPrograms(result);
 		}
 	};
 
-	const fecthSemester = async () => {
+	const fecthProgramFromAcademic = async () => {
 		const result = await httpService.get({
-			path: "/semesters/all",
+			path: "/academic-programs/all",
 		});
 		console.log(result.items);
 		if (result) {
-			setListOfSemester(result.items);
+			setListOfProgramFromAcademic(result.items);
 		}
 	};
 
@@ -61,8 +68,8 @@ const JurusanProgramCreat = () => {
 	};
 
 	useEffect(() => {
-		fecthMajor();
-		fecthSemester();
+		fecthStudyPrograms();
+		fecthProgramFromAcademic();
 	}, []);
 
 	return (
@@ -97,52 +104,35 @@ const JurusanProgramCreat = () => {
 
 					<div id="select">
 						<div className="mb-2 block">
-							<Label
-								htmlFor="jenis program MBKM yang di ikuti"
-								value="jenis program MBKM yang di ikuti"
-							/>
+							<Label htmlFor="Daftar Prodi" value="Daftar Prodi" />
 						</div>
 						<Select
 							onChange={(e) => setAcademicProgramType(e.target.value)}
 							required={true}
 						>
-							<option value={""}>pilih jenis program</option>
-							{listProgramType.map((name, index) => (
-								<option key={index} value={name}>
-									{name}
+							<option value={""}>pilih prodi</option>
+							{listOfStudyPrograms.map((studyProgram: any, index) => (
+								<option key={index} value={studyProgram}>
+									{studyProgram.study_program_name}
 								</option>
 							))}
 						</Select>
 					</div>
 					<div id="select">
 						<div className="mb-2 block">
-							<Label htmlFor="jurusan" value="jurusan" />
+							<Label
+								htmlFor="Daftar Program yang Tersedia"
+								value="Daftar Program yang Tersedia"
+							/>
 						</div>
 						<Select
 							onChange={(e) => setAcademicProgramMajorId(e.target.value)}
 							required={true}
 						>
-							<option value={""}>pilih jurusan</option>
-							{listOfMajorName.map((jurusan: any, index) => (
-								<option key={index} value={jurusan.major_id}>
-									{jurusan.major_name}
-								</option>
-							))}
-						</Select>
-					</div>
-
-					<div id="select">
-						<div className="mb-2 block">
-							<Label htmlFor="semester" value="semester" />
-						</div>
-						<Select
-							onChange={(e) => setSemesterId(e.target.value)}
-							required={true}
-						>
-							<option value={""}>pilih semester</option>
-							{listOfSemester.map((semester: any, index) => (
-								<option key={index} value={semester.semester_id}>
-									{semester.semester_name}
+							<option value={""}>pilih program</option>
+							{listOfProgramFromAcademic.map((program: any, index) => (
+								<option key={index} value={program.academic_program_id}>
+									{program.academic_program_name}
 								</option>
 							))}
 						</Select>

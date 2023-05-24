@@ -140,13 +140,12 @@ const Semester = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					{currentUser.user_role === "akademik" && (
-						<ButtonStyle
-							title="Create"
-							color="light"
-							onClick={() => navigate("/semesters/create")}
-						/>
-					)}
+
+					<ButtonStyle
+						title="Create"
+						color="light"
+						onClick={() => navigate("/semesters/create")}
+					/>
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />
