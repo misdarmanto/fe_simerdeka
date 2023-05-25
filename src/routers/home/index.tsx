@@ -49,7 +49,7 @@ const Home = () => {
 	}, []);
 	return (
 		<div className="bg-white border border-gray-200 rounded-lg shadow m-5 p-8">
-			<Timeline horizontal={true}>
+			{/* <Timeline horizontal={true}>
 				<Timeline.Item>
 					<Timeline.Point icon={BiCalendar} />
 					<Timeline.Content>
@@ -83,7 +83,7 @@ const Home = () => {
 						</Timeline.Body>
 					</Timeline.Content>
 				</Timeline.Item>
-			</Timeline>
+			</Timeline> */}
 		</div>
 	);
 };

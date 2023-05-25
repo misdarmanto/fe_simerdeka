@@ -4,7 +4,7 @@ import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { ProgramTypes } from "../../models/program";
 
-const DetailMyProgram = () => {
+const DetailStudentProgramView = () => {
 	const [programs, setPrograms] = useState<ProgramTypes>();
 	const { programId } = useParams();
 	const httpService = new ServiceHttp();
@@ -89,4 +89,4 @@ const ListItemStyle = ({
 	);
 };
 
-export default DetailMyProgram;
+export default DetailStudentProgramView;

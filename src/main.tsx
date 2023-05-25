@@ -10,7 +10,6 @@ import FaQ from "./routers/faq";
 import LogActivity from "./routers/log-activity";
 import MbkmProgram from "./routers/mbkm-program";
 import MbkmSummary from "./routers/mbkm-summary";
-import MyProgram from "./routers/my-program";
 import ProgramProposal from "./routers/program-proposal";
 import Semester from "./routers/semester";
 import Student from "./routers/student";
@@ -18,18 +17,13 @@ import StudyProgram from "./routers/study-program";
 import ManageUser from "./routers/manage-users";
 import Login from "./routers/auth/login";
 import Register from "./routers/auth/register";
-import RegistrationLoR from "./routers/recomendation-letter/recomendation-letter-list";
-import CreateRegistrationLoR from "./routers/recomendation-letter/create-recomendation-letter";
-import DetailRegistrationLoR from "./routers/recomendation-letter/detail-detail-recomendation-letter";
 import CreateMbkmProgram from "./routers/mbkm-program/create-program";
 import DetailProgram from "./routers/mbkm-program/detail-program";
-import DetailMyProgram from "./routers/my-program/detail-my-program";
 import CreateSemester from "./routers/semester/create-semester";
 import DetailSemester from "./routers/semester/detail-semester";
-import RecomendationLetterList from "./routers/recomendation-letter/recomendation-letter-list";
+import RecomendationLetterList from "./routers/recomendation-letter/list-recomendation-letter";
 import RecomendationLetterCreate from "./routers/recomendation-letter/create-recomendation-letter";
 import RecomendationLetterDetail from "./routers/recomendation-letter/detail-detail-recomendation-letter";
-import CreateAcademicProgram from "./routers/program-for-academic/create-academic-program";
 import AcademicProgramCreat from "./routers/program-for-academic/create-academic-program";
 import AcademicProgramList from "./routers/program-for-academic/list-academic-program";
 import AcademicProgramDetail from "./routers/program-for-academic/detail-academic-program";
@@ -39,6 +33,9 @@ import JurusanProgramDetail from "./routers/program-for-jurusan/detail-academic-
 import ProdiProgramList from "./routers/program-for-prodi/list-prodi-program";
 import ProdiProgramCreat from "./routers/program-for-prodi/create-prodi-program";
 import ProdiProgramDetail from "./routers/program-for-prodi/detail-prodi-program";
+import StudentProgramListView from "./routers/program-for-student/list-student-program";
+import DetailStudentProgramView from "./routers/program-for-student/detail-student-program";
+import ReportParticipationListView from "./routers/report-participation/list-report-participation";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -114,19 +111,26 @@ const privateRouter = createBrowserRouter([
 				element: <ProdiProgramDetail />,
 			},
 
+			//student program
+			{
+				path: "/mbkm-programs/student/",
+				element: <StudentProgramListView />,
+			},
+			{
+				path: "/mbkm-programs/student/:programId",
+				element: <DetailStudentProgramView />,
+			},
+
+			//report participation
+			{
+				path: "/report-participation",
+				element: <ReportParticipationListView />,
+			},
 			//mbkm summary
 
 			{
 				path: "/mbkm-summaries",
 				element: <MbkmSummary />,
-			},
-			{
-				path: "/my-programs",
-				element: <MyProgram />,
-			},
-			{
-				path: "/my-programs/:programId",
-				element: <DetailMyProgram />,
 			},
 			{
 				path: "/program-proposal",

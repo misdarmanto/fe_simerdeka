@@ -13,7 +13,7 @@ import { BiMenu, BiUser } from "react-icons/bi";
 import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { RiCloseLine } from "react-icons/ri";
 import { FiFileText } from "react-icons/fi";
-import { BsQuestionCircle } from "react-icons/bs";
+import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
 import { RootContext } from "../utils/contextApi";
 
 const SidebarStyle = () => {
@@ -21,99 +21,138 @@ const SidebarStyle = () => {
 	const location = useLocation();
 	const { role }: any = useContext(RootContext);
 
+	const HomeMenu = { title: "Home", path: "/", icon: <AiOutlineHome /> };
+
+	const RecomendationLetterMenu = {
+		title: "Surat Rekomendasi",
+		path: "/recomendation-letter",
+		icon: <AiOutlineAudit />,
+	};
+
+	const MBKMProgramForStudentMenu = {
+		title: "My Program",
+		path: "/mbkm-programs/student",
+		icon: <AiOutlineFolderOpen />,
+	};
+
+	const MBKMProgramForStudyProgramMenu = {
+		title: "MBKM Program",
+		path: "/mbkm-programs/prodi",
+		icon: <AiOutlineFolderOpen />,
+	};
+
+	const MBKMProgramForMajorMenu = {
+		title: "MBKM Program",
+		path: "/mbkm-programs/jurusan",
+		icon: <AiOutlineFolderOpen />,
+	};
+
+	const MBKMProgramForLP3M = {
+		title: "MBKM Program",
+		path: "/mbkm-programs/academic",
+		icon: <AiOutlineFolderOpen />,
+	};
+
+	const MBKMProgramForAcademicMenu = {
+		title: "MBKM Program",
+		path: "/mbkm-programs/academic",
+		icon: <AiOutlineFolderOpen />,
+	};
+
+	const ReportParticipationMenu = {
+		title: "Lapor Keikutsertaan",
+		path: "/report-participation",
+		icon: <BsPersonVcard />,
+	};
+
+	const ProgramProposalMenu = {
+		title: "Program Proposal",
+		path: "/program-proposal",
+		icon: <AiOutlineFile />,
+	};
+
+	const StudentMenu = { title: "Student", path: "/students", icon: <FaUserGraduate /> };
+	const StudyProgramMenu = {
+		title: "Study Program",
+		path: "/study-programs",
+		icon: <AiOutlineFundProjectionScreen />,
+	};
+
+	const SemesterMenu = {
+		title: "Semester",
+		path: "/semesters",
+		icon: <FaRegListAlt />,
+	};
+
+	const MBKMSummaryMenu = {
+		title: "Summary MBKM",
+		path: "/mbkm-summaries",
+		icon: <FiFileText />,
+	};
+
+	const ManageUserMenu = {
+		title: "Manage User",
+		path: "/manage-users",
+		icon: <BiUser />,
+	};
+
+	const LogActivityMenu = {
+		title: "Log Activity",
+		path: "/log-activities",
+		icon: <AiOutlineSearch />,
+	};
+
+	const FaQMenu = { title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> };
+
 	const studentMenus = [
-		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
-		{
-			title: "Surat Rekomendasi",
-			path: "/recomendation-letter",
-			icon: <AiOutlineAudit />,
-		},
-		{ title: "My Program", path: "/my-programs", icon: <AiOutlineFolderOpen /> },
-		{ title: "Program Proposal", path: "/program-proposal", icon: <AiOutlineFile /> },
-		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
+		HomeMenu,
+		RecomendationLetterMenu,
+		MBKMProgramForStudentMenu,
+		ReportParticipationMenu,
+		ProgramProposalMenu,
+		FaQMenu,
 	];
 
 	const prodiMenus = [
-		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
-		{
-			title: "Surat Rekomendasi",
-			path: "/recomendation-letter",
-			icon: <AiOutlineAudit />,
-		},
-		{
-			title: "MBKM Program",
-			path: "/mbkm-programs/prodi",
-			icon: <AiOutlineFolderOpen />,
-		},
-		{ title: "Student", path: "/students", icon: <FaUserGraduate /> },
-		{ title: "Program Proposal", path: "/program-proposal", icon: <AiOutlineFile /> },
-		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
+		HomeMenu,
+		RecomendationLetterMenu,
+		MBKMProgramForStudyProgramMenu,
+		ReportParticipationMenu,
+		StudentMenu,
+		ProgramProposalMenu,
+		FaQMenu,
 	];
 
 	const jurusanMenus = [
-		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
-		{
-			title: "Surat Rekomendasi",
-			path: "/recomendation-letter",
-			icon: <AiOutlineAudit />,
-		},
-		{
-			title: "MBKM Program",
-			path: "/mbkm-programs/jurusan",
-			icon: <AiOutlineFolderOpen />,
-		},
-		{
-			title: "Study Program",
-			path: "/study-programs",
-			icon: <AiOutlineFundProjectionScreen />,
-		},
-		{ title: "Summary MBKM", path: "/mbkm-summaries", icon: <FiFileText /> },
-		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
+		HomeMenu,
+		RecomendationLetterMenu,
+		MBKMProgramForMajorMenu,
+		ReportParticipationMenu,
+		StudyProgramMenu,
+		MBKMSummaryMenu,
+		FaQMenu,
 	];
 
-	const akademikMenus = [
-		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
-		{ title: "Manage User", path: "/manage-users", icon: <BiUser /> },
-		{ title: "Semester", path: "/semesters", icon: <FaRegListAlt /> },
-		{
-			title: "MBKM Program",
-			path: "/mbkm-programs/academic",
-			icon: <AiOutlineFolderOpen />,
-		},
-		{
-			title: "Surat Rekomendasi",
-			path: "/recomendation-letter",
-			icon: <AiOutlineAudit />,
-		},
-		{
-			title: "Verification Program",
-			path: "/verification-programs",
-			icon: <AiOutlineFundProjectionScreen />,
-		},
-		{
-			title: "Study Program",
-			path: "/study-programs",
-			icon: <AiOutlineFile />,
-		},
-		{ title: "Summary MBKM", path: "/mbkm-summaries", icon: <FiFileText /> },
-		{ title: "Log Activity", path: "/log-activities", icon: <AiOutlineSearch /> },
-		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
+	const LP3MMenus = [
+		HomeMenu,
+		ManageUserMenu,
+		SemesterMenu,
+		MBKMProgramForLP3M,
+		ReportParticipationMenu,
+		RecomendationLetterMenu,
+		StudyProgramMenu,
+		MBKMSummaryMenu,
+		LogActivityMenu,
+		FaQMenu,
 	];
 
-	const biroMenus = [
-		{ title: "Home", path: "/", icon: <AiOutlineHome /> },
-		{
-			title: "MBKM Program",
-			path: "/mbkm-programs/academic",
-			icon: <AiOutlineFolderOpen />,
-		},
-		{
-			title: "Surat Rekomendasi",
-			path: "/recomendation-letter",
-			icon: <AiOutlineAudit />,
-		},
-		{ title: "Log Activity", path: "/log-activities", icon: <AiOutlineSearch /> },
-		{ title: "FaQ", path: "/FaQ", icon: <BsQuestionCircle /> },
+	const AcademicMenus = [
+		HomeMenu,
+		MBKMProgramForAcademicMenu,
+		ReportParticipationMenu,
+		RecomendationLetterMenu,
+		LogActivityMenu,
+		FaQMenu,
 	];
 
 	type MenuTypes = {
@@ -124,9 +163,7 @@ const SidebarStyle = () => {
 
 	let MENUS: MenuTypes[] = [];
 
-	const ROLE: string = role;
-
-	switch (ROLE) {
+	switch (role) {
 		case "student":
 			MENUS = studentMenus;
 			break;
@@ -137,10 +174,10 @@ const SidebarStyle = () => {
 			MENUS = jurusanMenus;
 			break;
 		case "academic":
-			MENUS = akademikMenus;
+			MENUS = LP3MMenus;
 			break;
 		case "biro":
-			MENUS = biroMenus;
+			MENUS = AcademicMenus;
 			break;
 		default:
 			break;
