@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
-import { ProgramTypes } from "../../models/program";
+import { ProgramTypes } from "../../models/mbkm-program";
 
 const ProdiProgramDetail = () => {
 	const [programs, setPrograms] = useState<ProgramTypes>();

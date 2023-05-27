@@ -4,5 +4,5 @@ export interface SemesterTypes {
 	semester_id?: string;
 	semester_created_by?: string;
 	semester_name?: string;
-	semester_type?: string;
+	semester_status?: "active" | "non-active" | string;
 }

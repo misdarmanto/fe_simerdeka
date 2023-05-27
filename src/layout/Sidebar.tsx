@@ -59,6 +59,12 @@ const SidebarStyle = () => {
 		icon: <AiOutlineFolderOpen />,
 	};
 
+	const MBKMProgramMenu = {
+		title: "MBKM Program",
+		path: "/mbkm-programs",
+		icon: <AiOutlineFolderOpen />,
+	};
+
 	const ReportParticipationMenu = {
 		title: "Lapor Keikutsertaan",
 		path: "/report-participations",
@@ -137,7 +143,8 @@ const SidebarStyle = () => {
 		HomeMenu,
 		ManageUserMenu,
 		SemesterMenu,
-		MBKMProgramForLP3M,
+		MBKMProgramMenu,
+		// MBKMProgramForLP3M,
 		ReportParticipationMenu,
 		RecomendationLetterMenu,
 		StudyProgramMenu,

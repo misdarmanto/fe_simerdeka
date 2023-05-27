@@ -8,19 +8,13 @@ import ErrorPage from "./error-page";
 import Root from "./routers/root";
 import FaQ from "./routers/faq";
 import LogActivity from "./routers/log-activity";
-import MbkmProgram from "./routers/mbkm-program";
 import MbkmSummary from "./routers/mbkm-summary";
 import ProgramProposal from "./routers/program-proposal";
-import Semester from "./routers/semester";
 import Student from "./routers/student";
 import StudyProgram from "./routers/study-program";
 import ManageUser from "./routers/manage-users";
 import Login from "./routers/auth/login";
 import Register from "./routers/auth/register";
-import CreateMbkmProgram from "./routers/mbkm-program/create-program";
-import DetailProgram from "./routers/mbkm-program/detail-program";
-import CreateSemester from "./routers/semester/create-semester";
-import DetailSemester from "./routers/semester/detail-semester";
 import RecomendationLetterList from "./routers/recomendation-letter/list-recomendation-letter";
 import RecomendationLetterCreate from "./routers/recomendation-letter/create-recomendation-letter";
 import RecomendationLetterDetail from "./routers/recomendation-letter/detail-detail-recomendation-letter";
@@ -38,6 +32,12 @@ import DetailStudentProgramView from "./routers/program-for-student/detail-stude
 import ReportParticipationListView from "./routers/report-participation/list-report-participation";
 import ReportParicipationCreateView from "./routers/report-participation/create-report-participation";
 import ReportParicipationDetailView from "./routers/report-participation/detail-report-participation";
+import SemesterListView from "./routers/semester/list-semester";
+import SemesterCreateView from "./routers/semester/create-semester";
+import SemesterDetail from "./routers/semester/detail-semester";
+import MbkmProgramList from "./routers/mbkm-program/list-mbkm-program";
+import MbkmProgramCreat from "./routers/mbkm-program/create-mbkm-program";
+import MbkmProgramDetail from "./routers/mbkm-program/detail-mbkm-program";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -57,17 +57,19 @@ const privateRouter = createBrowserRouter([
 				path: "/log-activities",
 				element: <LogActivity />,
 			},
+
+			//mbkm program
 			{
 				path: "/mbkm-programs",
-				element: <MbkmProgram />,
+				element: <MbkmProgramList />,
 			},
 			{
 				path: "/mbkm-programs/create",
-				element: <CreateMbkmProgram />,
+				element: <MbkmProgramCreat />,
 			},
 			{
-				path: "/mbkm-programs/deatail/:programId",
-				element: <DetailProgram />,
+				path: "/mbkm-programs/detail/:mbkmProgramId",
+				element: <MbkmProgramDetail />,
 			},
 
 			//academic program
@@ -162,15 +164,15 @@ const privateRouter = createBrowserRouter([
 			},
 			{
 				path: "/semesters",
-				element: <Semester />,
+				element: <SemesterListView />,
 			},
 			{
 				path: "/semesters/create",
-				element: <CreateSemester />,
+				element: <SemesterCreateView />,
 			},
 			{
 				path: "/semesters/detail/:semesterId",
-				element: <DetailSemester />,
+				element: <SemesterDetail />,
 			},
 			{
 				path: "/students",
@@ -207,8 +209,10 @@ const publicRouter = createBrowserRouter([
 	},
 ]);
 
+const isAuth = true;
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 	<React.StrictMode>
-		<RouterProvider router={true ? privateRouter : publicRouter} />
+		<RouterProvider router={isAuth ? privateRouter : publicRouter} />
 	</React.StrictMode>
 );

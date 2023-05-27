@@ -59,9 +59,7 @@ const RecomendationLetterList = () => {
 			title: "Nama Mahasiswa",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_name.length > 10
-						? data.student.student_name.slice(0, 10) + "....."
-						: data.student.student_name}
+					{data.student.student_name}
 				</td>
 			),
 		},
@@ -142,7 +140,7 @@ const RecomendationLetterList = () => {
 			data: (data: any, index: number): ReactElement => {
 				if (data.recomendation_letter_assign_to_academic) {
 					return (
-						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+						<td key={index + "s"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
 								akademik
 							</Badge>
@@ -152,7 +150,7 @@ const RecomendationLetterList = () => {
 
 				if (data.recomendation_letter_assign_to_lp3m) {
 					return (
-						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+						<td key={index + "d"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
 								LP3M
 							</Badge>
@@ -162,7 +160,7 @@ const RecomendationLetterList = () => {
 
 				if (data.recomendation_letter_assign_to_major) {
 					return (
-						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+						<td key={index + "s"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
 								jurusan
 							</Badge>
@@ -172,7 +170,7 @@ const RecomendationLetterList = () => {
 
 				if (data.recomendation_letter_assign_to_study_program) {
 					return (
-						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+						<td key={index + "ss"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
 								prodi
 							</Badge>
@@ -181,7 +179,7 @@ const RecomendationLetterList = () => {
 				}
 
 				return (
-					<td key={index + "status"} className="md:px-6 md:py-3 break-all">
+					<td key={index + "s"} className="md:px-6 md:py-3 break-all">
 						<Badge color="warning" className="w-20">
 							{data.recomendation_letter_status}
 						</Badge>

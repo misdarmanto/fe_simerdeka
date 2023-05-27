@@ -1,46 +1,71 @@
-import { TextInput } from "flowbite-react";
+import { Label, Select, TextInput } from "flowbite-react";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { BASE_ICON, BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
+import { SemesterTypes } from "../../models/semester";
 
-const Semester = () => {
-	const [listSemester, setListSemester] = useState<any>();
-	const [isLoading, setIsLoading] = useState(true);
-	const { currentUser }: any = useContext(RootContext);
+const MbkmProgramList = () => {
 	const navigate = useNavigate();
 
+	const [listMbkmProgram, setListMbkmProgram] = useState<any>();
+	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
+	const [semesterId, setSemesterId] = useState<string>("");
+	const [isLoading, setIsLoading] = useState(true);
+
+	const { currentUser }: any = useContext(RootContext);
+	const httpService = new ServiceHttp();
+
 	const fecthData = async () => {
-		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/semesters/all",
+			url: CONFIG.base_url_api + "/mbkm-programs/all",
 			pagination: true,
 			page: 0,
 			size: 10,
 			filters: {
 				search: "",
+				semester_id: semesterId,
 			},
 		});
 
-		setListSemester({
-			link: "/semesters/all",
+		const filterBy: any = {};
+
+		if (semesterId !== "all") {
+			filterBy["semester_id"] = semesterId;
+		}
+
+		setListMbkmProgram({
+			link: "/mbkm-programs/all",
 			data: result,
 			page: 0,
 			size: 10,
 			filter: {
 				search: "",
+				...filterBy,
 			},
 		});
+
 		setIsLoading(false);
 	};
 
+	const fecthSemester = async () => {
+		const result = await httpService.get({
+			path: "/semesters/all",
+		});
+		console.log(result.items);
+		if (result) {
+			setListOfSemester(result.items);
+		}
+	};
+
 	useEffect(() => {
+		fecthSemester();
 		fecthData();
-	}, []);
+	}, [semesterId]);
 
 	const header: TableHeader[] = [
 		{
@@ -53,40 +78,37 @@ const Semester = () => {
 		},
 
 		{
-			title: "Nama Semester",
+			title: "Nama Program",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.semester_name.length > 10
-						? data.semester_name.slice(0, 10) + "....."
-						: data.semester_name}
+					{data.mbkm_program_name}
 				</td>
 			),
 		},
 
 		{
-			title: "Semester Type",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "semester type"} className="md:px-6 md:py-3 break-all">
-					{data.semester_type}
-				</td>
-			),
-		},
-
-		{
-			title: "Created By",
+			title: "Jenis Program",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.semester_created_by.length > 10
-						? data.semester_created_by.slice(0, 10) + "....."
-						: data.semester_created_by}
+					{data.mbkm_program_category.length > 10
+						? data.mbkm_program_category.slice(0, 10) + "....."
+						: data.mbkm_program_category}
 				</td>
 			),
 		},
 
 		{
-			title: "Created At",
+			title: "Semester",
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "created at"} className="md:px-6 md:py-3 break-all">
+				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
+					{data.semester.semester_name}
+				</td>
+			),
+		},
+		{
+			title: "Dibuat Pada",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "created-on"} className="md:px-6 md:py-3 break-all">
 					{data.created_on}
 				</td>
 			),
@@ -98,7 +120,7 @@ const Semester = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/semesters/detail/${data.semester_id}`}>
+						<Link to={`/mbkm-programs/detail/${data.mbkm_program_id}`}>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>
@@ -107,6 +129,8 @@ const Semester = () => {
 		},
 	];
 
+	console.log(semesterId);
+
 	if (isLoading) return <div>loading...</div>;
 
 	return (
@@ -114,20 +138,20 @@ const Semester = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/semester",
-						title: "Semester",
+						link: "/mbkm-programs",
+						title: "MBKM Program",
 					},
 					{
-						link: "/semester",
+						link: "/mbkm-programs",
 						title: "List",
 					},
 				]}
-				icon={BASE_MENU_ICON.LoRIcon}
+				icon={BASE_ICON.MENU.MbkmProgramIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
-				<div className="flex items-center">
-					<div className="w-full mr-2 flex flex-row justify-between md:justify-start">
+				<div className="flex items-center justify-between">
+					<div className="mr-2 flex flex-row justify-between md:justify-start">
 						<select
 							name="size"
 							defaultValue={10}
@@ -144,17 +168,29 @@ const Semester = () => {
 					<ButtonStyle
 						title="Create"
 						color="light"
-						onClick={() => navigate("/semesters/create")}
+						onClick={() => navigate("/mbkm-programs/create")}
 					/>
+
+					<Select
+						onChange={(e) => setSemesterId(e.target.value)}
+						className="mx-2"
+					>
+						<option value={"all"}>semua semester</option>
+						{listOfSemester.map((semester: any, index) => (
+							<option key={index} value={semester.semester_id}>
+								{semester.semester_name}
+							</option>
+						))}
+					</Select>
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />
 				</div>
 			</div>
 
-			<TableStyle header={header} table={listSemester} />
+			<TableStyle header={header} table={listMbkmProgram} />
 		</div>
 	);
 };
 
-export default Semester;
+export default MbkmProgramList;

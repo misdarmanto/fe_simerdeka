@@ -1,24 +1,23 @@
-import { TextInput } from "flowbite-react";
+import { Badge, TextInput } from "flowbite-react";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { BASE_ICON, BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 
-const MbkmProgram = () => {
-	const navigate = useNavigate();
-
-	const [listProgram, setListProgram] = useState<any>();
+const SemesterListView = () => {
+	const [listSemester, setListSemester] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const { currentUser }: any = useContext(RootContext);
+	const navigate = useNavigate();
 
 	const fecthData = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/programs/all",
+			url: CONFIG.base_url_api + "/semesters/all",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -27,8 +26,8 @@ const MbkmProgram = () => {
 			},
 		});
 
-		setListProgram({
-			link: "programs/all",
+		setListSemester({
+			link: "/semesters/all",
 			data: result,
 			page: 0,
 			size: 10,
@@ -36,9 +35,6 @@ const MbkmProgram = () => {
 				search: "",
 			},
 		});
-
-		console.log(result);
-
 		setIsLoading(false);
 	};
 
@@ -57,23 +53,53 @@ const MbkmProgram = () => {
 		},
 
 		{
-			title: "Name",
+			title: "Nama Semester",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.program_name.length > 10
-						? data.program_name.slice(0, 10) + "....."
-						: data.program_name}
+					{data.semester_name}
 				</td>
 			),
 		},
 
 		{
-			title: "Program Type",
+			title: "Status",
+			data: (data: any, index: number): ReactElement => {
+				if (data.semester_status === "active") {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="info" className="w-20 text-center">
+								aktif
+							</Badge>
+						</td>
+					);
+				} else {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="failure" className="w-20 text-center">
+								tidak aktif
+							</Badge>
+						</td>
+					);
+				}
+			},
+		},
+
+		{
+			title: "Created By",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.program_type.length > 10
-						? data.program_type.slice(0, 10) + "....."
-						: data.program_type}
+					{data.semester_created_by.length > 10
+						? data.semester_created_by.slice(0, 10) + "....."
+						: data.semester_created_by}
+				</td>
+			),
+		},
+
+		{
+			title: "Created At",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "created at"} className="md:px-6 md:py-3 break-all">
+					{data.created_on}
 				</td>
 			),
 		},
@@ -84,7 +110,7 @@ const MbkmProgram = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/mbkm-programs/${data.program_id}`}>
+						<Link to={`/semesters/detail/${data.semester_id}`}>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>
@@ -100,15 +126,15 @@ const MbkmProgram = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/mbkm-programs",
-						title: "MBKM Program",
+						link: "/semesters",
+						title: "Semester",
 					},
 					{
-						link: "/mbkm-programs",
+						link: "/semesters",
 						title: "List",
 					},
 				]}
-				icon={BASE_MENU_ICON.LoRIcon}
+				icon={BASE_ICON.MENU.SemesterIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
@@ -126,22 +152,21 @@ const MbkmProgram = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					{currentUser.user_role === "akademik" && (
-						<ButtonStyle
-							title="Create"
-							color="light"
-							onClick={() => navigate("/mbkm-programs/create")}
-						/>
-					)}
+
+					<ButtonStyle
+						title="Create"
+						color="light"
+						onClick={() => navigate("/semesters/create")}
+					/>
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />
 				</div>
 			</div>
 
-			<TableStyle header={header} table={listProgram} />
+			<TableStyle header={header} table={listSemester} />
 		</div>
 	);
 };
 
-export default MbkmProgram;
+export default SemesterListView;
