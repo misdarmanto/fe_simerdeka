@@ -1,16 +1,13 @@
 import { ref } from "firebase/storage";
 import { FileInput, Label, Select, TextInput, Textarea } from "flowbite-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../configs/firebase";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RootContext } from "../../utils/contextApi";
-import {
-	RecomendationLetterCreateRequestTypes,
-	RecomendationLetterTypes,
-} from "../../models/recomendation-letter";
+import { RecomendationLetterCreateRequestTypes } from "../../models/recomendation-letter";
 import { UserTypes } from "../../models/auth";
 
 const RecomendationLetterCreate = () => {
@@ -78,6 +75,12 @@ const RecomendationLetterCreate = () => {
 		}
 	};
 
+	useEffect(() => {
+		if (user.user_role !== "student") {
+			navigate("/recomendation-letter");
+		}
+	}, []);
+
 	return (
 		<div className="m-5">
 			<BreadcrumbStyle
@@ -91,7 +94,7 @@ const RecomendationLetterCreate = () => {
 						title: "Buat",
 					},
 				]}
-				icon={BASE_MENU_ICON.LoRIcon}
+				icon={BASE_MENU_ICON.ReportParicipationIcon}
 			/>
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>

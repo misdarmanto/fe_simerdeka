@@ -1,3 +1,5 @@
+import { StudentTypes } from "../student";
+
 export interface RecomendationLetterTypes {
 	recomendation_letter_id?: string;
 	study_program_id?: string;
@@ -17,8 +19,9 @@ export interface RecomendationLetterTypes {
 	recomendation_letter_assign_to_student?: boolean;
 	recomendation_letter_assign_to_study_program?: boolean;
 	recomendation_letter_assign_to_major?: boolean;
+	recomendation_letter_assign_to_lp3m?: boolean;
 	recomendation_letter_assign_to_academic?: boolean;
-	recomendation_letter_assign_to_biro?: boolean;
+	student?: StudentTypes;
 }
 
 export interface RecomendationLetterCreateRequestTypes {

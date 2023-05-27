@@ -36,6 +36,8 @@ import ProdiProgramDetail from "./routers/program-for-prodi/detail-prodi-program
 import StudentProgramListView from "./routers/program-for-student/list-student-program";
 import DetailStudentProgramView from "./routers/program-for-student/detail-student-program";
 import ReportParticipationListView from "./routers/report-participation/list-report-participation";
+import ReportParicipationCreateView from "./routers/report-participation/create-report-participation";
+import ReportParicipationDetailView from "./routers/report-participation/detail-report-participation";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -123,9 +125,19 @@ const privateRouter = createBrowserRouter([
 
 			//report participation
 			{
-				path: "/report-participation",
+				path: "/report-participations",
 				element: <ReportParticipationListView />,
 			},
+			{
+				path: "/report-participations/create",
+				element: <ReportParicipationCreateView />,
+			},
+
+			{
+				path: "/report-participations/detail/:reportParticipationId",
+				element: <ReportParicipationDetailView />,
+			},
+
 			//mbkm summary
 
 			{

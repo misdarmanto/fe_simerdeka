@@ -1,7 +1,12 @@
 import { FileInput, Label, Textarea, Timeline } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
+import {
+	BASE_ICON,
+	BASE_MENU_ICON,
+	BreadcrumbStyle,
+	ButtonStyle,
+} from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RootContext } from "../../utils/contextApi";
 import { BiCalendar } from "react-icons/bi";
@@ -9,6 +14,8 @@ import { RecomendationLetterTypes } from "../../models/recomendation-letter";
 import { storage } from "../../configs/firebase";
 import { ref } from "firebase/storage";
 import { uploadImageToFirebase } from "../../utils/firebase";
+import ListItemStyle from "../../components/list";
+import { convertStatusName } from "../../utils/convertStatusMenu";
 
 const RecomendationLetterDetail = () => {
 	const [recomendationLetter, setRecomendationLetter] =
@@ -27,6 +34,7 @@ const RecomendationLetterDetail = () => {
 			path: `/recomendation-letter/detail/${recomendationLetterId}`,
 		});
 		setRecomendationLetter(result);
+		console.log(result);
 	};
 
 	const handleAddCoverLetter = async (event: any) => {
@@ -49,12 +57,12 @@ const RecomendationLetterDetail = () => {
 				assignTo = "major";
 				break;
 			case "major":
+				assignTo = "lp3m";
+				break;
+			case "lp3m":
 				assignTo = "academic";
 				break;
 			case "academic":
-				assignTo = "biro";
-				break;
-			case "biro":
 				assignTo = "done";
 				break;
 			default:
@@ -66,6 +74,7 @@ const RecomendationLetterDetail = () => {
 			body: {
 				recomendation_letter_id: recomendationLetterId,
 				assign_to: assignTo,
+				student_id: recomendationLetter?.student_id,
 				approval_letter: recomendationLetterApproval,
 			},
 		});
@@ -78,7 +87,7 @@ const RecomendationLetterDetail = () => {
 			path: `/recomendation-letter/change-status`,
 			body: {
 				recomendation_letter_id: recomendationLetterId,
-				status,
+				status: status,
 				status_message: statusMessage,
 			},
 		});
@@ -92,7 +101,7 @@ const RecomendationLetterDetail = () => {
 	const dateTime = new Date();
 
 	return (
-		<div className="m-5">
+		<div className="sm:m-5">
 			<BreadcrumbStyle
 				listPath={[
 					{
@@ -104,10 +113,10 @@ const RecomendationLetterDetail = () => {
 						title: "Detail",
 					},
 				]}
-				icon={BASE_MENU_ICON.LoRIcon}
+				icon={BASE_ICON.MENU.RecomendationLetterIcon}
 			/>
 
-			<div className="bg-white border border-gray-200 rounded-lg shadow my-5 p-8">
+			<div className="bg-white border border-gray-200 rounded-lg shadow my-5 p-2 sm:p-8">
 				<Timeline horizontal={true}>
 					{recomendationLetter?.recomendation_letter_assign_to_study_program && (
 						<Timeline.Item>
@@ -115,12 +124,6 @@ const RecomendationLetterDetail = () => {
 							<Timeline.Content>
 								<Timeline.Title>Diteruskan ke prodi</Timeline.Title>
 								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
-								<Timeline.Body>
-									{recomendationLetter.recomendation_letter_status ===
-									"rejected"
-										? recomendationLetter.recomendation_letter_status_message
-										: "Selamat, surat rekomendasi mu telah diteruskan ke prodi"}
-								</Timeline.Body>
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
@@ -130,12 +133,15 @@ const RecomendationLetterDetail = () => {
 							<Timeline.Content>
 								<Timeline.Title>Diteruskan ke Jurusan</Timeline.Title>
 								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
-								<Timeline.Body>
-									{recomendationLetter.recomendation_letter_status ===
-									"rejected"
-										? recomendationLetter.recomendation_letter_status_message
-										: "Selamat, surat rekomendasi mu telah diteruskan ke jurusan"}
-								</Timeline.Body>
+							</Timeline.Content>
+						</Timeline.Item>
+					)}
+					{recomendationLetter?.recomendation_letter_assign_to_lp3m && (
+						<Timeline.Item>
+							<Timeline.Point icon={BiCalendar} />
+							<Timeline.Content>
+								<Timeline.Title>Diteruskan ke LP3M</Timeline.Title>
+								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
@@ -143,29 +149,8 @@ const RecomendationLetterDetail = () => {
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
-								<Timeline.Title>Diteruskan ke LP3M</Timeline.Title>
-								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
-								<Timeline.Body>
-									{recomendationLetter.recomendation_letter_status ===
-									"rejected"
-										? recomendationLetter.recomendation_letter_status_message
-										: "Selamat, surat rekomendasi mu telah diteruskan ke LP3M"}
-								</Timeline.Body>
-							</Timeline.Content>
-						</Timeline.Item>
-					)}
-					{recomendationLetter?.recomendation_letter_assign_to_biro && (
-						<Timeline.Item>
-							<Timeline.Point icon={BiCalendar} />
-							<Timeline.Content>
 								<Timeline.Title>Diteruskan ke akademik</Timeline.Title>
 								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
-								<Timeline.Body>
-									{recomendationLetter.recomendation_letter_status ===
-									"rejected"
-										? recomendationLetter.recomendation_letter_status_message
-										: "Selamat, surat rekomendasi mu telah diteruskan ke akademik"}
-								</Timeline.Body>
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
@@ -175,12 +160,7 @@ const RecomendationLetterDetail = () => {
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
 								<Timeline.Title>Selesai</Timeline.Title>
-								<Timeline.Time>{}</Timeline.Time>
-								<Timeline.Body>
-									{
-										recomendationLetter.recomendation_letter_status_message
-									}
-								</Timeline.Body>
+								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
@@ -189,6 +169,36 @@ const RecomendationLetterDetail = () => {
 
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
 				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
+					<ListItemStyle
+						title="Status"
+						description={convertStatusName(
+							recomendationLetter?.recomendation_letter_status
+						)}
+					/>
+					{recomendationLetter?.recomendation_letter_status_message && (
+						<ListItemStyle
+							title="Pesan"
+							description={
+								recomendationLetter?.recomendation_letter_status_message
+							}
+						/>
+					)}
+					<ListItemStyle
+						title="Nama"
+						description={recomendationLetter?.student?.student_name}
+					/>
+					<ListItemStyle
+						title="NIM"
+						description={recomendationLetter?.student?.student_nim}
+					/>
+					<ListItemStyle
+						title="Prodi"
+						description={recomendationLetter?.student?.study_program_name}
+					/>
+					<ListItemStyle
+						title="Jurusan"
+						description={recomendationLetter?.student?.major_name}
+					/>
 					<ListItemStyle
 						title="Dosen Wali"
 						description={recomendationLetter?.recomendation_letter_dosen_wali}
@@ -258,6 +268,7 @@ const RecomendationLetterDetail = () => {
 						</div>
 						<FileInput id="file" onChange={handleAddCoverLetter} />
 					</div>
+
 					<div id="textarea" className="mt-5">
 						<div className="mb-2 block">
 							<Label htmlFor="comment" value="Tinggalkan Pesan" />
@@ -273,46 +284,18 @@ const RecomendationLetterDetail = () => {
 					</div>
 					<div className="flex justify-end items-center mt-5">
 						<ButtonStyle
-							title="Terima"
-							className="mx-2"
-							onClick={() => handleChangeStatusAssignMent()}
-						/>
-						<ButtonStyle
 							onClick={() => handleChangeStatusApproval("rejected")}
 							title="Tolak"
 							color="failure"
 							className="mx-2"
 						/>
+						<ButtonStyle
+							title="Terima"
+							className="mx-2"
+							onClick={() => handleChangeStatusAssignMent()}
+						/>
 					</div>
 				</div>
-			)}
-		</div>
-	);
-};
-
-const ListItemStyle = ({
-	title,
-	description,
-	url,
-	isDownloadButton = false,
-}: {
-	title: string;
-	description?: string;
-	url?: string;
-	isDownloadButton?: boolean;
-}) => {
-	return (
-		<div className="flex flex-col pb-3">
-			<dt className="mb-1 text-gray-500">{title}</dt>
-			{url ? (
-				<a href={url} target="blank">
-					<ButtonStyle
-						color="light"
-						title={isDownloadButton ? "Download" : `Lihat file`}
-					/>
-				</a>
-			) : (
-				<dd className="text-sm font-semibold">{description}</dd>
 			)}
 		</div>
 	);

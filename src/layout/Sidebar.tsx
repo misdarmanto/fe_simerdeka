@@ -61,7 +61,7 @@ const SidebarStyle = () => {
 
 	const ReportParticipationMenu = {
 		title: "Lapor Keikutsertaan",
-		path: "/report-participation",
+		path: "/report-participations",
 		icon: <BsPersonVcard />,
 	};
 
@@ -173,10 +173,10 @@ const SidebarStyle = () => {
 		case "major":
 			MENUS = jurusanMenus;
 			break;
-		case "academic":
+		case "lp3m":
 			MENUS = LP3MMenus;
 			break;
-		case "biro":
+		case "academic":
 			MENUS = AcademicMenus;
 			break;
 		default:

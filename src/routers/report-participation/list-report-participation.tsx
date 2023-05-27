@@ -1,4 +1,4 @@
-import { TextInput } from "flowbite-react";
+import { Badge, TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ const ReportParticipationListView = () => {
 	const fecthData = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/academic-programs/all",
+			url: CONFIG.base_url_api + "/report-participations/all",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -25,8 +25,10 @@ const ReportParticipationListView = () => {
 			},
 		});
 
+		console.log(result);
+
 		setListProgram({
-			link: "/academic-programs/all",
+			link: "report-participations/all",
 			data: result,
 			page: 0,
 			size: 10,
@@ -52,32 +54,28 @@ const ReportParticipationListView = () => {
 		},
 
 		{
-			title: "Nama Program",
+			title: "Nama",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.academic_program_name.length > 10
-						? data.academic_program_name.slice(0, 10) + "....."
-						: data.academic_program_name}
+					{data.student.student_name}
 				</td>
 			),
 		},
 
 		{
-			title: "Jenis Program",
+			title: "NIM",
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.academic_program_type.length > 10
-						? data.academic_program_type.slice(0, 10) + "....."
-						: data.academic_program_type}
+				<td key={index + "NIM"} className="md:px-6 md:py-3 break-all">
+					{data.student.student_nim}
 				</td>
 			),
 		},
 
 		{
-			title: "Semester",
+			title: "Prodi",
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
-					{data.semester.semester_name}
+				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
+					{data.list_of_study_program.study_program_name}
 				</td>
 			),
 		},
@@ -92,12 +90,34 @@ const ReportParticipationListView = () => {
 		},
 
 		{
-			title: "Dibuat Pada",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "created-on"} className="md:px-6 md:py-3 break-all">
-					{data.created_on}
-				</td>
-			),
+			title: "Status",
+			data: (data: any, index: number): ReactElement => {
+				if (data.report_participation_status === "rejected") {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="failure" className="w-20 text-center">
+								ditolak
+							</Badge>
+						</td>
+					);
+				}
+				if (data.report_participation_status === "accepted") {
+					return (
+						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+							<Badge color="success" className="w-20 text-center">
+								selesai
+							</Badge>
+						</td>
+					);
+				}
+				return (
+					<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
+						<Badge color="warning" className="w-20 text-center">
+							menunggu
+						</Badge>
+					</td>
+				);
+			},
 		},
 
 		{
@@ -106,7 +126,9 @@ const ReportParticipationListView = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/mbkm-programs/academic/${data.program_id}`}>
+						<Link
+							to={`/report-participations/detail/${data.report_participation_id}`}
+						>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>
@@ -122,15 +144,15 @@ const ReportParticipationListView = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/mbkm-programs",
-						title: "MBKM Program",
+						link: "/report-participation",
+						title: "Lapor Keikut sertaan",
 					},
 					{
-						link: "/mbkm-programs",
+						link: "/report-participation",
 						title: "List",
 					},
 				]}
-				icon={BASE_MENU_ICON.LoRIcon}
+				icon={BASE_MENU_ICON.ReportParicipationIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
@@ -149,11 +171,13 @@ const ReportParticipationListView = () => {
 						</select>
 					</div>
 
-					<ButtonStyle
-						title="Create"
-						color="light"
-						onClick={() => navigate("/mbkm-programs/academic/create")}
-					/>
+					{currentUser.user_role === "student" && (
+						<ButtonStyle
+							title="Create"
+							color="light"
+							onClick={() => navigate("/report-participations/create")}
+						/>
+					)}
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />

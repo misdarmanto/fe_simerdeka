@@ -1,7 +1,7 @@
 import { Badge, TextInput } from "flowbite-react";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
@@ -80,10 +80,8 @@ const RecomendationLetterList = () => {
 		{
 			title: "Jurusan",
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
-					{data.student.major_name.length > 10
-						? data.student.major_name.slice(0, 10) + "..."
-						: data.student.major_name}
+				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
+					{data.student.major_name}
 				</td>
 			),
 		},
@@ -92,9 +90,7 @@ const RecomendationLetterList = () => {
 			title: "Prodi",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.student.study_program_name.length > 10
-						? data.student.study_program_name.slice(0, 10) + "..."
-						: data.student.study_program_name}
+					{data.student.study_program_name}
 				</td>
 			),
 		},
@@ -144,7 +140,7 @@ const RecomendationLetterList = () => {
 		{
 			title: "di teruskan ke",
 			data: (data: any, index: number): ReactElement => {
-				if (data.recomendation_letter_assign_to_biro) {
+				if (data.recomendation_letter_assign_to_academic) {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -154,7 +150,7 @@ const RecomendationLetterList = () => {
 					);
 				}
 
-				if (data.recomendation_letter_assign_to_academic) {
+				if (data.recomendation_letter_assign_to_lp3m) {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -225,7 +221,7 @@ const RecomendationLetterList = () => {
 						title: "List",
 					},
 				]}
-				icon={BASE_MENU_ICON.LoRIcon}
+				icon={BASE_ICON.MENU.RecomendationLetterIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">

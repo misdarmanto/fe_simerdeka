@@ -9,10 +9,10 @@ import {
 import { BiUser } from "react-icons/bi";
 import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
-import { BsQuestionCircle } from "react-icons/bs";
+import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
 
 const HomeIcon = AiOutlineHome;
-const LoRIcon = AiOutlineAudit;
+const RecomendationLetterIcon = AiOutlineAudit;
 const MyProgramIcon = AiOutlineFolderOpen;
 const ProgramProposalICon = AiOutlineFile;
 const FaQIcon = BsQuestionCircle;
@@ -23,10 +23,11 @@ const MbkmSummaryIcon = FiFileText;
 const ManageUserIcon = BiUser;
 const SemesterIcon = FaRegListAlt;
 const LogActivityIcon = AiOutlineSearch;
+const ReportParicipationIcon = BsPersonVcard;
 
 export const BASE_MENU_ICON = {
 	HomeIcon,
-	LoRIcon,
+	RecomendationLetterIcon,
 	MyProgramIcon,
 	ProgramProposalICon,
 	FaQIcon,
@@ -37,4 +38,23 @@ export const BASE_MENU_ICON = {
 	MbkmSummaryIcon,
 	ManageUserIcon,
 	LogActivityIcon,
+	ReportParicipationIcon,
+};
+
+export const BASE_ICON = {
+	MENU: {
+		HomeIcon,
+		RecomendationLetterIcon,
+		MyProgramIcon,
+		ProgramProposalICon,
+		FaQIcon,
+		MbkmProgramIcon,
+		SemesterIcon,
+		StudyProgramIcon,
+		StudenIcon,
+		MbkmSummaryIcon,
+		ManageUserIcon,
+		LogActivityIcon,
+		ReportParicipationIcon,
+	},
 };
