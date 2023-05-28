@@ -5,6 +5,8 @@ export interface MbkmProgramTypes {
 	mbkm_program_category?: string;
 	mbkm_program_syllabus?: string;
 	semester_id?: string;
+	major_id?: string;
+	study_program_id?: string;
 }
 
 export interface MbkmProgramCreateTypes {
@@ -13,4 +15,6 @@ export interface MbkmProgramCreateTypes {
 	mbkm_program_category: string;
 	mbkm_program_syllabus: string;
 	semester_id: string;
+	major_id: string;
+	study_program_id: string;
 }

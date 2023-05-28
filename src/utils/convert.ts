@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const convertStatusName = (status: "waiting" | "accepted" | "rejected" | any) => {
 	switch (status) {
 		case "waiting":
@@ -9,4 +11,8 @@ export const convertStatusName = (status: "waiting" | "accepted" | "rejected" | 
 		default:
 			break;
 	}
+};
+
+export const converDateTimeFromDB = (time: any) => {
+	return moment(time).format("DD-MM-YYYY");
 };

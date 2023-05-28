@@ -11,7 +11,7 @@ import {
 import ListItemStyle from "../../components/list";
 import { convertStatusName } from "../../utils/convert";
 
-const ReportParicipationDetailView = () => {
+const StudentDetailView = () => {
 	const [reportParticipation, setReportParticipation] =
 		useState<ReportParticipationDetailTypes>();
 
@@ -140,4 +140,4 @@ const ReportParicipationDetailView = () => {
 	);
 };
 
-export default ReportParicipationDetailView;
+export default StudentDetailView;

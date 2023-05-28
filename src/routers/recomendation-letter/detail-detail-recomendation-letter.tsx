@@ -15,7 +15,7 @@ import { storage } from "../../configs/firebase";
 import { ref } from "firebase/storage";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import ListItemStyle from "../../components/list";
-import { convertStatusName } from "../../utils/convertStatusMenu";
+import { convertStatusName } from "../../utils/convert";
 
 const RecomendationLetterDetail = () => {
 	const [recomendationLetter, setRecomendationLetter] =

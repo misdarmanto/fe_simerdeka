@@ -15,7 +15,7 @@ const RecomendationLetterList = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const { currentUser }: any = useContext(RootContext);
 
-	const fecthData = async () => {
+	const fecthRecomendationLetter = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
 			url: CONFIG.base_url_api + "/recomendation-letter/all",
@@ -42,7 +42,7 @@ const RecomendationLetterList = () => {
 	};
 
 	useEffect(() => {
-		fecthData();
+		fecthRecomendationLetter();
 	}, []);
 
 	const header: TableHeader[] = [

@@ -14,7 +14,7 @@ import {
 } from "../../models/list-of-major-and-study-program";
 import { SemesterTypes } from "../../models/semester";
 
-const MbkmProgramCreat = () => {
+const MbkmProgramStudentCreat = () => {
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
 	const [listOfStudyProgram, setListOfStudyProgram] = useState<
 		ListOfStudyProgramTypes[]
@@ -23,8 +23,7 @@ const MbkmProgramCreat = () => {
 	const [mbkmProgramSyllabus, setMbkmProgramSyllabus] = useState("");
 	const [mbkmProgramName, setMbkmProgramName] = useState("");
 	const [mbkmProgramCategory, setMbkmProgramCategory] = useState("");
-	const [studyProgramSelected, setStudyProgramSelected] =
-		useState<ListOfStudyProgramTypes>();
+	const [studyProgramSelected, setStudyProgramSelected] = useState<ListOfMajorTypes>();
 
 	const navigate = useNavigate();
 	const httpService = new ServiceHttp();
@@ -57,7 +56,7 @@ const MbkmProgramCreat = () => {
 				mbkm_program_syllabus: mbkmProgramSyllabus,
 				semester_id: listOfSemester[0].semester_id + "",
 				major_id: studyProgramSelected?.major_id + "",
-				study_program_id: studyProgramSelected?.study_program_id + "",
+				study_program_id: studyProgramSelected?.major_id + "",
 			};
 			console.log(data);
 
@@ -182,4 +181,4 @@ const MbkmProgramCreat = () => {
 	);
 };
 
-export default MbkmProgramCreat;
+export default MbkmProgramStudentCreat;

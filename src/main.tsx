@@ -10,7 +10,6 @@ import FaQ from "./routers/faq";
 import LogActivity from "./routers/log-activity";
 import MbkmSummary from "./routers/mbkm-summary";
 import ProgramProposal from "./routers/program-proposal";
-import Student from "./routers/student";
 import StudyProgram from "./routers/study-program";
 import ManageUser from "./routers/manage-users";
 import Login from "./routers/auth/login";
@@ -18,17 +17,6 @@ import Register from "./routers/auth/register";
 import RecomendationLetterList from "./routers/recomendation-letter/list-recomendation-letter";
 import RecomendationLetterCreate from "./routers/recomendation-letter/create-recomendation-letter";
 import RecomendationLetterDetail from "./routers/recomendation-letter/detail-detail-recomendation-letter";
-import AcademicProgramCreat from "./routers/program-for-academic/create-academic-program";
-import AcademicProgramList from "./routers/program-for-academic/list-academic-program";
-import AcademicProgramDetail from "./routers/program-for-academic/detail-academic-program";
-import JurusanProgramCreat from "./routers/program-for-jurusan/create-jurusan-program";
-import JurusanProgramList from "./routers/program-for-jurusan/list-academic-program";
-import JurusanProgramDetail from "./routers/program-for-jurusan/detail-academic-program";
-import ProdiProgramList from "./routers/program-for-prodi/list-prodi-program";
-import ProdiProgramCreat from "./routers/program-for-prodi/create-prodi-program";
-import ProdiProgramDetail from "./routers/program-for-prodi/detail-prodi-program";
-import StudentProgramListView from "./routers/program-for-student/list-student-program";
-import DetailStudentProgramView from "./routers/program-for-student/detail-student-program";
 import ReportParticipationListView from "./routers/report-participation/list-report-participation";
 import ReportParicipationCreateView from "./routers/report-participation/create-report-participation";
 import ReportParicipationDetailView from "./routers/report-participation/detail-report-participation";
@@ -38,6 +26,13 @@ import SemesterDetail from "./routers/semester/detail-semester";
 import MbkmProgramList from "./routers/mbkm-program/list-mbkm-program";
 import MbkmProgramCreat from "./routers/mbkm-program/create-mbkm-program";
 import MbkmProgramDetail from "./routers/mbkm-program/detail-mbkm-program";
+import StudentListView from "./routers/student/list-student";
+import StudentDetailView from "./routers/student/detail-student";
+import MyMbkmProgramList from "./routers/mbkm-program-student/list-mbkm-program-student";
+import MyMbkmProgramDetail from "./routers/mbkm-program-student/detail-mbkm-program-student";
+import MbkmProgramStudentDetail from "./routers/mbkm-program-student/detail-mbkm-program-student";
+import MbkmProgramStudentList from "./routers/mbkm-program-student/list-mbkm-program-student";
+import MbkmProgramStudentCreat from "./routers/mbkm-program-student/create-mbkm-program-student";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -72,57 +67,18 @@ const privateRouter = createBrowserRouter([
 				element: <MbkmProgramDetail />,
 			},
 
-			//academic program
-			{
-				path: "/mbkm-programs/academic",
-				element: <AcademicProgramList />,
-			},
-			{
-				path: "/mbkm-programs/academic/create",
-				element: <AcademicProgramCreat />,
-			},
-			{
-				path: "/mbkm-programs/academic/:programId",
-				element: <AcademicProgramDetail />,
-			},
-
-			//jurusan program
-			{
-				path: "/mbkm-programs/jurusan",
-				element: <JurusanProgramList />,
-			},
-			{
-				path: "/mbkm-programs/jurusan/create",
-				element: <JurusanProgramCreat />,
-			},
-			{
-				path: "/mbkm-programs/jurusan/:programId",
-				element: <JurusanProgramDetail />,
-			},
-
-			//prodi program
-
-			{
-				path: "/mbkm-programs/prodi",
-				element: <ProdiProgramList />,
-			},
-			{
-				path: "/mbkm-programs/prodi/create",
-				element: <ProdiProgramCreat />,
-			},
-			{
-				path: "/mbkm-programs/prodi/:programId",
-				element: <ProdiProgramDetail />,
-			},
-
 			//student program
 			{
-				path: "/mbkm-programs/student/",
-				element: <StudentProgramListView />,
+				path: "/mbkm-programs/students/",
+				element: <MbkmProgramStudentList />,
 			},
 			{
-				path: "/mbkm-programs/student/:programId",
-				element: <DetailStudentProgramView />,
+				path: "/mbkm-programs/students/create",
+				element: <MbkmProgramStudentCreat />,
+			},
+			{
+				path: "/mbkm-programs/students/:programId",
+				element: <MbkmProgramStudentDetail />,
 			},
 
 			//report participation
@@ -174,10 +130,18 @@ const privateRouter = createBrowserRouter([
 				path: "/semesters/detail/:semesterId",
 				element: <SemesterDetail />,
 			},
+
+			//student
 			{
 				path: "/students",
-				element: <Student />,
+				element: <StudentListView />,
 			},
+			{
+				path: "/students/detail/:studentId",
+				element: <StudentDetailView />,
+			},
+
+			//study program
 			{
 				path: "/study-programs",
 				element: <StudyProgram />,

@@ -1,50 +1,70 @@
-import { TextInput } from "flowbite-react";
+import { Label, Select, TextInput } from "flowbite-react";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { BASE_ICON, BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
+import { SemesterTypes } from "../../models/semester";
+import { UserTypes } from "../../models/auth";
+import { converDateTimeFromDB } from "../../utils/convert";
 
-const ProdiProgramList = () => {
+const MbkmProgramStudentList = () => {
 	const navigate = useNavigate();
 
-	const [listProgram, setListProgram] = useState<any>();
+	const [listMbkmProgram, setListMbkmProgram] = useState<any>();
+	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
+	const [semesterId, setSemesterId] = useState<string>("");
 	const [isLoading, setIsLoading] = useState(true);
+
 	const { currentUser }: any = useContext(RootContext);
+	const user: UserTypes = currentUser;
+	const httpService = new ServiceHttp();
 
 	const fecthData = async () => {
-		const httpService = new ServiceHttp();
+		const filters: any = { search: "" };
+
+		if (semesterId !== "all") {
+			filters["semester_id"] = semesterId;
+		}
+
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/academic-programs/all",
+			url: CONFIG.base_url_api + "/mbkm-programs/students/all",
 			pagination: true,
 			page: 0,
 			size: 10,
-			filters: {
-				search: "",
-			},
-		});
-
-		setListProgram({
-			link: "/academic-programs/all",
-			data: result,
-			page: 0,
-			size: 10,
-			filter: {
-				search: "",
-			},
+			filters,
 		});
 
 		console.log(result);
 
+		setListMbkmProgram({
+			link: "/mbkm-programs/students/all",
+			data: result,
+			page: 0,
+			size: 10,
+			...filters,
+		});
+
 		setIsLoading(false);
 	};
 
+	const fecthSemester = async () => {
+		const result = await httpService.get({
+			path: "/semesters/all",
+		});
+		console.log(result.items);
+		if (result) {
+			setListOfSemester(result.items);
+		}
+	};
+
 	useEffect(() => {
+		fecthSemester();
 		fecthData();
-	}, []);
+	}, [semesterId]);
 
 	const header: TableHeader[] = [
 		{
@@ -60,9 +80,7 @@ const ProdiProgramList = () => {
 			title: "Nama Program",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.academic_program_name.length > 10
-						? data.academic_program_name.slice(0, 10) + "....."
-						: data.academic_program_name}
+					{data.mbkm_program.mbkm_program_name}
 				</td>
 			),
 		},
@@ -71,9 +89,9 @@ const ProdiProgramList = () => {
 			title: "Jenis Program",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.academic_program_type.length > 10
-						? data.academic_program_type.slice(0, 10) + "....."
-						: data.academic_program_type}
+					{data.mbkm_program.mbkm_program_category.length > 10
+						? data.mbkm_program.mbkm_program_category.slice(0, 10) + "....."
+						: data.mbkm_program.mbkm_program_category}
 				</td>
 			),
 		},
@@ -86,21 +104,19 @@ const ProdiProgramList = () => {
 				</td>
 			),
 		},
-
 		{
-			title: "Jurusan",
+			title: "Konversi SKS",
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.list_of_major.major_name}
+				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
+					{data.mbkm_program_student_sks}
 				</td>
 			),
 		},
-
 		{
 			title: "Dibuat Pada",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "created-on"} className="md:px-6 md:py-3 break-all">
-					{data.created_on}
+					{converDateTimeFromDB(data.created_on)}
 				</td>
 			),
 		},
@@ -111,7 +127,7 @@ const ProdiProgramList = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/mbkm-programs/academic/${data.program_id}`}>
+						<Link to={`/mbkm-programs/detail/${data.mbkm_program_id}`}>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>
@@ -127,20 +143,20 @@ const ProdiProgramList = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/mbkm-programs/prodi",
-						title: "MBKM Program",
+						link: "/mbkm-programs/student",
+						title: "My MBKM Program",
 					},
 					{
-						link: "/mbkm-programs/prodi",
+						link: "/mbkm-programs/student",
 						title: "List",
 					},
 				]}
-				icon={BASE_MENU_ICON.LoRIcon}
+				icon={BASE_ICON.MENU.MbkmProgramIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
-				<div className="flex items-center">
-					<div className="w-full mr-2 flex flex-row justify-between md:justify-start">
+				<div className="flex items-center justify-between">
+					<div className="mr-2 flex flex-row justify-between md:justify-start">
 						<select
 							name="size"
 							defaultValue={10}
@@ -153,21 +169,34 @@ const ProdiProgramList = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
+					{/* {user.user_role === "study_program" && (
+						<ButtonStyle
+							title="Create"
+							color="light"
+							onClick={() => navigate("/mbkm-programs/create")}
+						/>
+					)} */}
 
-					<ButtonStyle
-						title="Create"
-						color="light"
-						onClick={() => navigate("/mbkm-programs/academic/create")}
-					/>
+					<Select
+						onChange={(e) => setSemesterId(e.target.value)}
+						className="mx-2"
+					>
+						<option value={"all"}>semua semester</option>
+						{listOfSemester.map((semester: any, index) => (
+							<option key={index} value={semester.semester_id}>
+								{semester.semester_name}
+							</option>
+						))}
+					</Select>
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />
 				</div>
 			</div>
 
-			<TableStyle header={header} table={listProgram} />
+			<TableStyle header={header} table={listMbkmProgram} />
 		</div>
 	);
 };
 
-export default ProdiProgramList;
+export default MbkmProgramStudentList;

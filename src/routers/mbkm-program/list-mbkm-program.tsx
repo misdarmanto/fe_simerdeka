@@ -1,53 +1,52 @@
-import { Label, Select, TextInput } from "flowbite-react";
+import { Select, TextInput } from "flowbite-react";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_ICON, BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 import { SemesterTypes } from "../../models/semester";
+import { UserTypes } from "../../models/auth";
+import { converDateTimeFromDB } from "../../utils/convert";
 
 const MbkmProgramList = () => {
 	const navigate = useNavigate();
 
 	const [listMbkmProgram, setListMbkmProgram] = useState<any>();
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
-	const [semesterId, setSemesterId] = useState<string>("");
+	const [semesterId, setSemesterId] = useState<string>("all");
 	const [isLoading, setIsLoading] = useState(true);
 
 	const { currentUser }: any = useContext(RootContext);
+	const user: UserTypes = currentUser;
 	const httpService = new ServiceHttp();
 
 	const fecthData = async () => {
+		const filters: any = {};
+
+		if (semesterId !== "all") {
+			filters["semester_id"] = semesterId;
+		}
+
 		const result = await httpService.getTableData({
 			url: CONFIG.base_url_api + "/mbkm-programs/all",
 			pagination: true,
 			page: 0,
 			size: 10,
-			filters: {
-				search: "",
-				semester_id: semesterId,
-			},
+			filters,
 		});
-
-		const filterBy: any = {};
-
-		if (semesterId !== "all") {
-			filterBy["semester_id"] = semesterId;
-		}
 
 		setListMbkmProgram({
 			link: "/mbkm-programs/all",
 			data: result,
 			page: 0,
 			size: 10,
-			filter: {
-				search: "",
-				...filterBy,
-			},
+			...filters,
 		});
+
+		console.log(result);
 
 		setIsLoading(false);
 	};
@@ -56,7 +55,6 @@ const MbkmProgramList = () => {
 		const result = await httpService.get({
 			path: "/semesters/all",
 		});
-		console.log(result.items);
 		if (result) {
 			setListOfSemester(result.items);
 		}
@@ -109,7 +107,7 @@ const MbkmProgramList = () => {
 			title: "Dibuat Pada",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "created-on"} className="md:px-6 md:py-3 break-all">
-					{data.created_on}
+					{converDateTimeFromDB(data.created_on)}
 				</td>
 			),
 		},
@@ -128,8 +126,6 @@ const MbkmProgramList = () => {
 			),
 		},
 	];
-
-	console.log(semesterId);
 
 	if (isLoading) return <div>loading...</div>;
 
@@ -164,12 +160,13 @@ const MbkmProgramList = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-
-					<ButtonStyle
-						title="Create"
-						color="light"
-						onClick={() => navigate("/mbkm-programs/create")}
-					/>
+					{user.user_role === "lp3m" && (
+						<ButtonStyle
+							title="Create"
+							color="light"
+							onClick={() => navigate("/mbkm-programs/create")}
+						/>
+					)}
 
 					<Select
 						onChange={(e) => setSemesterId(e.target.value)}

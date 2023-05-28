@@ -29,33 +29,9 @@ const SidebarStyle = () => {
 		icon: <AiOutlineAudit />,
 	};
 
-	const MBKMProgramForStudentMenu = {
+	const MBKMProgramStudentMenu = {
 		title: "My Program",
-		path: "/mbkm-programs/student",
-		icon: <AiOutlineFolderOpen />,
-	};
-
-	const MBKMProgramForStudyProgramMenu = {
-		title: "MBKM Program",
-		path: "/mbkm-programs/prodi",
-		icon: <AiOutlineFolderOpen />,
-	};
-
-	const MBKMProgramForMajorMenu = {
-		title: "MBKM Program",
-		path: "/mbkm-programs/jurusan",
-		icon: <AiOutlineFolderOpen />,
-	};
-
-	const MBKMProgramForLP3M = {
-		title: "MBKM Program",
-		path: "/mbkm-programs/academic",
-		icon: <AiOutlineFolderOpen />,
-	};
-
-	const MBKMProgramForAcademicMenu = {
-		title: "MBKM Program",
-		path: "/mbkm-programs/academic",
+		path: "/mbkm-programs/students",
 		icon: <AiOutlineFolderOpen />,
 	};
 
@@ -77,7 +53,12 @@ const SidebarStyle = () => {
 		icon: <AiOutlineFile />,
 	};
 
-	const StudentMenu = { title: "Student", path: "/students", icon: <FaUserGraduate /> };
+	const StudentMenu = {
+		title: "Mahasiswa",
+		path: "/students",
+		icon: <FaUserGraduate />,
+	};
+
 	const StudyProgramMenu = {
 		title: "Study Program",
 		path: "/study-programs",
@@ -113,26 +94,29 @@ const SidebarStyle = () => {
 	const studentMenus = [
 		HomeMenu,
 		RecomendationLetterMenu,
-		MBKMProgramForStudentMenu,
+		MBKMProgramStudentMenu,
 		ReportParticipationMenu,
-		ProgramProposalMenu,
+		// ProgramProposalMenu,
+		MBKMSummaryMenu,
 		FaQMenu,
 	];
 
 	const prodiMenus = [
 		HomeMenu,
-		RecomendationLetterMenu,
-		MBKMProgramForStudyProgramMenu,
-		ReportParticipationMenu,
 		StudentMenu,
-		ProgramProposalMenu,
+		RecomendationLetterMenu,
+		MBKMProgramStudentMenu,
+		ReportParticipationMenu,
+		// ProgramProposalMenu,
+		MBKMSummaryMenu,
 		FaQMenu,
 	];
 
 	const jurusanMenus = [
 		HomeMenu,
+		StudentMenu,
 		RecomendationLetterMenu,
-		MBKMProgramForMajorMenu,
+		MBKMProgramMenu,
 		ReportParticipationMenu,
 		StudyProgramMenu,
 		MBKMSummaryMenu,
@@ -141,21 +125,22 @@ const SidebarStyle = () => {
 
 	const LP3MMenus = [
 		HomeMenu,
-		ManageUserMenu,
+		StudentMenu,
 		SemesterMenu,
 		MBKMProgramMenu,
-		// MBKMProgramForLP3M,
 		ReportParticipationMenu,
 		RecomendationLetterMenu,
 		StudyProgramMenu,
 		MBKMSummaryMenu,
+		// ManageUserMenu,
 		LogActivityMenu,
 		FaQMenu,
 	];
 
 	const AcademicMenus = [
 		HomeMenu,
-		MBKMProgramForAcademicMenu,
+		StudentMenu,
+		MBKMProgramMenu,
 		ReportParticipationMenu,
 		RecomendationLetterMenu,
 		LogActivityMenu,

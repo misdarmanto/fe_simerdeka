@@ -1,24 +1,27 @@
-import { TextInput } from "flowbite-react";
-import { ReactElement, useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
-import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { CONFIG } from "../../configs";
+import { Badge, TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
+import {
+	BASE_ICON,
+	BASE_MENU_ICON,
+	BreadcrumbStyle,
+	ButtonStyle,
+} from "../../components";
+import { Link, useNavigate } from "react-router-dom";
+import { ReactElement, useContext, useEffect, useState } from "react";
+import { CONFIG } from "../../configs";
 import { RootContext } from "../../utils/contextApi";
+import { ServiceHttp } from "../../services/api";
 
-const JurusanProgramList = () => {
-	const navigate = useNavigate();
-
+const StudentListView = () => {
 	const [listProgram, setListProgram] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
+	const navigate = useNavigate();
 	const { currentUser }: any = useContext(RootContext);
 
-	const fecthData = async () => {
+	const fecthStudents = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/major-programs/all",
+			url: CONFIG.base_url_api + "/users/students/registered",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -27,8 +30,10 @@ const JurusanProgramList = () => {
 			},
 		});
 
+		console.log(result);
+
 		setListProgram({
-			link: "/major-programs/all",
+			link: "/users/students/registered",
 			data: result,
 			page: 0,
 			size: 10,
@@ -36,14 +41,11 @@ const JurusanProgramList = () => {
 				search: "",
 			},
 		});
-
-		console.log(result);
-
 		setIsLoading(false);
 	};
 
 	useEffect(() => {
-		fecthData();
+		fecthStudents();
 	}, []);
 
 	const header: TableHeader[] = [
@@ -57,50 +59,19 @@ const JurusanProgramList = () => {
 		},
 
 		{
-			title: "Nama Program",
+			title: "Nama",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.academic_program_name.length > 10
-						? data.academic_program_name.slice(0, 10) + "....."
-						: data.academic_program_name}
+					{data.user_name}
 				</td>
 			),
 		},
 
 		{
-			title: "Jenis Program",
+			title: "email",
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.academic_program_type.length > 10
-						? data.academic_program_type.slice(0, 10) + "....."
-						: data.academic_program_type}
-				</td>
-			),
-		},
-
-		{
-			title: "Semester",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
-					{data.semester.semester_name}
-				</td>
-			),
-		},
-
-		{
-			title: "Jurusan",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.list_of_major.major_name}
-				</td>
-			),
-		},
-
-		{
-			title: "Dibuat Pada",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "created-on"} className="md:px-6 md:py-3 break-all">
-					{data.created_on}
+				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
+					{data.user_email}
 				</td>
 			),
 		},
@@ -111,7 +82,7 @@ const JurusanProgramList = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/mbkm-programs/academic/${data.program_id}`}>
+						<Link to={`/students/detail/${data.user_id}`}>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>
@@ -127,15 +98,15 @@ const JurusanProgramList = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/mbkm-programs/jurusan",
-						title: "MBKM Program",
+						link: "/students",
+						title: "Mahasiswa",
 					},
 					{
-						link: "/mbkm-programs/jurusan",
+						link: "/students",
 						title: "List",
 					},
 				]}
-				icon={BASE_MENU_ICON.LoRIcon}
+				icon={BASE_ICON.MENU.StudenIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
@@ -154,11 +125,13 @@ const JurusanProgramList = () => {
 						</select>
 					</div>
 
-					<ButtonStyle
-						title="Create"
-						color="light"
-						onClick={() => navigate("/mbkm-programs/jurusan/create")}
-					/>
+					{currentUser.user_role === "student" && (
+						<ButtonStyle
+							title="Create"
+							color="light"
+							onClick={() => navigate("/report-participations/create")}
+						/>
+					)}
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />
@@ -170,4 +143,4 @@ const JurusanProgramList = () => {
 	);
 };
 
-export default JurusanProgramList;
+export default StudentListView;

@@ -7,6 +7,7 @@ import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
+import { converDateTimeFromDB } from "../../utils/convert";
 
 const SemesterListView = () => {
 	const [listSemester, setListSemester] = useState<any>();
@@ -88,9 +89,7 @@ const SemesterListView = () => {
 			title: "Created By",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.semester_created_by.length > 10
-						? data.semester_created_by.slice(0, 10) + "....."
-						: data.semester_created_by}
+					{data.semester_created_by}
 				</td>
 			),
 		},
@@ -99,7 +98,7 @@ const SemesterListView = () => {
 			title: "Created At",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "created at"} className="md:px-6 md:py-3 break-all">
-					{data.created_on}
+					{converDateTimeFromDB(data.created_on)}
 				</td>
 			),
 		},
