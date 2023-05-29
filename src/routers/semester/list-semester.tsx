@@ -86,7 +86,7 @@ const SemesterListView = () => {
 		},
 
 		{
-			title: "Created By",
+			title: "Di buat oleh",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
 					{data.semester_created_by}
@@ -95,7 +95,7 @@ const SemesterListView = () => {
 		},
 
 		{
-			title: "Created At",
+			title: "Di buat pada",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "created at"} className="md:px-6 md:py-3 break-all">
 					{converDateTimeFromDB(data.created_on)}

@@ -150,9 +150,10 @@ const MbkmProgramCreat = () => {
 							<Label htmlFor="daftar prodi" value="daftar prodi" />
 						</div>
 						<Select
-							onChange={(e) =>
-								setStudyProgramSelected(JSON.parse(e.target.value))
-							}
+							onChange={(e) => {
+								setStudyProgramSelected(JSON.parse(e.target.value));
+								console.log(JSON.parse(e.target.value));
+							}}
 							required={true}
 						>
 							<option value={""}>pilih prodi</option>

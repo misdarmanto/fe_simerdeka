@@ -105,7 +105,7 @@ const SidebarStyle = () => {
 		HomeMenu,
 		StudentMenu,
 		RecomendationLetterMenu,
-		MBKMProgramStudentMenu,
+		MBKMProgramMenu,
 		ReportParticipationMenu,
 		// ProgramProposalMenu,
 		MBKMSummaryMenu,
@@ -204,8 +204,8 @@ const SidebarStyle = () => {
 					return (
 						<Link to={menu.path} key={index}>
 							<li
-								className={`flex items-center text-gray-500 my-1 gap-x-2 p-3 text-base font-normal rounded-lg cursor-pointer hover:bg-gray-200
-                        ${isActive && "bg-yellow-100 text-gray"}`}
+								className={`flex items-center text-gray-600 my-1 gap-x-2 p-3 text-base font-normal rounded-lg cursor-pointer hover:bg-gray-200
+                        ${isActive && "bg-yellow-100 text-gray-900 font-bold"}`}
 							>
 								<span className="text-xl">{menu.icon}</span>
 								<span

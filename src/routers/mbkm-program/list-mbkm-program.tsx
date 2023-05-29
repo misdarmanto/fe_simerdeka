@@ -43,7 +43,7 @@ const MbkmProgramList = () => {
 			data: result,
 			page: 0,
 			size: 10,
-			...filters,
+			filters,
 		});
 
 		console.log(result);
@@ -100,14 +100,6 @@ const MbkmProgramList = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
 					{data.semester.semester_name}
-				</td>
-			),
-		},
-		{
-			title: "Dibuat Pada",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "created-on"} className="md:px-6 md:py-3 break-all">
-					{converDateTimeFromDB(data.created_on)}
 				</td>
 			),
 		},

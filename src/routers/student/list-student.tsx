@@ -13,7 +13,7 @@ import { RootContext } from "../../utils/contextApi";
 import { ServiceHttp } from "../../services/api";
 
 const StudentListView = () => {
-	const [listProgram, setListProgram] = useState<any>();
+	const [listOfStudent, setListOfStudent] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const navigate = useNavigate();
 	const { currentUser }: any = useContext(RootContext);
@@ -32,7 +32,7 @@ const StudentListView = () => {
 
 		console.log(result);
 
-		setListProgram({
+		setListOfStudent({
 			link: "/users/students/registered",
 			data: result,
 			page: 0,
@@ -138,7 +138,7 @@ const StudentListView = () => {
 				</div>
 			</div>
 
-			<TableStyle header={header} table={listProgram} />
+			<TableStyle header={header} table={listOfStudent} />
 		</div>
 	);
 };
