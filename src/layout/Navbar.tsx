@@ -11,8 +11,6 @@ const Navbar = () => {
 	const { role, setRole, currentUser }: any = useContext(RootContext);
 	const navigate = useNavigate();
 
-	console.log(currentUser);
-
 	const handleSaveUserCredential = (selectedUser: UserTypes) => {
 		const user = LIST_USER.find((user: UserTypes) => {
 			return user.user_id === selectedUser.user_id;

@@ -9,9 +9,8 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 import { SemesterTypes } from "../../models/semester";
 import { UserTypes } from "../../models/auth";
-import { converDateTimeFromDB } from "../../utils/convert";
 
-const MbkmProgramList = () => {
+const MbkmProgramListView = () => {
 	const navigate = useNavigate();
 
 	const [listMbkmProgram, setListMbkmProgram] = useState<any>();
@@ -109,10 +108,20 @@ const MbkmProgramList = () => {
 			action: true,
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
-					<div>
+					<div className="flex">
 						<Link to={`/mbkm-programs/detail/${data.mbkm_program_id}`}>
-							<ButtonStyle title="Detail" color="light" />
+							<ButtonStyle title="Detail" color="light" className="mx-1" />
 						</Link>
+
+						{user.user_role === "study_program" && (
+							<Link to={`/mbkm-programs/edit/${data.mbkm_program_id}`}>
+								<ButtonStyle
+									title="Edit"
+									color="light"
+									className="mx-1"
+								/>
+							</Link>
+						)}
 					</div>
 				</td>
 			),
@@ -182,4 +191,4 @@ const MbkmProgramList = () => {
 	);
 };
 
-export default MbkmProgramList;
+export default MbkmProgramListView;

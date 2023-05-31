@@ -3,6 +3,14 @@ import { UserTypes } from "../models/auth";
 export const LIST_USER: UserTypes[] = [
 	//student
 	{
+		user_id: "8b5e175f-5370-4419-8974-b8b0dce5b5ec",
+		user_name: "Zaki T.Telekomunikasi",
+		user_email: "Zaki.mahasiswa@mail.com",
+		user_role: "student",
+		major_id: "a6c6f281-4257-42ed-87f1-dbb1acea8ac0",
+		study_program_id: "c01f3e37-cd2d-48ed-b5de-0c3505bb1ff6",
+	},
+	{
 		user_id: "46cbc5cd-8f15-4777-a7c1-84767ec2342f",
 		user_name: "Budi T.Telekomunikasi",
 		user_email: "budi.mahasiswa@mail.com",

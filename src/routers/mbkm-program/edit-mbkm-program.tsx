@@ -1,20 +1,58 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { useNavigate, useParams } from "react-router-dom";
+import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { MbkmProgramTypes } from "../../models/mbkm-program";
 import ListItemStyle from "../../components/list";
-import { Label } from "flowbite-react";
+import { Label, TextInput } from "flowbite-react";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
+import { SksConvertionCreateTypes } from "../../models/sks-convertion";
 
-const MbkmProgramDetailView = () => {
+const MbkmProgramEditView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
 	const [mbkmProgram, setMbkmProgram] = useState<MbkmProgramTypes>();
+	const [sksConvertionTotal, setSksConvertionTotal] = useState<number>();
+	const [listSksConvertionSelected, setListSksConvertionSelected] = useState<
+		SksConvertionCreateTypes[]
+	>([]);
 
 	const [isLoading, setIsLoading] = useState(true);
 	const { mbkmProgramId } = useParams();
 	const httpService = new ServiceHttp();
+	const navigation = useNavigate();
+
+	const handleSubmit = async () => {
+		await httpService.post({
+			path: `/sks-convertions`,
+			body: listSksConvertionSelected,
+		});
+		navigation("/mbkm-programs");
+	};
+
+	const handleSelectSksConvertion = ({ studentId }: { studentId: string }) => {
+		const studentCheck = listSksConvertionSelected.find((item) => {
+			return item.sks_convertion_student_id === studentId;
+		});
+
+		if (studentCheck) {
+			const newListSksConvertion = listSksConvertionSelected.filter((item) => {
+				return item.sks_convertion_student_id !== studentId;
+			});
+			setListSksConvertionSelected(newListSksConvertion);
+		} else {
+			setListSksConvertionSelected([
+				...listSksConvertionSelected,
+				{
+					sks_convertion_total: sksConvertionTotal!,
+					sks_convertion_mbkm_program_id: mbkmProgram?.mbkm_program_id!,
+					sks_convertion_student_id: studentId,
+				},
+			]);
+		}
+	};
+
+	console.log(listSksConvertionSelected);
 
 	const fecthDetailMbkmProgram = async () => {
 		const result = await httpService.get({
@@ -26,7 +64,7 @@ const MbkmProgramDetailView = () => {
 	const fecthStudents = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + `/sks-convertions/detail/${mbkmProgramId}`,
+			url: CONFIG.base_url_api + "/users/students/registered",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -36,7 +74,7 @@ const MbkmProgramDetailView = () => {
 		});
 
 		setListOfStudent({
-			link: "/sks-convertions",
+			link: "/users/students/registered",
 			data: result,
 			page: 0,
 			size: 10,
@@ -60,16 +98,7 @@ const MbkmProgramDetailView = () => {
 			title: "Nama",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_name}
-				</td>
-			),
-		},
-
-		{
-			title: "nim",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_nim}
+					{data.user_name}
 				</td>
 			),
 		},
@@ -78,18 +107,35 @@ const MbkmProgramDetailView = () => {
 			title: "email",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_email}
+					{data.user_email}
 				</td>
 			),
 		},
 
 		{
-			title: "konversi sks",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.sks_convertion_total}
-				</td>
-			),
+			title: "Action",
+			action: true,
+			data: (data: any, index: number): ReactElement => {
+				const isButtonActive = listSksConvertionSelected.find((item) => {
+					return item.sks_convertion_student_id === data.user_id;
+				});
+
+				return (
+					<td key={index + "action"}>
+						<div>
+							<ButtonStyle
+								title="pilih"
+								color={isButtonActive ? "dark" : "light"}
+								onClick={() => {
+									handleSelectSksConvertion({
+										studentId: data.user_id,
+									});
+								}}
+							/>
+						</div>
+					</td>
+				);
+			},
 		},
 	];
 
@@ -139,13 +185,33 @@ const MbkmProgramDetailView = () => {
 			</div>
 
 			<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
+				<div>
+					<div className="mb-2 block">
+						<Label htmlFor="sks" value="Konversi SKS" />
+					</div>
+					<TextInput
+						min={0}
+						required
+						type="number"
+						onChange={(e) => setSksConvertionTotal(+e.target.value)}
+					/>
+				</div>
+
 				<div className="mb-2 block">
 					<Label value="Daftar Mahasiswa" />
 				</div>
 				<TableStyle header={header} table={listOfStudent} />
+				<div className="flex justify-end">
+					<ButtonStyle
+						title="Buat"
+						type="submit"
+						color="dark"
+						onClick={handleSubmit}
+					/>
+				</div>
 			</div>
 		</div>
 	);
 };
 
-export default MbkmProgramDetailView;
+export default MbkmProgramEditView;

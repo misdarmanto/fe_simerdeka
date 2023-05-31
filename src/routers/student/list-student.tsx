@@ -1,11 +1,6 @@
-import { Badge, TextInput } from "flowbite-react";
+import { TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import {
-	BASE_ICON,
-	BASE_MENU_ICON,
-	BreadcrumbStyle,
-	ButtonStyle,
-} from "../../components";
+import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { CONFIG } from "../../configs";
@@ -29,8 +24,6 @@ const StudentListView = () => {
 				search: "",
 			},
 		});
-
-		console.log(result);
 
 		setListOfStudent({
 			link: "/users/students/registered",

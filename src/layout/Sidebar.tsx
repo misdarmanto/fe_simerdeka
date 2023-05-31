@@ -17,9 +17,25 @@ import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
 import { RootContext } from "../utils/contextApi";
 
 const SidebarStyle = () => {
-	const [open, setOpen] = useState(false);
+	const [openSideBar, setOpenSideBar] = useState(false);
 	const location = useLocation();
 	const { role }: any = useContext(RootContext);
+
+	const handleOpenSideBar = () => {
+		const STORAGE_KEY = "simerdeka-sidebar-config";
+		const sidebarConfig = localStorage.getItem(STORAGE_KEY);
+
+		if (sidebarConfig) {
+			const isOpen = JSON.parse(sidebarConfig + "");
+			setOpenSideBar(!isOpen);
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(!openSideBar));
+		} else {
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(!openSideBar));
+			setOpenSideBar(!openSideBar);
+		}
+
+		setOpenSideBar(!openSideBar);
+	};
 
 	const HomeMenu = { title: "Home", path: "/", icon: <AiOutlineHome /> };
 
@@ -71,9 +87,9 @@ const SidebarStyle = () => {
 		icon: <FaRegListAlt />,
 	};
 
-	const MBKMSummaryMenu = {
-		title: "Summary MBKM",
-		path: "/mbkm-summaries",
+	const MBKMLogBookMenu = {
+		title: "Log book",
+		path: "/log-books",
 		icon: <FiFileText />,
 	};
 
@@ -97,7 +113,7 @@ const SidebarStyle = () => {
 		MBKMProgramStudentMenu,
 		ReportParticipationMenu,
 		// ProgramProposalMenu,
-		MBKMSummaryMenu,
+		MBKMLogBookMenu,
 		FaQMenu,
 	];
 
@@ -108,7 +124,7 @@ const SidebarStyle = () => {
 		MBKMProgramMenu,
 		ReportParticipationMenu,
 		// ProgramProposalMenu,
-		MBKMSummaryMenu,
+		MBKMLogBookMenu,
 		FaQMenu,
 	];
 
@@ -119,7 +135,7 @@ const SidebarStyle = () => {
 		MBKMProgramMenu,
 		ReportParticipationMenu,
 		StudyProgramMenu,
-		MBKMSummaryMenu,
+		MBKMLogBookMenu,
 		FaQMenu,
 	];
 
@@ -131,7 +147,7 @@ const SidebarStyle = () => {
 		ReportParticipationMenu,
 		RecomendationLetterMenu,
 		StudyProgramMenu,
-		MBKMSummaryMenu,
+		MBKMLogBookMenu,
 		// ManageUserMenu,
 		LogActivityMenu,
 		FaQMenu,
@@ -179,21 +195,21 @@ const SidebarStyle = () => {
 		<div className="border-2 border-black-200">
 			<ul
 				className={`${
-					open ? "w-60" : "w-fit"
+					openSideBar ? "w-60" : "w-fit"
 				} sm:block relative min-h-screen duration-100 p-2 border-gray-200`}
 			>
 				<li
-					onClick={() => setOpen(!open)}
+					onClick={handleOpenSideBar}
 					className={`flex items-center gap-x-6 p-2 my-1 text-base font-normal rounded-lg cursor-pointer hover:bg-gray-200`}
 				>
-					{open ? (
+					{openSideBar ? (
 						<>
 							<RiCloseLine className="text-3xl text-gray-500" />
 							<small>Close</small>
 						</>
 					) : (
 						<BiMenu
-							onClick={() => setOpen(!open)}
+							onClick={handleOpenSideBar}
 							className="text-3xl text-gray-500"
 						/>
 					)}
@@ -210,7 +226,7 @@ const SidebarStyle = () => {
 								<span className="text-xl">{menu.icon}</span>
 								<span
 									className={`${
-										!open && "hidden"
+										!openSideBar && "hidden"
 									} origin-left duration-100 text-sm hover:block`}
 								>
 									{menu.title}

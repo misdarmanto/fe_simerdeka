@@ -1,50 +1,44 @@
-import { Label, Textarea } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
+import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RootContext } from "../../utils/contextApi";
-import {
-	ReportParticipationDetailTypes,
-	ReportParticipationUpdateTypes,
-} from "../../models/report-participation";
 import ListItemStyle from "../../components/list";
 import { convertStatusName } from "../../utils/convert";
+import { StudentTypes } from "../../models/student";
+import { SksConvertionTypes } from "../../models/sks-convertion";
+import { MbkmProgramTypes } from "../../models/mbkm-program";
+import { Alert } from "flowbite-react";
+import { FiAlertTriangle } from "react-icons/fi";
+
+interface StudentDetailTypes {
+	sks_convertion_id: string;
+	sks_convertion_total: string;
+	sks_convertion_student_id: string;
+	sks_convertion_mbkm_program_id: string;
+	student: StudentTypes;
+	mbkm_program: MbkmProgramTypes;
+}
 
 const StudentDetailView = () => {
-	const [reportParticipation, setReportParticipation] =
-		useState<ReportParticipationDetailTypes>();
+	const [studentDetails, setStudentDetails] = useState<StudentDetailTypes>();
+	const [sksConvertion, setSksConvertion] = useState<SksConvertionTypes>();
 
-	const [statusMessage, setStatusMessage] = useState<string>("");
-
-	const { reportParticipationId } = useParams();
+	const { studentId } = useParams();
 	const { currentUser }: any = useContext(RootContext);
 	const navigation = useNavigate();
 	const httpService = new ServiceHttp();
 
-	const fecthReportParticipationLetter = async () => {
+	const fecthDetailStudent = async () => {
 		const result = await httpService.get({
-			path: `/report-participations/detail/${reportParticipationId}`,
+			path: `/sks-convertions/students/detail/${studentId}`,
 		});
-		setReportParticipation(result);
-	};
-
-	const handleChangeStatusApproval = async (status: "accepted" | "rejected") => {
-		const body: ReportParticipationUpdateTypes = {
-			report_participation_id: reportParticipationId,
-			report_participation_status: status,
-			report_participation_status_message: statusMessage,
-		};
-
-		await httpService.patch({
-			path: `/report-participations`,
-			body: body,
-		});
-		navigation("/report-participations");
+		setStudentDetails(result);
+		console.log(result);
 	};
 
 	useEffect(() => {
-		fecthReportParticipationLetter();
+		fecthDetailStudent();
 	}, []);
 
 	return (
@@ -52,11 +46,11 @@ const StudentDetailView = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/report-participations",
+						link: "/students",
 						title: "Lapor Keikutsertaan",
 					},
 					{
-						link: "/report-participations" + reportParticipationId,
+						link: "/students/" + studentId,
 						title: "Detail",
 					},
 				]}
@@ -64,78 +58,51 @@ const StudentDetailView = () => {
 			/>
 
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
-				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
-					<ListItemStyle
-						title="status"
-						description={convertStatusName(
-							reportParticipation?.report_participation_status
-						)}
-					/>
-
-					{reportParticipation?.report_participation_status_message && (
+				{studentDetails ? (
+					<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
 						<ListItemStyle
-							title="pesan"
+							title="Nama"
+							description={studentDetails?.student.student_name}
+						/>
+						<ListItemStyle
+							title="NIM"
+							description={studentDetails?.student.student_nim}
+						/>
+						<ListItemStyle
+							title="Prodi"
+							description={studentDetails?.student.study_program_name}
+						/>
+						<ListItemStyle
+							title="Jurusan"
+							description={studentDetails?.student.major_name}
+						/>
+						<ListItemStyle
+							title="Program MBKM"
+							description={studentDetails?.mbkm_program.mbkm_program_name}
+						/>
+						<ListItemStyle
+							title="Kategori Program MBKM"
 							description={
-								reportParticipation?.report_participation_status_message
+								studentDetails?.mbkm_program.mbkm_program_category
 							}
 						/>
-					)}
-
-					<ListItemStyle
-						title="Nama"
-						description={reportParticipation?.student.student_name}
-					/>
-					<ListItemStyle
-						title="NIM"
-						description={reportParticipation?.student.student_nim}
-					/>
-					<ListItemStyle
-						title="Program Studi"
-						description={
-							reportParticipation?.list_of_study_program.study_program_name
-						}
-					/>
-					<ListItemStyle
-						title="Jurusan"
-						description={reportParticipation?.list_of_major.major_name}
-					/>
-					<ListItemStyle
-						title="Lampiran Surat"
-						url={reportParticipation?.report_participation_letter}
-					/>
-				</dl>
+						<ListItemStyle
+							title="Total Konversi SKS"
+							description={studentDetails?.sks_convertion_total}
+						/>
+						<ListItemStyle
+							title="Silabus"
+							url={studentDetails?.mbkm_program.mbkm_program_syllabus}
+						/>
+					</dl>
+				) : (
+					<Alert color="failure" icon={FiAlertTriangle}>
+						<span>
+							<h1> Sedang Menunggu Konversi SKS!</h1>
+						</span>
+					</Alert>
+				)}
 			</div>
-
-			{currentUser.user_role === "academic" && (
-				<div className="bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
-					<div id="textarea" className="mt-5">
-						<div className="mb-2 block">
-							<Label htmlFor="comment" value="Tinggalkan Pesan" />
-						</div>
-						<Textarea
-							id="comment"
-							placeholder="message..."
-							required={true}
-							value={statusMessage}
-							onChange={(e) => setStatusMessage(e.target.value)}
-							rows={4}
-						/>
-					</div>
-					<div className="flex justify-end items-center mt-5">
-						<ButtonStyle
-							onClick={() => handleChangeStatusApproval("rejected")}
-							title="Tolak"
-							color="failure"
-							className="mx-2"
-						/>
-						<ButtonStyle
-							title="Terima"
-							className="mx-2"
-							onClick={() => handleChangeStatusApproval("accepted")}
-						/>
-					</div>
-				</div>
-			)}
 		</div>
 	);
 };

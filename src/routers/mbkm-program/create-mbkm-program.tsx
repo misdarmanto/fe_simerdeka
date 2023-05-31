@@ -8,13 +8,10 @@ import { ref } from "firebase/storage";
 import { storage } from "../../configs/firebase";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import { MbkmProgramCreateTypes } from "../../models/mbkm-program";
-import {
-	ListOfMajorTypes,
-	ListOfStudyProgramTypes,
-} from "../../models/list-of-major-and-study-program";
+import { ListOfStudyProgramTypes } from "../../models/list-of-major-and-study-program";
 import { SemesterTypes } from "../../models/semester";
 
-const MbkmProgramCreat = () => {
+const MbkmProgramCreatView = () => {
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
 	const [listOfStudyProgram, setListOfStudyProgram] = useState<
 		ListOfStudyProgramTypes[]
@@ -183,4 +180,4 @@ const MbkmProgramCreat = () => {
 	);
 };
 
-export default MbkmProgramCreat;
+export default MbkmProgramCreatView;

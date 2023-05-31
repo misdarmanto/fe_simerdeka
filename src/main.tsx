@@ -8,7 +8,6 @@ import ErrorPage from "./error-page";
 import Root from "./routers/root";
 import FaQ from "./routers/faq";
 import LogActivity from "./routers/log-activity";
-import MbkmSummary from "./routers/mbkm-summary";
 import ProgramProposal from "./routers/program-proposal";
 import StudyProgram from "./routers/study-program";
 import ManageUser from "./routers/manage-users";
@@ -23,16 +22,16 @@ import ReportParicipationDetailView from "./routers/report-participation/detail-
 import SemesterListView from "./routers/semester/list-semester";
 import SemesterCreateView from "./routers/semester/create-semester";
 import SemesterDetail from "./routers/semester/detail-semester";
-import MbkmProgramList from "./routers/mbkm-program/list-mbkm-program";
-import MbkmProgramCreat from "./routers/mbkm-program/create-mbkm-program";
-import MbkmProgramDetail from "./routers/mbkm-program/detail-mbkm-program";
 import StudentListView from "./routers/student/list-student";
 import StudentDetailView from "./routers/student/detail-student";
-import MyMbkmProgramList from "./routers/mbkm-program-student/list-mbkm-program-student";
-import MyMbkmProgramDetail from "./routers/mbkm-program-student/detail-mbkm-program-student";
 import MbkmProgramStudentDetail from "./routers/mbkm-program-student/detail-mbkm-program-student";
 import MbkmProgramStudentList from "./routers/mbkm-program-student/list-mbkm-program-student";
 import MbkmProgramStudentCreat from "./routers/mbkm-program-student/create-mbkm-program-student";
+import MbkmProgramEditView from "./routers/mbkm-program/edit-mbkm-program";
+import MbkmProgramCreatView from "./routers/mbkm-program/create-mbkm-program";
+import MbkmProgramDetailView from "./routers/mbkm-program/detail-mbkm-program";
+import MbkmProgramListView from "./routers/mbkm-program/list-mbkm-program";
+import LogBookListView from "./routers/log-book";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -56,15 +55,20 @@ const privateRouter = createBrowserRouter([
 			//mbkm program
 			{
 				path: "/mbkm-programs",
-				element: <MbkmProgramList />,
+				element: <MbkmProgramListView />,
 			},
 			{
 				path: "/mbkm-programs/create",
-				element: <MbkmProgramCreat />,
+				element: <MbkmProgramCreatView />,
 			},
 			{
 				path: "/mbkm-programs/detail/:mbkmProgramId",
-				element: <MbkmProgramDetail />,
+				element: <MbkmProgramDetailView />,
+			},
+
+			{
+				path: "/mbkm-programs/edit/:mbkmProgramId",
+				element: <MbkmProgramEditView />,
 			},
 
 			//student program
@@ -99,8 +103,8 @@ const privateRouter = createBrowserRouter([
 			//mbkm summary
 
 			{
-				path: "/mbkm-summaries",
-				element: <MbkmSummary />,
+				path: "/log-books",
+				element: <LogBookListView />,
 			},
 			{
 				path: "/program-proposal",

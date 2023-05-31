@@ -11,19 +11,19 @@ import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
 import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
 
-const HomeIcon = AiOutlineHome;
-const RecomendationLetterIcon = AiOutlineAudit;
-const MyProgramIcon = AiOutlineFolderOpen;
-const ProgramProposalICon = AiOutlineFile;
-const FaQIcon = BsQuestionCircle;
-const MbkmProgramIcon = AiOutlineFolderOpen;
-const StudenIcon = FaUserGraduate;
-const StudyProgramIcon = AiOutlineFundProjectionScreen;
-const MbkmSummaryIcon = FiFileText;
-const ManageUserIcon = BiUser;
-const SemesterIcon = FaRegListAlt;
-const LogActivityIcon = AiOutlineSearch;
-const ReportParicipationIcon = BsPersonVcard;
+export const HomeIcon = AiOutlineHome;
+export const RecomendationLetterIcon = AiOutlineAudit;
+export const MyProgramIcon = AiOutlineFolderOpen;
+export const ProgramProposalICon = AiOutlineFile;
+export const FaQIcon = BsQuestionCircle;
+export const MbkmProgramIcon = AiOutlineFolderOpen;
+export const StudenIcon = FaUserGraduate;
+export const StudyProgramIcon = AiOutlineFundProjectionScreen;
+export const MbkmSummaryIcon = FiFileText;
+export const ManageUserIcon = BiUser;
+export const SemesterIcon = FaRegListAlt;
+export const LogActivityIcon = AiOutlineSearch;
+export const ReportParicipationIcon = BsPersonVcard;
 
 export const BASE_MENU_ICON = {
 	HomeIcon,
@@ -43,18 +43,18 @@ export const BASE_MENU_ICON = {
 
 export const BASE_ICON = {
 	MENU: {
-		HomeIcon,
-		RecomendationLetterIcon,
-		MyProgramIcon,
-		ProgramProposalICon,
-		FaQIcon,
-		MbkmProgramIcon,
-		SemesterIcon,
-		StudyProgramIcon,
-		StudenIcon,
-		MbkmSummaryIcon,
-		ManageUserIcon,
-		LogActivityIcon,
-		ReportParicipationIcon,
+		HomeIcon: AiOutlineHome,
+		RecomendationLetterIcon: AiOutlineAudit,
+		MyProgramIcon: AiOutlineFolderOpen,
+		ProgramProposalICon: AiOutlineFile,
+		FaQIcon: BsQuestionCircle,
+		MbkmProgramIcon: AiOutlineFolderOpen,
+		StudenIcon: FaUserGraduate,
+		StudyProgramIcon: AiOutlineFundProjectionScreen,
+		MbkmSummaryIcon: FiFileText,
+		ManageUserIcon: BiUser,
+		SemesterIcon: FaRegListAlt,
+		LogActivityIcon: AiOutlineSearch,
+		ReportParicipationIcon: BsPersonVcard,
 	},
 };
