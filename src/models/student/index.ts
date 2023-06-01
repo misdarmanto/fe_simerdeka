@@ -3,8 +3,8 @@ export interface StudentTypes {
 	student_name: string;
 	student_nim: string;
 	student_email: string;
-	major_id: string;
-	major_name: string;
-	study_program_id: string;
-	study_program_name: string;
+	student_department_id: string;
+	student_department_name: string;
+	student_study_program_id: string;
+	student_study_program_name: string;
 }

@@ -29,9 +29,6 @@ const RecomendationLetterCreate = () => {
 		event.preventDefault();
 		try {
 			const data: RecomendationLetterCreateRequestTypes = {
-				major_id: user.major_id || "",
-				study_program_id: user.study_program_id || "",
-				student_id: user.user_id,
 				recomendation_letter_student_transkrip: recomendatationStudentTranskrip,
 				recomendation_letter_dosen_wali: dosenWali,
 				recomendation_letter_approval_letter: suratPersetujuanDosenWali,
@@ -42,10 +39,10 @@ const RecomendationLetterCreate = () => {
 
 			const httpService = new ServiceHttp();
 			await httpService.post({
-				path: "/recomendation-letter",
+				path: "/recomendation-letters",
 				body: data,
 			});
-			navigate("/recomendation-letter");
+			navigate("/recomendation-letters");
 		} catch (error: any) {
 			console.error(error.message);
 		}
@@ -77,7 +74,7 @@ const RecomendationLetterCreate = () => {
 
 	useEffect(() => {
 		if (user.user_role !== "student") {
-			navigate("/recomendation-letter");
+			navigate("/recomendation-letters");
 		}
 	}, []);
 

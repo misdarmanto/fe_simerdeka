@@ -41,7 +41,7 @@ const SidebarStyle = () => {
 
 	const RecomendationLetterMenu = {
 		title: "Surat Rekomendasi",
-		path: "/recomendation-letter",
+		path: "/recomendation-letters",
 		icon: <AiOutlineAudit />,
 	};
 
@@ -178,7 +178,7 @@ const SidebarStyle = () => {
 		case "study_program":
 			MENUS = prodiMenus;
 			break;
-		case "major":
+		case "department":
 			MENUS = jurusanMenus;
 			break;
 		case "lp3m":

@@ -111,15 +111,15 @@ const privateRouter = createBrowserRouter([
 				element: <ProgramProposal />,
 			},
 			{
-				path: "/recomendation-letter",
+				path: "/recomendation-letters",
 				element: <RecomendationLetterList />,
 			},
 			{
-				path: "/recomendation-letter/create",
+				path: "/recomendation-letters/create",
 				element: <RecomendationLetterCreate />,
 			},
 			{
-				path: "/recomendation-letter/detail/:recomendationLetterId",
+				path: "/recomendation-letters/detail/:recomendationLetterId",
 				element: <RecomendationLetterDetail />,
 			},
 			{

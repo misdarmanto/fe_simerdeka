@@ -1,21 +1,18 @@
-import { FileInput, Label, Textarea, Timeline } from "flowbite-react";
+import { Button, FileInput, Label, Textarea, Timeline } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-	BASE_ICON,
-	BASE_MENU_ICON,
-	BreadcrumbStyle,
-	ButtonStyle,
-} from "../../components";
+import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RootContext } from "../../utils/contextApi";
-import { BiCalendar } from "react-icons/bi";
+import { BiCalendar, BiUpload } from "react-icons/bi";
 import { RecomendationLetterTypes } from "../../models/recomendation-letter";
 import { storage } from "../../configs/firebase";
 import { ref } from "firebase/storage";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import ListItemStyle from "../../components/list";
 import { convertStatusName } from "../../utils/convert";
+import { RiUpload2Fill } from "react-icons/ri";
+import FileUploadButton from "../../components/button/button-upload";
 
 const RecomendationLetterDetail = () => {
 	const [recomendationLetter, setRecomendationLetter] =
@@ -31,10 +28,10 @@ const RecomendationLetterDetail = () => {
 
 	const fecthRecomendationLetter = async () => {
 		const result = await httpService.get({
-			path: `/recomendation-letter/detail/${recomendationLetterId}`,
+			path: `/recomendation-letters/detail/${recomendationLetterId}`,
 		});
-		setRecomendationLetter(result);
 		console.log(result);
+		setRecomendationLetter(result);
 	};
 
 	const handleAddCoverLetter = async (event: any) => {
@@ -50,36 +47,15 @@ const RecomendationLetterDetail = () => {
 	};
 
 	const handleChangeStatusAssignMent = async () => {
-		let assignTo = "";
-
-		switch (currentUser.user_role) {
-			case "study_program":
-				assignTo = "major";
-				break;
-			case "major":
-				assignTo = "lp3m";
-				break;
-			case "lp3m":
-				assignTo = "academic";
-				break;
-			case "academic":
-				assignTo = "done";
-				break;
-			default:
-				break;
-		}
-
 		await httpService.patch({
-			path: `/recomendation-letter/change-status`,
+			path: `/recomendation-letters/change-status`,
 			body: {
 				recomendation_letter_id: recomendationLetterId,
-				assign_to: assignTo,
-				student_id: recomendationLetter?.student_id,
-				approval_letter: recomendationLetterApproval,
+				recomendation_letter_approval_letter: recomendationLetterApproval,
 			},
 		});
 
-		navigation("/recomendation-letter");
+		navigation("/recomendation-letters");
 	};
 
 	const handleChangeStatusApproval = async (status: string) => {
@@ -91,7 +67,7 @@ const RecomendationLetterDetail = () => {
 				status_message: statusMessage,
 			},
 		});
-		navigation("/recomendation-letter");
+		navigation("/recomendation-letters");
 	};
 
 	useEffect(() => {
@@ -105,11 +81,11 @@ const RecomendationLetterDetail = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/recomendation-letter",
+						link: "/recomendation-letters",
 						title: "Surat Rekomendasi",
 					},
 					{
-						link: "/recomendation-letter" + recomendationLetterId,
+						link: "/recomendation-letters/" + recomendationLetterId,
 						title: "Detail",
 					},
 				]}
@@ -127,7 +103,7 @@ const RecomendationLetterDetail = () => {
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
-					{recomendationLetter?.recomendation_letter_assign_to_major && (
+					{recomendationLetter?.recomendation_letter_assign_to_department && (
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
@@ -193,11 +169,15 @@ const RecomendationLetterDetail = () => {
 					/>
 					<ListItemStyle
 						title="Prodi"
-						description={recomendationLetter?.student?.study_program_name}
+						description={
+							recomendationLetter?.student?.student_study_program_name
+						}
 					/>
 					<ListItemStyle
 						title="Jurusan"
-						description={recomendationLetter?.student?.major_name}
+						description={
+							recomendationLetter?.student?.student_department_name
+						}
 					/>
 					<ListItemStyle
 						title="Dosen Wali"
@@ -233,11 +213,12 @@ const RecomendationLetterDetail = () => {
 							}
 						/>
 					)}
-					{recomendationLetter?.recomendation_letter_from_major && (
+					{recomendationLetter?.recomendation_letter_from_department && (
 						<ListItemStyle
 							title="Surat Pengantar Jurusan"
 							url={
-								recomendationLetter?.recomendation_letter_from_major + ""
+								recomendationLetter?.recomendation_letter_from_department +
+								""
 							}
 						/>
 					)}
@@ -264,9 +245,9 @@ const RecomendationLetterDetail = () => {
 				<div className="bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 					<div>
 						<div className="mb-2 block">
-							<Label htmlFor="file" value="Surat Pengantar" />
+							<label htmlFor="file">surat pengantar</label>
 						</div>
-						<FileInput id="file" onChange={handleAddCoverLetter} />
+						<FileUploadButton onUpload={setRecomendationLetterApproval} />
 					</div>
 
 					<div id="textarea" className="mt-5">
@@ -291,6 +272,7 @@ const RecomendationLetterDetail = () => {
 						/>
 						<ButtonStyle
 							title="Terima"
+							disabled={recomendationLetterApproval === ""}
 							className="mx-2"
 							onClick={() => handleChangeStatusAssignMent()}
 						/>

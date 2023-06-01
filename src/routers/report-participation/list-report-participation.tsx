@@ -16,7 +16,7 @@ const ReportParticipationListView = () => {
 	const fecthData = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/report-participations/all",
+			url: CONFIG.base_url_api + "/report-participations",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -28,7 +28,7 @@ const ReportParticipationListView = () => {
 		console.log(result);
 
 		setListProgram({
-			link: "report-participations/all",
+			link: "report-participations",
 			data: result,
 			page: 0,
 			size: 10,
@@ -75,7 +75,7 @@ const ReportParticipationListView = () => {
 			title: "Prodi",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.list_of_study_program.study_program_name}
+					{data.student.student_study_program_name}
 				</td>
 			),
 		},
@@ -84,7 +84,7 @@ const ReportParticipationListView = () => {
 			title: "Jurusan",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.list_of_major.major_name}
+					{data.student.student_department_name}
 				</td>
 			),
 		},

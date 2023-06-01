@@ -18,7 +18,7 @@ const RecomendationLetterList = () => {
 	const fecthRecomendationLetter = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/recomendation-letter/all",
+			url: CONFIG.base_url_api + "/recomendation-letters",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -29,7 +29,7 @@ const RecomendationLetterList = () => {
 
 		console.log(result);
 		setListOfRecomendationLetter({
-			link: "recomendation-letter/all",
+			link: "recomendation-letters",
 			data: result,
 			page: 0,
 			size: 10,
@@ -79,7 +79,7 @@ const RecomendationLetterList = () => {
 			title: "Jurusan",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.student.major_name}
+					{data.student.student_department_name}
 				</td>
 			),
 		},
@@ -88,7 +88,7 @@ const RecomendationLetterList = () => {
 			title: "Prodi",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.student.study_program_name}
+					{data.student.student_study_program_name}
 				</td>
 			),
 		},
@@ -158,7 +158,7 @@ const RecomendationLetterList = () => {
 					);
 				}
 
-				if (data.recomendation_letter_assign_to_major) {
+				if (data.recomendation_letter_assign_to_department) {
 					return (
 						<td key={index + "s"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -194,7 +194,7 @@ const RecomendationLetterList = () => {
 				<td key={index + "action"}>
 					<div>
 						<Link
-							to={`/recomendation-letter/detail/${data.recomendation_letter_id}`}
+							to={`/recomendation-letters/detail/${data.recomendation_letter_id}`}
 						>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
@@ -241,7 +241,7 @@ const RecomendationLetterList = () => {
 						<ButtonStyle
 							title="Buat"
 							color="light"
-							onClick={() => navigate("/recomendation-letter/create")}
+							onClick={() => navigate("/recomendation-letters/create")}
 						/>
 					)}
 				</div>

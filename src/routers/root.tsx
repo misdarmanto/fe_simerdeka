@@ -28,12 +28,10 @@ const Root = () => {
 		if (!userCredential) {
 			localStorage.setItem(CONFIG.local_storage_key, JSON.stringify(LIST_USER[0]));
 			setRole(LIST_USER[0].user_role);
-			//setCurrentUser(LIST_USER[0]);
 			await fecthCurrentUser();
 		} else {
 			const user: UserTypes = JSON.parse(userCredential + "");
 			setRole(user.user_role);
-			//setCurrentUser(user);
 			await fecthCurrentUser();
 		}
 		setIsLoading(false);

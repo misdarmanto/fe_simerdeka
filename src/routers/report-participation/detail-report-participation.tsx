@@ -92,12 +92,12 @@ const ReportParicipationDetailView = () => {
 					<ListItemStyle
 						title="Program Studi"
 						description={
-							reportParticipation?.list_of_study_program.study_program_name
+							reportParticipation?.student.student_study_program_name
 						}
 					/>
 					<ListItemStyle
 						title="Jurusan"
-						description={reportParticipation?.list_of_major.major_name}
+						description={reportParticipation?.student.student_department_name}
 					/>
 					<ListItemStyle
 						title="Lampiran Surat"
