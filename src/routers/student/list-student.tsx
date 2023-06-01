@@ -16,7 +16,7 @@ const StudentListView = () => {
 	const fecthStudents = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/users/students/registered",
+			url: CONFIG.base_url_api + "/students?registered=true",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -26,7 +26,7 @@ const StudentListView = () => {
 		});
 
 		setListOfStudent({
-			link: "/users/students/registered",
+			link: "/students?registered=true",
 			data: result,
 			page: 0,
 			size: 10,
@@ -55,7 +55,7 @@ const StudentListView = () => {
 			title: "Nama",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.user_name}
+					{data.student_name}
 				</td>
 			),
 		},
@@ -64,7 +64,16 @@ const StudentListView = () => {
 			title: "email",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
-					{data.user_email}
+					{data.student_email}
+				</td>
+			),
+		},
+
+		{
+			title: "jurusan",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
+					{data.student_department_name}
 				</td>
 			),
 		},
@@ -117,14 +126,6 @@ const StudentListView = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-
-					{currentUser.user_role === "student" && (
-						<ButtonStyle
-							title="Create"
-							color="light"
-							onClick={() => navigate("/report-participations/create")}
-						/>
-					)}
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />

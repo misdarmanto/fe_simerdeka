@@ -9,6 +9,7 @@ import { ServiceHttp } from "../../services/api";
 import { RootContext } from "../../utils/contextApi";
 import { UserTypes } from "../../models/auth";
 import { ReportParticipationTypes } from "../../models/report-participation";
+import FileUploadButton from "../../components/button/button-upload";
 
 const ReportParicipationCreateView = () => {
 	const { currentUser }: any = useContext(RootContext);
@@ -35,17 +36,6 @@ const ReportParicipationCreateView = () => {
 		}
 	};
 
-	const handleUploadReportParticipationFile = async (event: any) => {
-		const file = event.target.files[0];
-		const imageRef = ref(storage, "request-Lor/" + file.name);
-		try {
-			const url = await uploadImageToFirebase({ imageRef, file });
-			setReportParticipationFile(url);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
 	useEffect(() => {
 		if (user.user_role !== "student") {
 			navigate("/report-participations");
@@ -67,7 +57,7 @@ const ReportParicipationCreateView = () => {
 				]}
 				icon={BASE_MENU_ICON.ReportParicipationIcon}
 			/>
-			{!user.user_is_registered && (
+			{/* {!user.user_is_registered && (
 				<Alert color="failure" icon={BASE_MENU_ICON.FaQIcon} className="my-5">
 					<span>
 						<p>
@@ -76,7 +66,7 @@ const ReportParicipationCreateView = () => {
 						</p>
 					</span>
 				</Alert>
-			)}
+			)} */}
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 					<div>
@@ -86,11 +76,7 @@ const ReportParicipationCreateView = () => {
 								value="upload bukti surat keikutsertaan"
 							/>
 						</div>
-						<FileInput
-							disabled={!user.user_is_registered}
-							id="file"
-							onChange={handleUploadReportParticipationFile}
-						/>
+						<FileUploadButton onUpload={setReportParticipationFile} />
 					</div>
 
 					<div className="flex justify-end">
@@ -98,7 +84,7 @@ const ReportParicipationCreateView = () => {
 							title="Submit"
 							type="submit"
 							color="dark"
-							disabled={!user.user_is_registered}
+							// disabled={!user.user_is_registered}
 						/>
 					</div>
 				</form>

@@ -37,7 +37,7 @@ const SidebarStyle = () => {
 		setOpenSideBar(!openSideBar);
 	};
 
-	const HomeMenu = { title: "Home", path: "/", icon: <AiOutlineHome /> };
+	const HomeMenu = { title: "Beranda", path: "/", icon: <AiOutlineHome /> };
 
 	const RecomendationLetterMenu = {
 		title: "Surat Rekomendasi",
@@ -46,13 +46,13 @@ const SidebarStyle = () => {
 	};
 
 	const MBKMProgramStudentMenu = {
-		title: "My Program",
+		title: "Program Saya",
 		path: "/mbkm-programs/students",
 		icon: <AiOutlineFolderOpen />,
 	};
 
 	const MBKMProgramMenu = {
-		title: "MBKM Program",
+		title: "Program MBKM",
 		path: "/mbkm-programs",
 		icon: <AiOutlineFolderOpen />,
 	};
@@ -76,7 +76,7 @@ const SidebarStyle = () => {
 	};
 
 	const StudyProgramMenu = {
-		title: "Study Program",
+		title: "Program Studi",
 		path: "/study-programs",
 		icon: <AiOutlineFundProjectionScreen />,
 	};
@@ -100,7 +100,7 @@ const SidebarStyle = () => {
 	};
 
 	const LogActivityMenu = {
-		title: "Log Activity",
+		title: "Log aktifitas",
 		path: "/log-activities",
 		icon: <AiOutlineSearch />,
 	};
@@ -142,11 +142,11 @@ const SidebarStyle = () => {
 	const LP3MMenus = [
 		HomeMenu,
 		StudentMenu,
+		StudyProgramMenu,
 		SemesterMenu,
 		MBKMProgramMenu,
 		ReportParticipationMenu,
 		RecomendationLetterMenu,
-		StudyProgramMenu,
 		MBKMLogBookMenu,
 		// ManageUserMenu,
 		LogActivityMenu,
@@ -156,6 +156,7 @@ const SidebarStyle = () => {
 	const AcademicMenus = [
 		HomeMenu,
 		StudentMenu,
+		StudyProgramMenu,
 		MBKMProgramMenu,
 		ReportParticipationMenu,
 		RecomendationLetterMenu,

@@ -9,7 +9,8 @@ import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 
 const MbkmProgramDetailView = () => {
-	const [listOfStudent, setListOfStudent] = useState<any>();
+	const [listOfStudyProgramRegistered, setListOfStudyProgramRegistered] =
+		useState<any>();
 	const [mbkmProgram, setMbkmProgram] = useState<MbkmProgramTypes>();
 
 	const [isLoading, setIsLoading] = useState(true);
@@ -23,10 +24,10 @@ const MbkmProgramDetailView = () => {
 		setMbkmProgram(result);
 	};
 
-	const fecthStudents = async () => {
+	const fecthStudyPrograms = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + `/sks-convertions/detail/${mbkmProgramId}`,
+			url: CONFIG.base_url_api + `/study-programs?registered=true`,
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -35,8 +36,8 @@ const MbkmProgramDetailView = () => {
 			},
 		});
 
-		setListOfStudent({
-			link: "/sks-convertions",
+		setListOfStudyProgramRegistered({
+			link: "/study-programs?registered=1",
 			data: result,
 			page: 0,
 			size: 10,
@@ -60,16 +61,7 @@ const MbkmProgramDetailView = () => {
 			title: "Nama",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_name}
-				</td>
-			),
-		},
-
-		{
-			title: "nim",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_nim}
+					{data.study_program_name}
 				</td>
 			),
 		},
@@ -78,16 +70,16 @@ const MbkmProgramDetailView = () => {
 			title: "email",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_email}
+					{data.study_program_email}
 				</td>
 			),
 		},
 
 		{
-			title: "konversi sks",
+			title: "jurusan",
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.sks_convertion_total}
+				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
+					{data.study_program_department_name}
 				</td>
 			),
 		},
@@ -95,7 +87,7 @@ const MbkmProgramDetailView = () => {
 
 	const fecthData = async () => {
 		await fecthDetailMbkmProgram();
-		await fecthStudents();
+		await fecthStudyPrograms();
 		setIsLoading(false);
 	};
 
@@ -140,9 +132,9 @@ const MbkmProgramDetailView = () => {
 
 			<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 				<div className="mb-2 block">
-					<Label value="Daftar Mahasiswa" />
+					<Label value="Daftar Prodi" />
 				</div>
-				<TableStyle header={header} table={listOfStudent} />
+				<TableStyle header={header} table={listOfStudyProgramRegistered} />
 			</div>
 		</div>
 	);

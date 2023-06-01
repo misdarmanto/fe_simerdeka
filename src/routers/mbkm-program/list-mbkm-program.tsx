@@ -55,7 +55,7 @@ const MbkmProgramListView = () => {
 
 	const fecthSemester = async () => {
 		const result = await httpService.get({
-			path: "/semesters/all",
+			path: "/semesters",
 		});
 		if (result) {
 			setListOfSemester(result.items);
@@ -113,27 +113,28 @@ const MbkmProgramListView = () => {
 				<td key={index + "action"}>
 					<div className="flex">
 						<Link to={`/mbkm-programs/detail/${data.mbkm_program_id}`}>
-							<ButtonStyle title="Detail" color="light" className="mx-1" />
+							<ButtonStyle
+								title="Detail"
+								size="xs"
+								color="light"
+								className="mx-1"
+							/>
 						</Link>
-
+						{/* <Link to={`/mbkm-programs/edit/${data.mbkm_program_id}`}>
+							<ButtonStyle
+								title="Edit"
+								size="xs"
+								color="light"
+								className="mx-1"
+							/>
+						</Link> */}
 						<ButtonStyle
 							title="Hapus"
+							size="xs"
 							color="failure"
 							onClick={() => setOpenModalDelete(true)}
 							className="mx-1"
 						/>
-
-						{user.user_role === "study_program" && (
-							<>
-								<Link to={`/mbkm-programs/edit/${data.mbkm_program_id}`}>
-									<ButtonStyle
-										title="Edit"
-										color="light"
-										className="mx-1"
-									/>
-								</Link>
-							</>
-						)}
 					</div>
 				</td>
 			),

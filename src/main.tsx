@@ -32,6 +32,7 @@ import MbkmProgramCreatView from "./routers/mbkm-program/create-mbkm-program";
 import MbkmProgramDetailView from "./routers/mbkm-program/detail-mbkm-program";
 import MbkmProgramListView from "./routers/mbkm-program/list-mbkm-program";
 import LogBookListView from "./routers/log-book";
+import StudyProgramListView from "./routers/study-program";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -148,7 +149,7 @@ const privateRouter = createBrowserRouter([
 			//study program
 			{
 				path: "/study-programs",
-				element: <StudyProgram />,
+				element: <StudyProgramListView />,
 			},
 
 			{

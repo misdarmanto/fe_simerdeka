@@ -11,7 +11,6 @@ import { ref } from "firebase/storage";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import ListItemStyle from "../../components/list";
 import { convertStatusName } from "../../utils/convert";
-import { RiUpload2Fill } from "react-icons/ri";
 import FileUploadButton from "../../components/button/button-upload";
 
 const RecomendationLetterDetail = () => {
