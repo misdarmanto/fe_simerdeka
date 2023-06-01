@@ -8,6 +8,7 @@ export interface ButtonStyleTypes {
 	onClick?: () => void;
 	onSubmit?: () => void;
 	disabled?: boolean;
+	size?: "xs" | "sm" | "md" | "xl";
 }
 
 export const ButtonStyle = ({
@@ -17,13 +18,14 @@ export const ButtonStyle = ({
 	type = "button",
 	onClick,
 	disabled = false,
+	size = "sm",
 }: ButtonStyleTypes) => {
 	return (
 		<Button
 			onClick={onClick}
 			disabled={disabled}
 			type={type}
-			size="sm"
+			size={size}
 			className={"h-5 " + className}
 			color={color}
 		>

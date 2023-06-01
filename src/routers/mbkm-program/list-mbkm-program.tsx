@@ -9,6 +9,7 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 import { SemesterTypes } from "../../models/semester";
 import { UserTypes } from "../../models/auth";
+import ModalStyle from "../../components/modal";
 
 const MbkmProgramListView = () => {
 	const navigate = useNavigate();
@@ -17,6 +18,8 @@ const MbkmProgramListView = () => {
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
 	const [semesterId, setSemesterId] = useState<string>("all");
 	const [isLoading, setIsLoading] = useState(true);
+
+	const [openModalDelete, setOpenModalDelete] = useState(false);
 
 	const { currentUser }: any = useContext(RootContext);
 	const user: UserTypes = currentUser;
@@ -113,14 +116,23 @@ const MbkmProgramListView = () => {
 							<ButtonStyle title="Detail" color="light" className="mx-1" />
 						</Link>
 
+						<ButtonStyle
+							title="Hapus"
+							color="failure"
+							onClick={() => setOpenModalDelete(true)}
+							className="mx-1"
+						/>
+
 						{user.user_role === "study_program" && (
-							<Link to={`/mbkm-programs/edit/${data.mbkm_program_id}`}>
-								<ButtonStyle
-									title="Edit"
-									color="light"
-									className="mx-1"
-								/>
-							</Link>
+							<>
+								<Link to={`/mbkm-programs/edit/${data.mbkm_program_id}`}>
+									<ButtonStyle
+										title="Edit"
+										color="light"
+										className="mx-1"
+									/>
+								</Link>
+							</>
 						)}
 					</div>
 				</td>
@@ -187,6 +199,13 @@ const MbkmProgramListView = () => {
 			</div>
 
 			<TableStyle header={header} table={listMbkmProgram} />
+			<ModalStyle
+				isOpen={openModalDelete}
+				onBtnNoClick={() => setOpenModalDelete(false)}
+				onBtnYesClick={() => setOpenModalDelete(false)}
+				onOpen={() => setOpenModalDelete(!openModalDelete)}
+				title="apakah anda yakin ingin menghapus"
+			/>
 		</div>
 	);
 };

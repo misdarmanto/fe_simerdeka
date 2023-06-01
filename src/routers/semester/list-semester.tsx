@@ -8,17 +8,37 @@ import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 import { converDateTimeFromDB } from "../../utils/convert";
+import ModalStyle from "../../components/modal";
+import { SemesterTypes } from "../../models/semester";
 
 const SemesterListView = () => {
 	const [listSemester, setListSemester] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const { currentUser }: any = useContext(RootContext);
 	const navigate = useNavigate();
+	const [openModalDelete, setOpenModalDelete] = useState(false);
+	const [modalDeleteData, setModalDeleteData] = useState<SemesterTypes>();
+	const httpService = new ServiceHttp();
+
+	const handleModalDelete = () => {
+		setOpenModalDelete(!openModalDelete);
+	};
+
+	const handleModaDataSelected = (item: SemesterTypes) => {
+		setModalDeleteData(item);
+	};
+
+	const handleDeleteSemester = async () => {
+		await httpService.remove({
+			path: `/semesters?semester_id=${modalDeleteData?.semester_id}`,
+		});
+		setOpenModalDelete(false);
+		window.location.reload();
+	};
 
 	const fecthData = async () => {
-		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/semesters/all",
+			url: CONFIG.base_url_api + "/semesters",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -28,7 +48,7 @@ const SemesterListView = () => {
 		});
 
 		setListSemester({
-			link: "/semesters/all",
+			link: "/semesters",
 			data: result,
 			page: 0,
 			size: 10,
@@ -108,10 +128,20 @@ const SemesterListView = () => {
 			action: true,
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
-					<div>
+					<div className="flex items-center">
 						<Link to={`/semesters/detail/${data.semester_id}`}>
-							<ButtonStyle title="Detail" color="light" />
+							<ButtonStyle title="Detail" size="xs" color="light" />
 						</Link>
+						<ButtonStyle
+							title="Hapus"
+							size="xs"
+							color="failure"
+							className="mx-2"
+							onClick={() => {
+								handleModalDelete();
+								handleModaDataSelected(data);
+							}}
+						/>
 					</div>
 				</td>
 			),
@@ -163,6 +193,13 @@ const SemesterListView = () => {
 				</div>
 			</div>
 
+			<ModalStyle
+				onBtnNoClick={handleModalDelete}
+				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.semester_name}`}
+				isOpen={openModalDelete}
+				onBtnYesClick={handleDeleteSemester}
+				onOpen={handleModalDelete}
+			/>
 			<TableStyle header={header} table={listSemester} />
 		</div>
 	);

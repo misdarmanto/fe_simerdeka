@@ -28,7 +28,7 @@ const MbkmProgramCreatView = () => {
 
 	const fecthSemester = async () => {
 		const result = await httpService.get({
-			path: "/semesters/all",
+			path: "/semesters?semester_status=active",
 		});
 		console.log(result.items);
 		if (result) {

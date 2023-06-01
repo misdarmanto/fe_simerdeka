@@ -9,15 +9,10 @@ import { RootContext } from "../../utils/contextApi";
 const SemesterDetail = () => {
 	const [semester, setSemester] = useState<SemesterTypes>();
 	const [semesterName, setSemesterName] = useState<string>();
-	const [semesterStatus, setSemesterStatus] = useState<string>();
 	const { currentUser }: any = useContext(RootContext);
 	const { semesterId } = useParams();
 
 	const navigate = useNavigate();
-
-	const handleSelectSemester = (status: string) => {
-		setSemesterStatus(status);
-	};
 
 	const httpService = new ServiceHttp();
 
@@ -28,7 +23,7 @@ const SemesterDetail = () => {
 				semester_id: semester?.semester_id,
 				semester_name: semesterName,
 				semester_created_by: currentUser.user_role,
-				semester_status: semesterStatus,
+				semester_status: "active",
 			};
 
 			await httpService.patch({
@@ -47,7 +42,6 @@ const SemesterDetail = () => {
 		});
 		setSemester(result);
 		setSemesterName(result.semester_name + "");
-		setSemesterStatus(result.semester_status);
 	};
 
 	useEffect(() => {
@@ -83,30 +77,8 @@ const SemesterDetail = () => {
 							required={true}
 						/>
 					</div>
-
-					<fieldset className="flex flex-col gap-4" id="radio">
-						<legend className="mb-5">Status Semester</legend>
-						<div className="flex items-center gap-2">
-							<Radio
-								defaultChecked={semesterStatus === "active"}
-								name="semester-status"
-								value="active"
-								onChange={(e) => handleSelectSemester(e.target.value)}
-							/>
-							<Label htmlFor="united-state">Aktif</Label>
-						</div>
-						<div className="flex items-center gap-2">
-							<Radio
-								defaultChecked={semesterStatus === "non-active"}
-								name="semester-status"
-								value="non-active"
-								onChange={(e) => handleSelectSemester(e.target.value)}
-							/>
-							<Label htmlFor="united-state">Tidak Aktif</Label>
-						</div>
-					</fieldset>
 					<div className="flex justify-end">
-						<ButtonStyle title="Update Semester" type="submit" color="dark" />
+						<ButtonStyle title="Aktifkan" type="submit" color="dark" />
 					</div>
 				</form>
 			</div>

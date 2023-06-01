@@ -66,39 +66,6 @@ const SemesterCreateView = () => {
 							required={true}
 						/>
 					</div>
-
-					{/* <div id="select">
-						<div className="mb-2 block">
-							<Label htmlFor="select student" value="select student" />
-						</div>
-						<Select
-							onChange={(e) => setSemesterType(e.target.value)}
-							required={true}
-						>
-							<option value={"ganjil"}>Ganjil</option>
-							<option value={"genap"}>Genap</option>
-						</Select>
-					</div> */}
-					<fieldset className="flex flex-col gap-4" id="radio">
-						<legend className="mb-5">Status Semester</legend>
-						<div className="flex items-center gap-2">
-							<Radio
-								defaultChecked
-								name="semester-status"
-								value="active"
-								onChange={(e) => handleSelectSemester(e.target.value)}
-							/>
-							<Label htmlFor="united-state">Aktif</Label>
-						</div>
-						<div className="flex items-center gap-2">
-							<Radio
-								name="semester-status"
-								value="non-active"
-								onChange={(e) => handleSelectSemester(e.target.value)}
-							/>
-							<Label htmlFor="united-state">Tidak Aktif</Label>
-						</div>
-					</fieldset>
 					<div className="flex justify-end">
 						<ButtonStyle title="Buat Semester" type="submit" color="dark" />
 					</div>
