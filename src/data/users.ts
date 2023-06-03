@@ -1,4 +1,4 @@
-import { UserTypes } from "../models/auth";
+import { UserTypes } from "../models/user";
 
 export const LIST_USER: UserTypes[] = [
 	//student

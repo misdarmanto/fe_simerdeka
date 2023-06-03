@@ -1,4 +1,4 @@
-import { StudentTypes } from "../student";
+import { StudentTypes } from "./student";
 
 export interface RecomendationLetterTypes {
 	recomendation_letter_id?: string;

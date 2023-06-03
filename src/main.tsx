@@ -31,8 +31,10 @@ import MbkmProgramEditView from "./routers/mbkm-program/edit-mbkm-program";
 import MbkmProgramCreatView from "./routers/mbkm-program/create-mbkm-program";
 import MbkmProgramDetailView from "./routers/mbkm-program/detail-mbkm-program";
 import MbkmProgramListView from "./routers/mbkm-program/list-mbkm-program";
-import LogBookListView from "./routers/log-book";
+import LogBookListView from "./routers/log-book/list-log-book";
 import StudyProgramListView from "./routers/study-program";
+import LogBooksCreateView from "./routers/log-book/create-log-book";
+import LogBookDetailView from "./routers/log-book/detail-log-book";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -101,12 +103,22 @@ const privateRouter = createBrowserRouter([
 				element: <ReportParicipationDetailView />,
 			},
 
-			//mbkm summary
+			//log books
 
 			{
 				path: "/log-books",
 				element: <LogBookListView />,
 			},
+			{
+				path: "/log-books/create",
+				element: <LogBooksCreateView />,
+			},
+			{
+				path: "/log-books/detail/:logBookId",
+				element: <LogBookDetailView />,
+			},
+
+			//program proposal
 			{
 				path: "/program-proposal",
 				element: <ProgramProposal />,

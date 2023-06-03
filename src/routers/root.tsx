@@ -4,7 +4,7 @@ import SidebarStyle from "../layout/Sidebar";
 import { RootContext } from "../utils/contextApi";
 import { useEffect, useState } from "react";
 import { CONFIG } from "../configs";
-import { UserTypes } from "../models/auth";
+import { UserTypes } from "../models/user";
 import { LIST_USER } from "../data/users";
 import { Footer } from "flowbite-react";
 import { ServiceHttp } from "../services/api";

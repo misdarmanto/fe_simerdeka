@@ -8,7 +8,7 @@ import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 import { SemesterTypes } from "../../models/semester";
-import { UserTypes } from "../../models/auth";
+import { UserTypes } from "../../models/user";
 import { converDateTimeFromDB } from "../../utils/convert";
 
 const MbkmProgramStudentList = () => {

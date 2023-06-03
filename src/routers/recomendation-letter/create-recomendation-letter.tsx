@@ -8,7 +8,7 @@ import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RootContext } from "../../utils/contextApi";
 import { RecomendationLetterCreateRequestTypes } from "../../models/recomendation-letter";
-import { UserTypes } from "../../models/auth";
+import { UserTypes } from "../../models/user";
 
 const RecomendationLetterCreate = () => {
 	const { currentUser }: any = useContext(RootContext);

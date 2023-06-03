@@ -7,7 +7,7 @@ import { uploadImageToFirebase } from "../../utils/firebase";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RootContext } from "../../utils/contextApi";
-import { UserTypes } from "../../models/auth";
+import { UserTypes } from "../../models/user";
 import { ReportParticipationTypes } from "../../models/report-participation";
 import FileUploadButton from "../../components/button/button-upload";
 

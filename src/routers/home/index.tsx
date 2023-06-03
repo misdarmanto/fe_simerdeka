@@ -24,6 +24,10 @@ const Home = () => {
 		setSummaries(result);
 	};
 
+	const handleNavigate = (path: string) => {
+		navigation(path);
+	};
+
 	const isAuth = true;
 	useEffect(() => {
 		if (!isAuth) {
@@ -34,15 +38,24 @@ const Home = () => {
 
 	return (
 		<div className="flex flex-wrap">
-			<div className="flex items-center bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64">
+			<div
+				onClick={() => handleNavigate("/students")}
+				className="flex items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64"
+			>
 				<StudenIcon size={30} className="mr-5" />{" "}
 				<p>{summaries?.total_student} Mahasiswa</p>
 			</div>
-			<div className="flex items-center bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64">
+			<div
+				onClick={() => handleNavigate("/study-programs")}
+				className="flex items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64"
+			>
 				<StudyProgramIcon size={30} className="mr-5" />{" "}
 				<p>{summaries?.total_study_program} Prodi</p>
 			</div>
-			<div className="flex items-center bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64">
+			<div
+				onClick={() => handleNavigate("/mbkm-programs")}
+				className="flex items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64"
+			>
 				<MbkmProgramIcon size={30} className="mr-5" />{" "}
 				<p>{summaries?.total_program} Program MBKM</p>
 			</div>

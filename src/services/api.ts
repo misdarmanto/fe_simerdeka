@@ -1,6 +1,6 @@
 import axios from "axios";
 import { CONFIG } from "../configs";
-import { UserTypes } from "../models/auth";
+import { UserTypes } from "../models/user";
 
 export interface GetTableDataTypes {
 	url: string;

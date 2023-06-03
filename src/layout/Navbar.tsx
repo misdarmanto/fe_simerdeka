@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Dropdown } from "flowbite-react";
 import { RootContext } from "../utils/contextApi";
 import { LIST_USER } from "../data/users";
-import { UserTypes } from "../models/auth";
+import { UserTypes } from "../models/user";
 import { CONFIG } from "../configs";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logos/bgw_simerdeka.jpeg";

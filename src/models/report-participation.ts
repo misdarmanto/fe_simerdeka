@@ -1,5 +1,6 @@
-import { ListOfMajor, ListOfStudyProgram } from "../list-of-major-and-study-program";
-import { StudentTypes } from "../student";
+import { DepartmentTypes } from "./department";
+import { StudentTypes } from "./student";
+import { StudyProgramTypes } from "./study-program";
 
 export interface ReportParticipationTypes {
 	report_participation_id?: string;
@@ -13,8 +14,8 @@ export interface ReportParticipationTypes {
 
 export interface ReportParticipationDetailTypes extends ReportParticipationTypes {
 	student: StudentTypes;
-	list_of_study_program: ListOfStudyProgram;
-	list_of_major: ListOfMajor;
+	list_of_study_program: StudyProgramTypes;
+	list_of_major: DepartmentTypes;
 }
 
 export interface ReportParticipationUpdateTypes {
