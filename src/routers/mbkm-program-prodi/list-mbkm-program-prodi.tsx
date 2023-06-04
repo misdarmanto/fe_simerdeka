@@ -9,10 +9,8 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 import { SemesterTypes } from "../../models/semester";
 import { UserTypes } from "../../models/user";
-import ModalStyle from "../../components/modal";
-import { MbkmProgramTypes } from "../../models/mbkm-program";
 
-const MbkmProgramListView = () => {
+const MbkmProgramProdiListView = () => {
 	const navigate = useNavigate();
 
 	const [listMbkmProgram, setListMbkmProgram] = useState<any>();
@@ -20,29 +18,9 @@ const MbkmProgramListView = () => {
 	const [semesterId, setSemesterId] = useState<string>("all");
 	const [isLoading, setIsLoading] = useState(true);
 
-	const [openModalDelete, setOpenModalDelete] = useState(false);
-	const [modalDeleteData, setModalDeleteData] = useState<MbkmProgramTypes>();
-
 	const { currentUser }: any = useContext(RootContext);
 	const user: UserTypes = currentUser;
 	const httpService = new ServiceHttp();
-
-	const handleModalDelete = () => {
-		setOpenModalDelete(!openModalDelete);
-	};
-
-	const handleModaDataSelected = (item: MbkmProgramTypes) => {
-		setModalDeleteData(item);
-	};
-
-	const handleDeleteMbkmProgram = async () => {
-		console.log(modalDeleteData);
-		await httpService.remove({
-			path: `/mbkm-programs?mbkm_program_id=${modalDeleteData?.mbkm_program_id}`,
-		});
-		setOpenModalDelete(false);
-		window.location.reload();
-	};
 
 	const fecthData = async () => {
 		const filters: any = {};
@@ -52,7 +30,7 @@ const MbkmProgramListView = () => {
 		}
 
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/mbkm-programs",
+			url: CONFIG.base_url_api + "/mbkm-programs/prodi",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -67,6 +45,7 @@ const MbkmProgramListView = () => {
 			filters,
 		});
 
+		console.log("____________________________");
 		console.log(result);
 
 		setIsLoading(false);
@@ -100,7 +79,7 @@ const MbkmProgramListView = () => {
 			title: "Nama Program",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program_name}
+					{data.mbkm_program.mbkm_program_name}
 				</td>
 			),
 		},
@@ -109,9 +88,9 @@ const MbkmProgramListView = () => {
 			title: "Jenis Program",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program_category.length > 10
-						? data.mbkm_program_category.slice(0, 10) + "....."
-						: data.mbkm_program_category}
+					{data.mbkm_program.mbkm_program_category.length > 10
+						? data.mbkm_program.mbkm_program_category.slice(0, 10) + "....."
+						: data.mbkm_program.mbkm_program_category}
 				</td>
 			),
 		},
@@ -131,7 +110,9 @@ const MbkmProgramListView = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex">
-						<Link to={`/mbkm-programs/detail/${data.mbkm_program_id}`}>
+						<Link
+							to={`/mbkm-programs/prodi/detail/${data.mbkm_program_prodi_id}`}
+						>
 							<ButtonStyle
 								title="Detail"
 								size="xs"
@@ -139,16 +120,6 @@ const MbkmProgramListView = () => {
 								className="mx-1"
 							/>
 						</Link>
-						<ButtonStyle
-							title="Hapus"
-							size="xs"
-							color="failure"
-							className="mx-2"
-							onClick={() => {
-								handleModalDelete();
-								handleModaDataSelected(data);
-							}}
-						/>
 					</div>
 				</td>
 			),
@@ -188,13 +159,6 @@ const MbkmProgramListView = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					{user.user_role === "lp3m" && (
-						<ButtonStyle
-							title="Create"
-							color="light"
-							onClick={() => navigate("/mbkm-programs/create")}
-						/>
-					)}
 
 					<Select
 						onChange={(e) => setSemesterId(e.target.value)}
@@ -214,15 +178,8 @@ const MbkmProgramListView = () => {
 			</div>
 
 			<TableStyle header={header} table={listMbkmProgram} />
-			<ModalStyle
-				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.mbkm_program_name}`}
-				isOpen={openModalDelete}
-				onBtnYesClick={handleDeleteMbkmProgram}
-				onOpen={handleModalDelete}
-			/>
 		</div>
 	);
 };
 
-export default MbkmProgramListView;
+export default MbkmProgramProdiListView;

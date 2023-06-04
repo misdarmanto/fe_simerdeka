@@ -9,7 +9,6 @@ import Root from "./routers/root";
 import FaQ from "./routers/faq";
 import LogActivity from "./routers/log-activity";
 import ProgramProposal from "./routers/program-proposal";
-import StudyProgram from "./routers/study-program";
 import ManageUser from "./routers/manage-users";
 import Login from "./routers/auth/login";
 import Register from "./routers/auth/register";
@@ -35,6 +34,9 @@ import LogBookListView from "./routers/log-book/list-log-book";
 import StudyProgramListView from "./routers/study-program";
 import LogBooksCreateView from "./routers/log-book/create-log-book";
 import LogBookDetailView from "./routers/log-book/detail-log-book";
+import MbkmProgramProdiListView from "./routers/mbkm-program-prodi/list-mbkm-program-prodi";
+import MbkmProgramProdiDetailView from "./routers/mbkm-program-prodi/detail-mbkm-program-prodi";
+import MataKuliahListView from "./routers/mata-kuliah/list-log-book";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -72,6 +74,16 @@ const privateRouter = createBrowserRouter([
 			{
 				path: "/mbkm-programs/edit/:mbkmProgramId",
 				element: <MbkmProgramEditView />,
+			},
+
+			//mbkm program prodi
+			{
+				path: "/mbkm-programs/prodi",
+				element: <MbkmProgramProdiListView />,
+			},
+			{
+				path: "/mbkm-programs/prodi/detail/:mbkmProgramId",
+				element: <MbkmProgramProdiDetailView />,
 			},
 
 			//student program
@@ -116,6 +128,13 @@ const privateRouter = createBrowserRouter([
 			{
 				path: "/log-books/detail/:logBookId",
 				element: <LogBookDetailView />,
+			},
+
+			//mata kuliah
+
+			{
+				path: "/mata-kuliah",
+				element: <MataKuliahListView />,
 			},
 
 			//program proposal

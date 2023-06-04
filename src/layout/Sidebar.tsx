@@ -57,6 +57,12 @@ const SidebarStyle = () => {
 		icon: <AiOutlineFolderOpen />,
 	};
 
+	const MBKMProgramProdiMenu = {
+		title: "Program MBKM",
+		path: "/mbkm-programs/prodi",
+		icon: <AiOutlineFolderOpen />,
+	};
+
 	const ReportParticipationMenu = {
 		title: "Lapor Keikutsertaan",
 		path: "/report-participations",
@@ -93,6 +99,12 @@ const SidebarStyle = () => {
 		icon: <FiFileText />,
 	};
 
+	const MataKuliahMenu = {
+		title: "Mata Kuliah",
+		path: "/mata-kuliah",
+		icon: <FiFileText />,
+	};
+
 	const ManageUserMenu = {
 		title: "Manage User",
 		path: "/manage-users",
@@ -121,9 +133,10 @@ const SidebarStyle = () => {
 		HomeMenu,
 		StudentMenu,
 		RecomendationLetterMenu,
-		MBKMProgramMenu,
+		MBKMProgramProdiMenu,
+		MataKuliahMenu,
+		// MBKMProgramMenu,
 		ReportParticipationMenu,
-		// ProgramProposalMenu,
 		MBKMLogBookMenu,
 		FaQMenu,
 	];

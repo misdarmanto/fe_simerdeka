@@ -19,9 +19,10 @@ const LogBookListView = () => {
 	const { currentUser }: any = useContext(RootContext);
 	const user: UserTypes = currentUser;
 	const navigate = useNavigate();
+	const httpService = new ServiceHttp();
+
 	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [modalDeleteData, setModalDeleteData] = useState<LogBookTypes>();
-	const httpService = new ServiceHttp();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);

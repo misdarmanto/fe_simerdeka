@@ -7,14 +7,14 @@ import ListItemStyle from "../../components/list";
 import { Label, TextInput } from "flowbite-react";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import ModalSelectStudyProgram from "./modal-add-study-program";
+import ModalSelectStudyProgram from "./modal-add-study-program-prodi";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 import ModalStyle from "../../components/modal";
 
-const MbkmProgramDetailView = () => {
+const MbkmProgramProdiDetailView = () => {
 	const [listOfStudyProgramRegistered, setListOfStudyProgramRegistered] =
 		useState<any>();
-	const [mbkmProgram, setMbkmProgram] = useState<MbkmProgramTypes>();
+	const [mbkmProgram, setMbkmProgram] = useState<MbkmProgramProdiTypes>();
 
 	const [openModalSelectStudyProgram, setOpenModalSelectStudyProgram] = useState(false);
 
@@ -44,36 +44,39 @@ const MbkmProgramDetailView = () => {
 
 	const fecthDetailMbkmProgram = async () => {
 		const result = await httpService.get({
-			path: `/mbkm-programs/detail/${mbkmProgramId}`,
+			path: `/mbkm-programs/prodi/detail/${mbkmProgramId}`,
 		});
 		setMbkmProgram(result);
 	};
 
 	const fecthStudyPrograms = async () => {
-		const httpService = new ServiceHttp();
-		const result = await httpService.getTableData({
-			url:
-				CONFIG.base_url_api +
-				`/mbkm-programs/prodi?program_id=${mbkmProgramId}&&`,
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
-		});
+		try {
+			const result = await httpService.getTableData({
+				url:
+					CONFIG.base_url_api +
+					`/mbkm-programs/prodi?program_id=${mbkmProgramId}&&`,
+				pagination: true,
+				page: 0,
+				size: 10,
+				filters: {
+					search: "",
+				},
+			});
 
-		console.log(result);
+			console.log(result);
 
-		setListOfStudyProgramRegistered({
-			link: `/mbkm-programs/prodi?program_id=${mbkmProgramId}&&`,
-			data: result,
-			page: 0,
-			size: 10,
-			filter: {
-				search: "",
-			},
-		});
+			setListOfStudyProgramRegistered({
+				link: `/mbkm-programs/prodi?program_id=${mbkmProgramId}&&`,
+				data: result,
+				page: 0,
+				size: 10,
+				filter: {
+					search: "",
+				},
+			});
+		} catch (error: any) {
+			alert(error.message);
+		}
 	};
 
 	const header: TableHeader[] = [
@@ -135,7 +138,7 @@ const MbkmProgramDetailView = () => {
 
 	const fecthData = async () => {
 		await fecthDetailMbkmProgram();
-		await fecthStudyPrograms();
+		// await fecthStudyPrograms();
 		setIsLoading(false);
 	};
 
@@ -165,11 +168,11 @@ const MbkmProgramDetailView = () => {
 				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
 					<ListItemStyle
 						title="Nama"
-						description={mbkmProgram?.mbkm_program_name}
+						description={mbkmProgram?.mbkm_program.mbkm_program_name}
 					/>
 					<ListItemStyle
 						title="kategori program"
-						description={mbkmProgram?.mbkm_program_category}
+						description={mbkmProgram?.mbkm_program.mbkm_program_category}
 					/>
 					<ListItemStyle
 						title="Semester"
@@ -177,7 +180,7 @@ const MbkmProgramDetailView = () => {
 					/>
 					<ListItemStyle
 						title="Program Syllabus"
-						url={mbkmProgram?.mbkm_program_syllabus}
+						url={mbkmProgram?.mbkm_program.mbkm_program_syllabus}
 					/>
 				</dl>
 			</div>
@@ -212,7 +215,7 @@ const MbkmProgramDetailView = () => {
 					</div>
 				</div>
 
-				<TableStyle header={header} table={listOfStudyProgramRegistered} />
+				{/* <TableStyle header={header} table={listOfStudyProgramRegistered} /> */}
 			</div>
 
 			<ModalSelectStudyProgram
@@ -231,4 +234,4 @@ const MbkmProgramDetailView = () => {
 		</div>
 	);
 };
-export default MbkmProgramDetailView;
+export default MbkmProgramProdiDetailView;

@@ -7,16 +7,41 @@ import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
+import { converDateTimeFromDB } from "../../utils/convert";
+import ModalStyle from "../../components/modal";
+import { UserTypes } from "../../models/user";
+import { LogBookTypes } from "../../models/log-book";
 
-const StudyProgramListView = () => {
-	const [listStudyProgram, setListStudyProgram] = useState<any>();
+const MataKuliahListView = () => {
+	const [listMataKuliah, setListMataKuliah] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const { currentUser }: any = useContext(RootContext);
+	const user: UserTypes = currentUser;
+	const navigate = useNavigate();
 	const httpService = new ServiceHttp();
+
+	const [openModalDelete, setOpenModalDelete] = useState(false);
+	const [modalDeleteData, setModalDeleteData] = useState<LogBookTypes>();
+
+	const handleModalDelete = () => {
+		setOpenModalDelete(!openModalDelete);
+	};
+
+	const handleModaDataSelected = (item: LogBookTypes) => {
+		setModalDeleteData(item);
+	};
+
+	const handleDeleteMataKuliah = async () => {
+		await httpService.remove({
+			path: `/log-books?log_book_id=${modalDeleteData?.log_book_id}`,
+		});
+		setOpenModalDelete(false);
+		window.location.reload();
+	};
 
 	const fecthData = async () => {
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/study-programs?registered=true",
+			url: CONFIG.base_url_api + "/mata-kuliah",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -25,8 +50,8 @@ const StudyProgramListView = () => {
 			},
 		});
 
-		setListStudyProgram({
-			link: "/study-programs?registered=true",
+		setListMataKuliah({
+			link: "/mata-kuliah",
 			data: result,
 			page: 0,
 			size: 10,
@@ -52,28 +77,44 @@ const StudyProgramListView = () => {
 		},
 
 		{
-			title: "Nama Prodi",
+			title: "Nama",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.study_program_name}
+					{data.mataKuliahName}
+				</td>
+			),
+		},
+		{
+			title: "total sks",
+			data: (data: any, index: number): ReactElement => (
+				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
+					{data.mataKuliahSksTotal}
 				</td>
 			),
 		},
 
 		{
-			title: "Email",
+			title: "Action",
+			action: true,
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
-					{data.study_program_email}
-				</td>
-			),
-		},
-
-		{
-			title: "Nama Jurusan",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.study_program_department_name}
+				<td key={index + "action"}>
+					<div className="flex items-center">
+						<Link to={`/log-books/detail/${data.log_book_id}`}>
+							<ButtonStyle title="Detail" size="xs" color="light" />
+						</Link>
+						{user.user_role === "study_program" && (
+							<ButtonStyle
+								title="Hapus"
+								size="xs"
+								color="failure"
+								className="mx-2"
+								onClick={() => {
+									handleModalDelete();
+									handleModaDataSelected(data);
+								}}
+							/>
+						)}
+					</div>
 				</td>
 			),
 		},
@@ -86,15 +127,15 @@ const StudyProgramListView = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/study-programs",
-						title: "Program Studi",
+						link: "/log-books",
+						title: "Log Book",
 					},
 					{
-						link: "/study-programs",
+						link: "/log-books",
 						title: "List",
 					},
 				]}
-				icon={BASE_ICON.MENU.StudyProgramIcon}
+				icon={BASE_ICON.MENU.MbkmSummaryIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
@@ -112,14 +153,30 @@ const StudyProgramListView = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
+
+					{user.user_role === "study_program" && (
+						<ButtonStyle
+							title="Create"
+							color="light"
+							onClick={() => navigate("/log-books/create")}
+						/>
+					)}
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />
 				</div>
 			</div>
-			<TableStyle header={header} table={listStudyProgram} />
+
+			<ModalStyle
+				onBtnNoClick={handleModalDelete}
+				title={`Apakah anda yakin ingin menghapus log book minggu ke-${modalDeleteData?.log_book_report_week}`}
+				isOpen={openModalDelete}
+				onBtnYesClick={handleDeleteMataKuliah}
+				onOpen={handleModalDelete}
+			/>
+			<TableStyle header={header} table={listMataKuliah} />
 		</div>
 	);
 };
 
-export default StudyProgramListView;
+export default MataKuliahListView;
