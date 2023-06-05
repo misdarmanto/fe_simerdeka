@@ -15,11 +15,15 @@ import { RiCloseLine } from "react-icons/ri";
 import { FiFileText } from "react-icons/fi";
 import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
 import { RootContext } from "../utils/contextApi";
+import { UserTypes } from "../models/user";
 
 const SidebarStyle = () => {
 	const [openSideBar, setOpenSideBar] = useState(false);
 	const location = useLocation();
 	const { role }: any = useContext(RootContext);
+
+	const { currentUser }: any = useContext(RootContext);
+	const user: UserTypes = currentUser;
 
 	const handleOpenSideBar = () => {
 		const STORAGE_KEY = "simerdeka-sidebar-config";
@@ -47,7 +51,7 @@ const SidebarStyle = () => {
 
 	const MBKMProgramStudentMenu = {
 		title: "Program Saya",
-		path: "/mbkm-programs/students",
+		path: `/mbkm-programs/students/${user.user_id}`,
 		icon: <AiOutlineFolderOpen />,
 	};
 

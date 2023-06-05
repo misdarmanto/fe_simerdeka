@@ -38,6 +38,7 @@ import MbkmProgramProdiListView from "./routers/mbkm-program-prodi/list-mbkm-pro
 import MbkmProgramProdiDetailView from "./routers/mbkm-program-prodi/detail-mbkm-program-prodi";
 import MataKuliahListView from "./routers/mata-kuliah/list-mata-kuliah";
 import MataKuliahCreateView from "./routers/mata-kuliah/create-log-book";
+import MbkmProgramStudentMyProgramView from "./routers/mbkm-program-student/my-mbkm-program";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -89,17 +90,21 @@ const privateRouter = createBrowserRouter([
 
 			//student program
 			{
-				path: "/mbkm-programs/students/",
-				element: <MbkmProgramStudentList />,
+				path: "/mbkm-programs/students/:studentId",
+				element: <MbkmProgramStudentMyProgramView />,
 			},
-			{
-				path: "/mbkm-programs/students/create",
-				element: <MbkmProgramStudentCreat />,
-			},
-			{
-				path: "/mbkm-programs/students/:programId",
-				element: <MbkmProgramStudentDetail />,
-			},
+			// {
+			// 	path: "/mbkm-programs/students/",
+			// 	element: <MbkmProgramStudentList />,
+			// },
+			// {
+			// 	path: "/mbkm-programs/students/create",
+			// 	element: <MbkmProgramStudentCreat />,
+			// },
+			// {
+			// 	path: "/mbkm-programs/students/:programId",
+			// 	element: <MbkmProgramStudentDetail />,
+			// },
 
 			//report participation
 			{

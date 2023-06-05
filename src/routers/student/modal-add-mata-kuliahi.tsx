@@ -8,55 +8,37 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudyProgramTypes } from "../../models/study-program";
 import { MbkmProgramProdiCreateRequestTypes } from "../../models/mbkm-program-prodi";
 import { MataKuliahTypes } from "../../models/mata-kuliah";
+import { TranskripCreateRequestTypes, TranskripTypes } from "../../models/transkrip";
+import { StudentTypes } from "../../models/student";
 
 interface ModalAddMataKuliahTypes {
 	onOpen: (item: boolean) => void;
 	isOpen: boolean;
-	mbkmProgram?: MbkmProgramTypes;
+	student?: StudentTypes;
 }
 
-const ModalAddMataKuliah = ({ onOpen, isOpen, mbkmProgram }: ModalAddMataKuliahTypes) => {
+const ModalAddMataKuliah = ({ onOpen, isOpen, student }: ModalAddMataKuliahTypes) => {
 	const [listOfMataKuliah, setListOfMataKuliah] = useState<any>();
 
-	const [mataKuliahSelected, setMataKuliahSelected] = useState<MataKuliahTypes[]>([]);
+	const [mataKuliahSelected, setMataKuliahSelected] = useState<TranskripTypes>();
 
 	const [isLoading, setIsLoading] = useState(true);
 	const httpService = new ServiceHttp();
 
-	const handleSelectStudyProgram = (studyProgram: StudyProgramTypes) => {
-		// const check = mataKuliahSelected.find((item) => {
-		// 	return (
-		// 		item.mbkm_program_prodi_study_program_id === studyProgram.study_program_id
-		// 	);
-		// });
-		// if (check) {
-		// 	const newData = mataKuliahSelected.filter((item) => {
-		// 		return (
-		// 			item.mbkm_program_prodi_study_program_id !==
-		// 			studyProgram.study_program_id
-		// 		);
-		// 	});
-		// 	setMataKuliahSelected(newData);
-		// } else {
-		// 	const data: MbkmProgramProdiCreateRequestTypes = {
-		// 		mbkm_program_prodi_program_id: mbkmProgram?.mbkm_program_id,
-		// 		mbkm_program_prodi_program_name: mbkmProgram?.mbkm_program_name,
-		// 		mbkm_program_prodi_study_program_id: studyProgram.study_program_id,
-		// 		mbkm_program_prodi_study_program_name: studyProgram.study_program_name,
-		// 		mbkm_program_prodi_department_id:
-		// 			studyProgram.study_program_department_id,
-		// 		mbkm_program_prodi_department_name:
-		// 			studyProgram.study_program_department_name,
-		// 		mbkm_program_prodi_semester_id: mbkmProgram?.mbkm_program_semester_id,
-		// 	};
-		// 	setMataKuliahSelected([...mataKuliahSelected, data]);
-		// }
+	const handleSelectMataKuliah = (mataKuliah: MataKuliahTypes) => {
+		const newData: TranskripCreateRequestTypes = {
+			transkripStudentId: student?.student_id,
+			transkripMataKuliahId: mataKuliah.mataKuliahId,
+		};
+		setMataKuliahSelected(newData);
+
+		console.log(mataKuliahSelected);
 	};
 
 	const handleSubmit = async () => {
-		if (mataKuliahSelected.length !== 0) {
+		if (mataKuliahSelected) {
 			await httpService.post({
-				path: `/mbkm-programs/participations/study-programs`,
+				path: `/transkrip`,
 				body: mataKuliahSelected,
 			});
 		}
@@ -95,7 +77,7 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, mbkmProgram }: ModalAddMataKuliahT
 	const tableHeaderMataKuliah: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MataKuliahTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -104,7 +86,7 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, mbkmProgram }: ModalAddMataKuliahT
 
 		{
 			title: "Nama",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MataKuliahTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
 					{data.mataKuliahName}
 				</td>
@@ -113,7 +95,7 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, mbkmProgram }: ModalAddMataKuliahT
 
 		{
 			title: "total sks",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MataKuliahTypes, index: number): ReactElement => (
 				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
 					{data.mataKuliahSksTotal}
 				</td>
@@ -123,17 +105,22 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, mbkmProgram }: ModalAddMataKuliahT
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<ButtonStyle
-						title="pilih"
-						color={"light"}
-						onClick={() => {
-							handleSelectStudyProgram(data);
-						}}
-					/>
-				</td>
-			),
+			data: (data: MataKuliahTypes, index: number): ReactElement => {
+				const isActive =
+					data.mataKuliahId === mataKuliahSelected?.transkripMataKuliahId;
+				console.log(isActive);
+				return (
+					<td key={index + "action"}>
+						<ButtonStyle
+							title="pilih"
+							color={isActive ? "dark" : "light"}
+							onClick={() => {
+								handleSelectMataKuliah(data);
+							}}
+						/>
+					</td>
+				);
+			},
 		},
 	];
 
@@ -175,7 +162,7 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, mbkmProgram }: ModalAddMataKuliahT
 				<TableStyle header={tableHeaderMataKuliah} table={listOfMataKuliah} />
 				<div className="flex justify-end">
 					<ButtonStyle
-						title="Buat"
+						title="Tambahkan"
 						type="submit"
 						color="dark"
 						onClick={handleSubmit}

@@ -9,11 +9,10 @@ import { Alert, Label, TextInput } from "flowbite-react";
 import { FiAlertTriangle } from "react-icons/fi";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { CONFIG } from "../../configs";
-import ModalAddMataKuliah from "./modal-add-mata-kuliahi";
 import { TranskripTypes } from "../../models/transkrip";
 import { MataKuliahTypes } from "../../models/mata-kuliah";
 
-const StudentDetailView = () => {
+const MbkmProgramStudentMyProgramView = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const { studentId } = useParams();
 	const [studentDetails, setStudentDetails] = useState<StudentTypes>();
@@ -106,20 +105,10 @@ const StudentDetailView = () => {
 		},
 
 		{
-			title: "Action",
-			action: true,
+			title: "Nilai",
 			data: (data: TranskripTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<ButtonStyle
-						title="Hapus"
-						size="xs"
-						color="failure"
-						className="mx-2"
-						onClick={() => {
-							handleModalDelete();
-							handleModaDataSelected(data);
-						}}
-					/>
+				<td key={index + "nilai"} className="md:px-6 md:py-3 break-all">
+					{data.transkripMataKuliahGrade || "T"}
 				</td>
 			),
 		},
@@ -142,55 +131,45 @@ const StudentDetailView = () => {
 			/>
 
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
-				{studentDetails ? (
-					<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
-						<ListItemStyle
-							title="Nama"
-							description={studentDetails?.student_name}
-						/>
-						<ListItemStyle
-							title="NIM"
-							description={studentDetails?.student_nim}
-						/>
-						<ListItemStyle
-							title="Prodi"
-							description={studentDetails?.student_study_program_name}
-						/>
-						<ListItemStyle
-							title="Jurusan"
-							description={studentDetails?.student_department_name}
-						/>
-						<ListItemStyle
-							title="Program MBKM"
-							description={studentDetails?.mbkm_program?.mbkm_program_name}
-						/>
-						<ListItemStyle
-							title="Kategori Program MBKM"
-							description={
-								studentDetails?.mbkm_program?.mbkm_program_category
-							}
-						/>
-						<ListItemStyle
-							title="Total Konversi SKS"
-							description={studentDetails?.student_sks_total + "" || "_"}
-						/>
-						<ListItemStyle
-							title="Silabus"
-							url={studentDetails?.mbkm_program?.mbkm_program_syllabus}
-						/>
-					</dl>
-				) : (
-					<Alert color="failure" icon={FiAlertTriangle}>
-						<span>
-							<h1> Sedang Menunggu Konversi SKS!</h1>
-						</span>
-					</Alert>
-				)}
+				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
+					<ListItemStyle
+						title="Nama"
+						description={studentDetails?.student_name}
+					/>
+					<ListItemStyle
+						title="NIM"
+						description={studentDetails?.student_nim}
+					/>
+					<ListItemStyle
+						title="Prodi"
+						description={studentDetails?.student_study_program_name}
+					/>
+					<ListItemStyle
+						title="Jurusan"
+						description={studentDetails?.student_department_name}
+					/>
+					<ListItemStyle
+						title="Program MBKM"
+						description={studentDetails?.mbkm_program?.mbkm_program_name}
+					/>
+					<ListItemStyle
+						title="Kategori Program MBKM"
+						description={studentDetails?.mbkm_program?.mbkm_program_category}
+					/>
+					<ListItemStyle
+						title="Total Konversi SKS"
+						description={studentDetails?.student_sks_total + "" || "_"}
+					/>
+					<ListItemStyle
+						title="Silabus"
+						url={studentDetails?.mbkm_program?.mbkm_program_syllabus}
+					/>
+				</dl>
 			</div>
 
 			<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 				<div className="mb-2 block">
-					<Label value="Daftar Mata Kuliah" />
+					<Label value="Transkrip Mata Kuliah" />
 				</div>
 				<div className="flex flex-col md:flex-row justify-between md:px-0">
 					<div className="flex items-center justify-between">
@@ -208,9 +187,9 @@ const StudentDetailView = () => {
 							</select>
 						</div>
 						<ButtonStyle
-							title="Tambah Mata Kuliah"
+							title="Download"
 							color="light"
-							onClick={() => setOpenModalAddMataKuliah(true)}
+							// onClick={}
 						/>
 					</div>
 					<div className="mt-1 w-full md:w-1/5">
@@ -222,15 +201,9 @@ const StudentDetailView = () => {
 					header={tableHeaderMataKuliah}
 					table={listOfMataKuliahTranskrip}
 				/>
-
-				<ModalAddMataKuliah
-					student={studentDetails}
-					isOpen={openModalAddMataKuliah}
-					onOpen={setOpenModalAddMataKuliah}
-				/>
 			</div>
 		</div>
 	);
 };
 
-export default StudentDetailView;
+export default MbkmProgramStudentMyProgramView;
