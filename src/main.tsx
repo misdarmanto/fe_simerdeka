@@ -36,7 +36,8 @@ import LogBooksCreateView from "./routers/log-book/create-log-book";
 import LogBookDetailView from "./routers/log-book/detail-log-book";
 import MbkmProgramProdiListView from "./routers/mbkm-program-prodi/list-mbkm-program-prodi";
 import MbkmProgramProdiDetailView from "./routers/mbkm-program-prodi/detail-mbkm-program-prodi";
-import MataKuliahListView from "./routers/mata-kuliah/list-log-book";
+import MataKuliahListView from "./routers/mata-kuliah/list-mata-kuliah";
+import MataKuliahCreateView from "./routers/mata-kuliah/create-log-book";
 
 const privateRouter = createBrowserRouter([
 	{
@@ -135,6 +136,10 @@ const privateRouter = createBrowserRouter([
 			{
 				path: "/mata-kuliah",
 				element: <MataKuliahListView />,
+			},
+			{
+				path: "/mata-kuliah/create",
+				element: <MataKuliahCreateView />,
 			},
 
 			//program proposal

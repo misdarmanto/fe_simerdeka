@@ -6,6 +6,7 @@ import { ReactElement, useContext, useEffect, useState } from "react";
 import { CONFIG } from "../../configs";
 import { RootContext } from "../../utils/contextApi";
 import { ServiceHttp } from "../../services/api";
+import { StudentTypes } from "../../models/student";
 
 const StudentListView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
@@ -16,7 +17,7 @@ const StudentListView = () => {
 	const fecthStudents = async () => {
 		const httpService = new ServiceHttp();
 		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/students?registered=true",
+			url: CONFIG.base_url_api + "/students",
 			pagination: true,
 			page: 0,
 			size: 10,
@@ -25,8 +26,11 @@ const StudentListView = () => {
 			},
 		});
 
+		console.log("_______________result");
+		console.log(result);
+
 		setListOfStudent({
-			link: "/students?registered=true",
+			link: "/students",
 			data: result,
 			page: 0,
 			size: 10,
@@ -44,7 +48,7 @@ const StudentListView = () => {
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -53,7 +57,7 @@ const StudentListView = () => {
 
 		{
 			title: "Nama",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
 					{data.student_name}
 				</td>
@@ -61,30 +65,62 @@ const StudentListView = () => {
 		},
 
 		{
+			title: "NIM",
+			data: (data: StudentTypes, index: number): ReactElement => (
+				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
+					{data.student_nim}
+				</td>
+			),
+		},
+
+		{
 			title: "email",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
 					{data.student_email}
+				</td>
+			),
+		},
+		{
+			title: "prodi",
+			data: (data: StudentTypes, index: number): ReactElement => (
+				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
+					{data.student_study_program_name}
 				</td>
 			),
 		},
 
 		{
 			title: "jurusan",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
 					{data.student_department_name}
 				</td>
 			),
 		},
-
+		{
+			title: "program",
+			data: (data: StudentTypes, index: number): ReactElement => (
+				<td key={index + "program"} className="md:px-6 md:py-3 break-all">
+					{data.mbkm_program?.mbkm_program_name || "_"}
+				</td>
+			),
+		},
+		{
+			title: "sks",
+			data: (data: StudentTypes, index: number): ReactElement => (
+				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
+					{data.student_sks_total || "_"}
+				</td>
+			),
+		},
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/students/detail/${data.user_id}`}>
+						<Link to={`/students/detail/${data.student_id}`}>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>

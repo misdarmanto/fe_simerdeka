@@ -6,7 +6,7 @@ import {
 	AiOutlineHome,
 	AiOutlineSearch,
 } from "react-icons/ai";
-import { BiUser } from "react-icons/bi";
+import { BiBookOpen, BiUser } from "react-icons/bi";
 import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
 import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
@@ -56,5 +56,6 @@ export const BASE_ICON = {
 		SemesterIcon: FaRegListAlt,
 		LogActivityIcon: AiOutlineSearch,
 		ReportParicipationIcon: BsPersonVcard,
+		MataKuliahIcon: BiBookOpen,
 	},
 };

@@ -2,41 +2,43 @@ import { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
-import { MbkmProgramTypes } from "../../models/mbkm-program";
 import ListItemStyle from "../../components/list";
 import { Label, TextInput } from "flowbite-react";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import ModalSelectStudyProgram from "./modal-add-study-program-prodi";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 import ModalStyle from "../../components/modal";
+import ModalAddStudent from "./modal-add-student";
+import { StudentTypes } from "../../models/student";
 
 const MbkmProgramProdiDetailView = () => {
-	const [listOfStudyProgramRegistered, setListOfStudyProgramRegistered] =
-		useState<any>();
+	const [listOfStudent, setListOfStudent] = useState<any>();
 	const [mbkmProgram, setMbkmProgram] = useState<MbkmProgramProdiTypes>();
-
-	const [openModalSelectStudyProgram, setOpenModalSelectStudyProgram] = useState(false);
+	const [openModalAddStudent, setOpenModalAddStudent] = useState(false);
 
 	const [isLoading, setIsLoading] = useState(true);
 	const { mbkmProgramId } = useParams();
 	const httpService = new ServiceHttp();
 
 	const [openModalDelete, setOpenModalDelete] = useState(false);
-	const [modalDeleteData, setModalDeleteData] = useState<MbkmProgramProdiTypes>();
+	const [modalDeleteData, setModalDeleteData] = useState<StudentTypes>();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);
 	};
 
-	const handleModaDataSelected = (item: MbkmProgramProdiTypes) => {
+	const handleModaDataSelected = (item: StudentTypes) => {
 		setModalDeleteData(item);
 	};
 
-	const handleDeleteMbkmProgramParticipation = async () => {
+	const handleChangeMbkmProgramStudent = async () => {
 		console.log(modalDeleteData);
-		await httpService.remove({
-			path: `/mbkm-programs/prodi?id=${modalDeleteData?.mbkm_program_prodi_id}`,
+		await httpService.patch({
+			path: `/students`,
+			body: {
+				student_id: modalDeleteData?.student_id,
+				student_mbkm_program_id: null,
+			},
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
@@ -49,37 +51,36 @@ const MbkmProgramProdiDetailView = () => {
 		setMbkmProgram(result);
 	};
 
-	const fecthStudyPrograms = async () => {
+	const fecthStudents = async () => {
 		try {
 			const result = await httpService.getTableData({
-				url:
-					CONFIG.base_url_api +
-					`/mbkm-programs/prodi?program_id=${mbkmProgramId}&&`,
+				url: CONFIG.base_url_api + `/students`,
 				pagination: true,
 				page: 0,
 				size: 10,
 				filters: {
 					search: "",
+					mbkm_program_id: mbkmProgramId,
 				},
 			});
 
 			console.log(result);
-
-			setListOfStudyProgramRegistered({
-				link: `/mbkm-programs/prodi?program_id=${mbkmProgramId}&&`,
+			setListOfStudent({
+				link: `/students`,
 				data: result,
 				page: 0,
 				size: 10,
 				filter: {
 					search: "",
+					mbkm_program_id: mbkmProgramId,
 				},
 			});
 		} catch (error: any) {
-			alert(error.message);
+			console.log(error.message);
 		}
 	};
 
-	const header: TableHeader[] = [
+	const tableHeaderStudent: TableHeader[] = [
 		{
 			title: "No",
 			data: (data: any, index: number): ReactElement => (
@@ -93,25 +94,16 @@ const MbkmProgramProdiDetailView = () => {
 			title: "Nama",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program_prodi_program_name}
+					{data.student_name}
 				</td>
 			),
 		},
 
 		{
-			title: "Prodi",
+			title: "total sks",
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program_prodi_study_program_name}
-				</td>
-			),
-		},
-
-		{
-			title: "jurusan",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program_prodi_department_name}
+				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
+					{data.student_email}
 				</td>
 			),
 		},
@@ -138,7 +130,7 @@ const MbkmProgramProdiDetailView = () => {
 
 	const fecthData = async () => {
 		await fecthDetailMbkmProgram();
-		// await fecthStudyPrograms();
+		await fecthStudents();
 		setIsLoading(false);
 	};
 
@@ -187,7 +179,7 @@ const MbkmProgramProdiDetailView = () => {
 
 			<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 				<div className="mb-2 block">
-					<Label value="Daftar Prodi" />
+					<Label value="Daftar Mahasiswa " />
 				</div>
 				<div className="flex flex-col md:flex-row justify-between md:px-0">
 					<div className="flex items-center justify-between">
@@ -205,9 +197,9 @@ const MbkmProgramProdiDetailView = () => {
 							</select>
 						</div>
 						<ButtonStyle
-							title="Tambah Prodi"
+							title="Tambah Mahasiswa"
 							color="light"
-							onClick={() => setOpenModalSelectStudyProgram(true)}
+							onClick={() => setOpenModalAddStudent(true)}
 						/>
 					</div>
 					<div className="mt-1 w-full md:w-1/5">
@@ -215,20 +207,20 @@ const MbkmProgramProdiDetailView = () => {
 					</div>
 				</div>
 
-				{/* <TableStyle header={header} table={listOfStudyProgramRegistered} /> */}
+				<TableStyle header={tableHeaderStudent} table={listOfStudent} />
 			</div>
 
-			<ModalSelectStudyProgram
+			<ModalAddStudent
 				mbkmProgram={mbkmProgram}
-				isOpen={openModalSelectStudyProgram}
-				onOpen={setOpenModalSelectStudyProgram}
+				isOpen={openModalAddStudent}
+				onOpen={setOpenModalAddStudent}
 			/>
 
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.mbkm_program_prodi_study_program_name}`}
+				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.student_name}`}
 				isOpen={openModalDelete}
-				onBtnYesClick={handleDeleteMbkmProgramParticipation}
+				onBtnYesClick={handleChangeMbkmProgramStudent}
 				onOpen={handleModalDelete}
 			/>
 		</div>

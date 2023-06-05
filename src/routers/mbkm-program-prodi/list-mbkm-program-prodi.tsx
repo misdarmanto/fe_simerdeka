@@ -9,6 +9,7 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
 import { SemesterTypes } from "../../models/semester";
 import { UserTypes } from "../../models/user";
+import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 
 const MbkmProgramProdiListView = () => {
 	const navigate = useNavigate();
@@ -38,15 +39,12 @@ const MbkmProgramProdiListView = () => {
 		});
 
 		setListMbkmProgram({
-			link: "/mbkm-programs",
+			link: "/mbkm-programs/prodi",
 			data: result,
 			page: 0,
 			size: 10,
 			filters,
 		});
-
-		console.log("____________________________");
-		console.log(result);
 
 		setIsLoading(false);
 	};
@@ -68,7 +66,7 @@ const MbkmProgramProdiListView = () => {
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -77,7 +75,7 @@ const MbkmProgramProdiListView = () => {
 
 		{
 			title: "Nama Program",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
 					{data.mbkm_program.mbkm_program_name}
 				</td>
@@ -86,18 +84,16 @@ const MbkmProgramProdiListView = () => {
 
 		{
 			title: "Jenis Program",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program.mbkm_program_category.length > 10
-						? data.mbkm_program.mbkm_program_category.slice(0, 10) + "....."
-						: data.mbkm_program.mbkm_program_category}
+					{data?.mbkm_program?.mbkm_program_category}
 				</td>
 			),
 		},
 
 		{
 			title: "Semester",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
 					{data.semester.semester_name}
 				</td>
@@ -107,11 +103,11 @@ const MbkmProgramProdiListView = () => {
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex">
 						<Link
-							to={`/mbkm-programs/prodi/detail/${data.mbkm_program_prodi_id}`}
+							to={`/mbkm-programs/prodi/detail/${data.mbkm_program.mbkm_program_id}`}
 						>
 							<ButtonStyle
 								title="Detail"

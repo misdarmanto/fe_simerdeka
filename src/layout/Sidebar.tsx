@@ -9,7 +9,7 @@ import {
 	AiOutlineHome,
 	AiOutlineSearch,
 } from "react-icons/ai";
-import { BiMenu, BiUser } from "react-icons/bi";
+import { BiBookOpen, BiMenu, BiUser } from "react-icons/bi";
 import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { RiCloseLine } from "react-icons/ri";
 import { FiFileText } from "react-icons/fi";
@@ -55,6 +55,13 @@ const SidebarStyle = () => {
 		title: "Program MBKM",
 		path: "/mbkm-programs",
 		icon: <AiOutlineFolderOpen />,
+		child: [
+			{
+				title: "Program MBKM",
+				path: "/mbkm-programs",
+				icon: <AiOutlineFolderOpen />,
+			},
+		],
 	};
 
 	const MBKMProgramProdiMenu = {
@@ -102,7 +109,7 @@ const SidebarStyle = () => {
 	const MataKuliahMenu = {
 		title: "Mata Kuliah",
 		path: "/mata-kuliah",
-		icon: <FiFileText />,
+		icon: <BiBookOpen />,
 	};
 
 	const ManageUserMenu = {

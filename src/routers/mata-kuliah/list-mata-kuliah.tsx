@@ -99,9 +99,6 @@ const MataKuliahListView = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex items-center">
-						<Link to={`/log-books/detail/${data.log_book_id}`}>
-							<ButtonStyle title="Detail" size="xs" color="light" />
-						</Link>
 						{user.user_role === "study_program" && (
 							<ButtonStyle
 								title="Hapus"
@@ -127,15 +124,15 @@ const MataKuliahListView = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/log-books",
-						title: "Log Book",
+						link: "/mata-kuliah",
+						title: "Mata Kuliah",
 					},
 					{
-						link: "/log-books",
+						link: "/mata-kuliah",
 						title: "List",
 					},
 				]}
-				icon={BASE_ICON.MENU.MbkmSummaryIcon}
+				icon={BASE_ICON.MENU.MataKuliahIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
@@ -158,7 +155,7 @@ const MataKuliahListView = () => {
 						<ButtonStyle
 							title="Create"
 							color="light"
-							onClick={() => navigate("/log-books/create")}
+							onClick={() => navigate("/mata-kuliah/create")}
 						/>
 					)}
 				</div>
@@ -169,7 +166,7 @@ const MataKuliahListView = () => {
 
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus log book minggu ke-${modalDeleteData?.log_book_report_week}`}
+				title={`Apakah anda yakin ingin menghapus mata kuliah ${modalDeleteData?.log_book_report_week}?`}
 				isOpen={openModalDelete}
 				onBtnYesClick={handleDeleteMataKuliah}
 				onOpen={handleModalDelete}
