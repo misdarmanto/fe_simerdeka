@@ -26,7 +26,7 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, student }: ModalAddMataKuliahTypes
 	const httpService = new ServiceHttp();
 
 	const handleSelectMataKuliah = (mataKuliah: MataKuliahTypes) => {
-		const newData: TranskripCreateRequestTypes = {
+		const newData: any = {
 			transkripStudentId: student?.student_id,
 			transkripMataKuliahId: mataKuliah.mataKuliahId,
 		};
