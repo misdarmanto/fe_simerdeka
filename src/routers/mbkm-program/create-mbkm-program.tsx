@@ -31,11 +31,11 @@ const MbkmProgramCreatView = () => {
 		event.preventDefault();
 		try {
 			const data: MbkmProgramCreateTypes = {
-				mbkm_program_created_by: "lp3m",
-				mbkm_program_name: mbkmProgramName,
-				mbkm_program_category: mbkmProgramCategory,
-				mbkm_program_syllabus: mbkmProgramSyllabus,
-				mbkm_program_semester_id: listOfSemester[0].semester_id + "",
+				mbkmProgramCreatedBy: "lp3m",
+				mbkmProgramName: mbkmProgramName,
+				mbkmProgramCategory: mbkmProgramCategory,
+				mbkmProgramSyllabus: mbkmProgramSyllabus,
+				mbkmProgramSemesterId: listOfSemester[0].semesterId + "",
 			};
 			console.log(data);
 

@@ -13,14 +13,14 @@ const Navbar = () => {
 
 	const handleSaveUserCredential = (selectedUser: UserTypes) => {
 		const user = LIST_USER.find((user: UserTypes) => {
-			return user.user_id === selectedUser.user_id;
+			return user.userId === selectedUser.userId;
 		});
 		localStorage.setItem(CONFIG.local_storage_key, JSON.stringify(user));
 	};
 
 	const handleSelectRole = (user: UserTypes) => {
 		handleSaveUserCredential(user);
-		setRole(user.user_role);
+		setRole(user.userRole);
 		navigate("/");
 		window.location.reload();
 	};
@@ -35,12 +35,12 @@ const Navbar = () => {
 				<div className="flex justify-end items-center pt-4 sm:mr-5">
 					<Dropdown
 						inline={true}
-						label={currentUser.user_name}
+						label={currentUser.userName}
 						dismissOnClick={true}
 					>
 						{LIST_USER.map((user: UserTypes) => (
 							<Dropdown.Item onClick={() => handleSelectRole(user)}>
-								{user.user_name}
+								{user.userName}
 							</Dropdown.Item>
 						))}
 					</Dropdown>

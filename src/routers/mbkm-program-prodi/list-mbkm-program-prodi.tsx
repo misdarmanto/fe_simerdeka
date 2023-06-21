@@ -77,7 +77,7 @@ const MbkmProgramProdiListView = () => {
 			title: "Nama Program",
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program.mbkm_program_name}
+					{data.mbkmProgram.mbkmProgramName}
 				</td>
 			),
 		},
@@ -86,7 +86,7 @@ const MbkmProgramProdiListView = () => {
 			title: "Jenis Program",
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data?.mbkm_program?.mbkm_program_category}
+					{data?.mbkmProgram?.mbkmProgramCategory}
 				</td>
 			),
 		},
@@ -95,7 +95,7 @@ const MbkmProgramProdiListView = () => {
 			title: "Semester",
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
-					{data.semester.semester_name}
+					{data.semester.semesterName}
 				</td>
 			),
 		},
@@ -107,7 +107,7 @@ const MbkmProgramProdiListView = () => {
 				<td key={index + "action"}>
 					<div className="flex">
 						<Link
-							to={`/mbkm-programs/prodi/detail/${data.mbkm_program.mbkm_program_id}`}
+							to={`/mbkm-programs/prodi/detail/${data.mbkmProgram.mbkmProgramId}`}
 						>
 							<ButtonStyle
 								title="Detail"

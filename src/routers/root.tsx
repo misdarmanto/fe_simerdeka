@@ -16,25 +16,34 @@ const Root = () => {
 
 	const fecthCurrentUser = async () => {
 		const serviceHttp = new ServiceHttp();
+		console.log("before fecth users______________");
 		const result = await serviceHttp.get({
 			path: "/users",
 		});
 		setCurrentUser(result);
 		console.log(result);
+		console.log("after fecth users______________");
 	};
 
 	const checkUserAuth = async () => {
-		const userCredential = localStorage.getItem(CONFIG.local_storage_key);
-		if (!userCredential) {
-			localStorage.setItem(CONFIG.local_storage_key, JSON.stringify(LIST_USER[0]));
-			setRole(LIST_USER[0].user_role);
-			await fecthCurrentUser();
-		} else {
-			const user: UserTypes = JSON.parse(userCredential + "");
-			setRole(user.user_role);
-			await fecthCurrentUser();
+		try {
+			const userCredential = localStorage.getItem(CONFIG.local_storage_key);
+			if (!userCredential) {
+				localStorage.setItem(
+					CONFIG.local_storage_key,
+					JSON.stringify(LIST_USER[0])
+				);
+				setRole(LIST_USER[0].userRole);
+				await fecthCurrentUser();
+			} else {
+				const user: UserTypes = JSON.parse(userCredential + "");
+				setRole(user.userRole);
+				await fecthCurrentUser();
+			}
+			setIsLoading(false);
+		} catch (err: any) {
+			console.log(err.message);
 		}
-		setIsLoading(false);
 	};
 
 	useEffect(() => {

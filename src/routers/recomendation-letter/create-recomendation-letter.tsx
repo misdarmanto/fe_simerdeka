@@ -29,11 +29,11 @@ const RecomendationLetterCreate = () => {
 		event.preventDefault();
 		try {
 			const data: RecomendationLetterCreateRequestTypes = {
-				recomendation_letter_student_transkrip: recomendatationStudentTranskrip,
-				recomendation_letter_dosen_wali: dosenWali,
-				recomendation_letter_approval_letter: suratPersetujuanDosenWali,
-				recomendation_letter_program_name: programName,
-				recomendation_letter_program_correlation: programCorrelationDescription,
+				recomendationLetterStudentTranskrip: recomendatationStudentTranskrip,
+				recomendationLetterDosenWali: dosenWali,
+				recomendationLetterApprovalLetter: suratPersetujuanDosenWali,
+				recomendationLetterProgramName: programName,
+				recomendationLetterProgramCorrelation: programCorrelationDescription,
 			};
 			console.log(data);
 
@@ -73,7 +73,7 @@ const RecomendationLetterCreate = () => {
 	};
 
 	useEffect(() => {
-		if (user.user_role !== "student") {
+		if (user.userRole !== "student") {
 			navigate("/recomendation-letters");
 		}
 	}, []);

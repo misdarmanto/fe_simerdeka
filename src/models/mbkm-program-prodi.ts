@@ -4,26 +4,26 @@ import { SemesterTypes } from "./semester";
 import { StudyProgramTypes } from "./study-program";
 
 export interface MbkmProgramProdiTypes {
-	mbkm_program_prodi_id?: string;
-	mbkm_program_prodi_program_id?: string;
-	mbkm_program_prodi_program_name?: string;
-	mbkm_program_prodi_study_program_id?: string;
-	mbkm_program_prodi_study_program_name?: string;
-	mbkm_program_prodi_department_id?: string;
-	mbkm_program_prodi_department_name?: string;
-	mbkm_program_prodi_semester_id?: string;
+	mbkmProgramProdiId: string;
+	mbkmProgramProdiProgramId: string;
+	mbkmProgramProdiProgramName: string;
+	mbkmProgramProdiStudyProgramId: string;
+	mbkmProgramProdiStudyProgramName: string;
+	mbkmProgramProdiDepartmentId: string;
+	mbkmProgramProdiDepartmentName: string;
+	mbkmProgramProdiSemesterId: string;
 	department: DepartmentTypes;
-	study_program: StudyProgramTypes;
+	studyProgram: StudyProgramTypes;
 	semester: SemesterTypes;
-	mbkm_program: MbkmProgramTypes;
+	mbkmProgram: MbkmProgramTypes;
 }
 
 export interface MbkmProgramProdiCreateRequestTypes {
-	mbkm_program_prodi_program_id?: string;
-	mbkm_program_prodi_program_name?: string;
-	mbkm_program_prodi_study_program_id?: string;
-	mbkm_program_prodi_study_program_name?: string;
-	mbkm_program_prodi_department_id?: string;
-	mbkm_program_prodi_department_name?: string;
-	mbkm_program_prodi_semester_id?: string;
+	mbkmProgramProdiProgramId: string;
+	mbkmProgramProdiProgramName: string;
+	mbkmProgramProdiStudyProgramId: string;
+	mbkmProgramProdiStudyProgramName: string;
+	mbkmProgramProdiDepartmentId: string;
+	mbkmProgramProdiDepartmentName: string;
+	mbkmProgramProdiSemesterId: string;
 }

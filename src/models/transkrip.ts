@@ -7,7 +7,7 @@ export interface TranskripTypes {
 	transkripStudyProgramId?: string;
 	transkripDepartmentId?: string;
 	transkripMataKuliahGrade?: string;
-	mata_kuliah: MataKuliahTypes;
+	mataKuliah: MataKuliahTypes;
 }
 
 export interface TranskripCreateRequestTypes {

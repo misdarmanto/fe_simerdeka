@@ -20,10 +20,9 @@ const SemesterDetail = () => {
 		event.preventDefault();
 		try {
 			const data: SemesterTypes = {
-				semester_id: semester?.semester_id,
-				semester_name: semesterName,
-				semester_created_by: currentUser.user_role,
-				semester_status: "active",
+				semesterName: semesterName,
+				semesterCreatedBy: currentUser.userRole,
+				semesterStatus: "active",
 			};
 
 			await httpService.patch({
@@ -41,7 +40,7 @@ const SemesterDetail = () => {
 			path: `/semesters/detail/${semesterId}`,
 		});
 		setSemester(result);
-		setSemesterName(result.semester_name + "");
+		setSemesterName(result.semesterName + "");
 	};
 
 	useEffect(() => {

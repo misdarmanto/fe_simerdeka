@@ -31,9 +31,9 @@ const ReportParicipationDetailView = () => {
 
 	const handleChangeStatusApproval = async (status: "accepted" | "rejected") => {
 		const body: ReportParticipationUpdateTypes = {
-			report_participation_id: reportParticipationId,
-			report_participation_status: status,
-			report_participation_status_message: statusMessage,
+			reportParticipationId: reportParticipationId,
+			reportParticipationStatus: status,
+			reportParticipationStatusMessage: statusMessage,
 		};
 
 		await httpService.patch({
@@ -68,40 +68,40 @@ const ReportParicipationDetailView = () => {
 					<ListItemStyle
 						title="status"
 						description={convertStatusName(
-							reportParticipation?.report_participation_status
+							reportParticipation?.reportParticipationStatus
 						)}
 					/>
 
-					{reportParticipation?.report_participation_status_message && (
+					{reportParticipation?.reportParticipationStatusMessage && (
 						<ListItemStyle
 							title="pesan"
 							description={
-								reportParticipation?.report_participation_status_message
+								reportParticipation?.reportParticipationStatusMessage
 							}
 						/>
 					)}
 
 					<ListItemStyle
 						title="Nama"
-						description={reportParticipation?.student.student_name}
+						description={reportParticipation?.student?.studentName}
 					/>
 					<ListItemStyle
 						title="NIM"
-						description={reportParticipation?.student.student_nim}
+						description={reportParticipation?.student?.studentNim}
 					/>
 					<ListItemStyle
 						title="Program Studi"
 						description={
-							reportParticipation?.student.student_study_program_name
+							reportParticipation?.student?.studentStudyProgramName
 						}
 					/>
 					<ListItemStyle
 						title="Jurusan"
-						description={reportParticipation?.student.student_department_name}
+						description={reportParticipation?.student?.studentDepartmentName}
 					/>
 					<ListItemStyle
 						title="Lampiran Surat"
-						url={reportParticipation?.report_participation_letter}
+						url={reportParticipation?.reportParticipationLetter}
 					/>
 				</dl>
 			</div>
