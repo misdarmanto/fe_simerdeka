@@ -49,8 +49,8 @@ const RecomendationLetterDetail = () => {
 		await httpService.patch({
 			path: `/recomendation-letters/change-status`,
 			body: {
-				recomendation_letter_id: recomendationLetterId,
-				recomendation_letter_approval_letter: recomendationLetterApproval,
+				recomendationLetter_id: recomendationLetterId,
+				recomendationLetter_approval_letter: recomendationLetterApproval,
 			},
 		});
 
@@ -61,7 +61,7 @@ const RecomendationLetterDetail = () => {
 		await httpService.patch({
 			path: `/recomendation-letter/change-status`,
 			body: {
-				recomendation_letter_id: recomendationLetterId,
+				recomendationLetter_id: recomendationLetterId,
 				status: status,
 				status_message: statusMessage,
 			},
@@ -93,7 +93,7 @@ const RecomendationLetterDetail = () => {
 
 			<div className="bg-white border border-gray-200 rounded-lg shadow my-5 p-2 sm:p-8">
 				<Timeline horizontal={true}>
-					{recomendationLetter?.recomendation_letter_assign_to_study_program && (
+					{recomendationLetter?.recomendationLetterAssignToStudyProgram && (
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
@@ -102,7 +102,7 @@ const RecomendationLetterDetail = () => {
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
-					{recomendationLetter?.recomendation_letter_assign_to_department && (
+					{recomendationLetter?.recomendationLetterAssignToDepartment && (
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
@@ -111,7 +111,7 @@ const RecomendationLetterDetail = () => {
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
-					{recomendationLetter?.recomendation_letter_assign_to_lp3m && (
+					{recomendationLetter?.recomendationLetterAssignToLp3m && (
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
@@ -120,7 +120,7 @@ const RecomendationLetterDetail = () => {
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
-					{recomendationLetter?.recomendation_letter_assign_to_academic && (
+					{recomendationLetter?.recomendationLetterAssignToAcademic && (
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
@@ -130,7 +130,7 @@ const RecomendationLetterDetail = () => {
 						</Timeline.Item>
 					)}
 
-					{recomendationLetter?.recomendation_letter_status === "accepted" && (
+					{recomendationLetter?.recomendationLetterStatus === "accepted" && (
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
@@ -147,93 +147,88 @@ const RecomendationLetterDetail = () => {
 					<ListItemStyle
 						title="Status"
 						description={convertStatusName(
-							recomendationLetter?.recomendation_letter_status
+							recomendationLetter?.recomendationLetterStatus
 						)}
 					/>
-					{recomendationLetter?.recomendation_letter_status_message && (
+					{recomendationLetter?.recomendationLetterStatusMessage && (
 						<ListItemStyle
 							title="Pesan"
 							description={
-								recomendationLetter?.recomendation_letter_status_message
+								recomendationLetter?.recomendationLetterStatusMessage
 							}
 						/>
 					)}
 					<ListItemStyle
 						title="Nama"
-						description={recomendationLetter?.student?.student_name}
+						description={recomendationLetter?.student?.studentName}
 					/>
 					<ListItemStyle
 						title="NIM"
-						description={recomendationLetter?.student?.student_nim}
+						description={recomendationLetter?.student?.studentNim}
 					/>
 					<ListItemStyle
 						title="Prodi"
 						description={
-							recomendationLetter?.student?.student_study_program_name
+							recomendationLetter?.student?.studentStudyProgramName
 						}
 					/>
 					<ListItemStyle
 						title="Jurusan"
-						description={
-							recomendationLetter?.student?.student_department_name
-						}
+						description={recomendationLetter?.student?.studentDepartmentName}
 					/>
 					<ListItemStyle
 						title="Dosen Wali"
-						description={recomendationLetter?.recomendation_letter_dosen_wali}
+						description={recomendationLetter?.recomendationLetterDosenWali}
 					/>
 					<ListItemStyle
 						title="Program Yang Diikuti"
-						description={
-							recomendationLetter?.recomendation_letter_program_name
-						}
+						description={recomendationLetter?.recomendationLetterProgramName}
 					/>
 					<ListItemStyle
 						title="Keterkaitan Pembelajaran Dengan Program Studi"
 						description={
-							recomendationLetter?.recomendation_letter_program_correlation
+							recomendationLetter?.recomendationLetterProgramCorrelation
 						}
 					/>
 					<ListItemStyle
 						title="Surat Persetujuan Dosen Wali"
-						url={recomendationLetter?.recomendation_letter_approval_letter}
+						url={recomendationLetter?.recomendationLetterApprovalLetter}
 					/>
 					<ListItemStyle
 						title="Transkrip semester 1-4"
-						url={recomendationLetter?.recomendation_letter_student_transkrip}
+						url={recomendationLetter?.recomendationLetterStudentTranskrip}
 					/>
 
-					{recomendationLetter?.recomendation_letter_from_study_program && (
+					{recomendationLetter?.recomendationLetterFromStudyProgram && (
 						<ListItemStyle
 							title="Surat Pengantar Prodi"
 							url={
-								recomendationLetter?.recomendation_letter_from_study_program +
+								recomendationLetter?.recomendationLetterFromStudyProgram +
 								""
 							}
 						/>
 					)}
-					{recomendationLetter?.recomendation_letter_from_department && (
+					{recomendationLetter?.recomendationLetterFromDepartment && (
 						<ListItemStyle
 							title="Surat Pengantar Jurusan"
 							url={
-								recomendationLetter?.recomendation_letter_from_department +
+								recomendationLetter?.recomendationLetterFromDepartment +
 								""
 							}
 						/>
 					)}
-					{recomendationLetter?.recomendation_letter_from_lp3m && (
+					{recomendationLetter?.recomendationLetterFromLp3m && (
 						<ListItemStyle
 							title="Surat Pengantar LP3M"
-							url={recomendationLetter?.recomendation_letter_from_lp3m + ""}
+							url={recomendationLetter?.recomendationLetterFromLp3m + ""}
 						/>
 					)}
-					{recomendationLetter?.recomendation_letter_from_academic && (
+					{recomendationLetter?.recomendationLetterFromAcademic && (
 						<ListItemStyle
 							title="Download Surat Rekomendasi"
 							isDownloadButton={true}
 							url={
-								recomendationLetter?.recomendation_letter_from_academic +
-								""
+								recomendationLetter?.recomendationLetterFromAcademic + ""
 							}
 						/>
 					)}

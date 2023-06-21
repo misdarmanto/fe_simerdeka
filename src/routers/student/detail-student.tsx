@@ -80,7 +80,7 @@ const StudentDetailView = () => {
 	const tableHeaderMataKuliah: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: TranskripTypes, index: number): ReactElement => (
+			data: (data: MataKuliahTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -89,18 +89,18 @@ const StudentDetailView = () => {
 
 		{
 			title: "Nama",
-			data: (data: TranskripTypes, index: number): ReactElement => (
+			data: (data: MataKuliahTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mata_kuliah.mataKuliahName}
+					{data.mataKuliahName}
 				</td>
 			),
 		},
 
 		{
 			title: "total sks",
-			data: (data: TranskripTypes, index: number): ReactElement => (
+			data: (data: MataKuliahTypes, index: number): ReactElement => (
 				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.mata_kuliah.mataKuliahSksTotal}
+					{data.mataKuliahSksTotal}
 				</td>
 			),
 		},
@@ -108,7 +108,7 @@ const StudentDetailView = () => {
 		{
 			title: "Action",
 			action: true,
-			data: (data: TranskripTypes, index: number): ReactElement => (
+			data: (data: MataKuliahTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<ButtonStyle
 						title="Hapus"
@@ -146,37 +146,35 @@ const StudentDetailView = () => {
 					<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
 						<ListItemStyle
 							title="Nama"
-							description={studentDetails?.student_name}
+							description={studentDetails?.studentName}
 						/>
 						<ListItemStyle
 							title="NIM"
-							description={studentDetails?.student_nim}
+							description={studentDetails?.studentNim}
 						/>
 						<ListItemStyle
 							title="Prodi"
-							description={studentDetails?.student_study_program_name}
+							description={studentDetails?.studentStudyProgramName}
 						/>
 						<ListItemStyle
 							title="Jurusan"
-							description={studentDetails?.student_department_name}
+							description={studentDetails?.studentDepartmentName}
 						/>
 						<ListItemStyle
 							title="Program MBKM"
-							description={studentDetails?.mbkm_program?.mbkm_program_name}
+							description={studentDetails?.mbkmProgram?.mbkmProgramName}
 						/>
 						<ListItemStyle
 							title="Kategori Program MBKM"
-							description={
-								studentDetails?.mbkm_program?.mbkm_program_category
-							}
+							description={studentDetails?.mbkmProgram?.mbkmProgramCategory}
 						/>
 						<ListItemStyle
 							title="Total Konversi SKS"
-							description={studentDetails?.student_sks_total + "" || "_"}
+							description={studentDetails?.studentSksTotal + "" || "_"}
 						/>
 						<ListItemStyle
 							title="Silabus"
-							url={studentDetails?.mbkm_program?.mbkm_program_syllabus}
+							url={studentDetails?.mbkmProgram?.mbkmProgramSyllabus}
 						/>
 					</dl>
 				) : (

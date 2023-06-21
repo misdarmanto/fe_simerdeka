@@ -26,7 +26,6 @@ const StudentListView = () => {
 			},
 		});
 
-		console.log("_______________result");
 		console.log(result);
 
 		setListOfStudent({
@@ -59,7 +58,7 @@ const StudentListView = () => {
 			title: "Nama",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student_name}
+					{data.studentName}
 				</td>
 			),
 		},
@@ -68,7 +67,7 @@ const StudentListView = () => {
 			title: "NIM",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
-					{data.student_nim}
+					{data.studentNim}
 				</td>
 			),
 		},
@@ -77,7 +76,7 @@ const StudentListView = () => {
 			title: "email",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
-					{data.student_email}
+					{data.studentEmail}
 				</td>
 			),
 		},
@@ -85,7 +84,7 @@ const StudentListView = () => {
 			title: "prodi",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.student_study_program_name}
+					{data.studentStudyProgramName}
 				</td>
 			),
 		},
@@ -94,7 +93,7 @@ const StudentListView = () => {
 			title: "jurusan",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.student_department_name}
+					{data.studentDepartmentName}
 				</td>
 			),
 		},
@@ -102,7 +101,7 @@ const StudentListView = () => {
 			title: "program",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "program"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program?.mbkm_program_name || "_"}
+					{data.mbkmProgram?.mbkmProgramName || "_"}
 				</td>
 			),
 		},
@@ -110,7 +109,7 @@ const StudentListView = () => {
 			title: "sks",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.student_sks_total || "_"}
+					{data.studentSksTotal || "_"}
 				</td>
 			),
 		},
@@ -120,7 +119,7 @@ const StudentListView = () => {
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
-						<Link to={`/students/detail/${data.student_id}`}>
+						<Link to={`/students/detail/${data.studentId}`}>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>
 					</div>

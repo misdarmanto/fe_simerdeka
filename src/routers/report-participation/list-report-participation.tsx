@@ -6,6 +6,7 @@ import { ReactElement, useContext, useEffect, useState } from "react";
 import { CONFIG } from "../../configs";
 import { RootContext } from "../../utils/contextApi";
 import { ServiceHttp } from "../../services/api";
+import { ReportParticipationTypes } from "../../models/report-participation";
 
 const ReportParticipationListView = () => {
 	const [listProgram, setListProgram] = useState<any>();
@@ -46,7 +47,7 @@ const ReportParticipationListView = () => {
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: ReportParticipationTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -55,44 +56,44 @@ const ReportParticipationListView = () => {
 
 		{
 			title: "Nama",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: ReportParticipationTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_name}
+					{data.student?.studentName}
 				</td>
 			),
 		},
 
 		{
 			title: "NIM",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: ReportParticipationTypes, index: number): ReactElement => (
 				<td key={index + "NIM"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_nim}
+					{data.student?.studentNim}
 				</td>
 			),
 		},
 
 		{
 			title: "Prodi",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: ReportParticipationTypes, index: number): ReactElement => (
 				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_study_program_name}
+					{data.student?.studentStudyProgramName}
 				</td>
 			),
 		},
 
 		{
 			title: "Jurusan",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: ReportParticipationTypes, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_department_name}
+					{data.student?.studentDepartmentName}
 				</td>
 			),
 		},
 
 		{
 			title: "Status",
-			data: (data: any, index: number): ReactElement => {
-				if (data.report_participation_status === "rejected") {
+			data: (data: ReportParticipationTypes, index: number): ReactElement => {
+				if (data.reportParticipationStatus === "rejected") {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="failure" className="w-20 text-center">
@@ -101,7 +102,7 @@ const ReportParticipationListView = () => {
 						</td>
 					);
 				}
-				if (data.report_participation_status === "accepted") {
+				if (data.reportParticipationStatus === "accepted") {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="success" className="w-20 text-center">
@@ -123,11 +124,11 @@ const ReportParticipationListView = () => {
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
+			data: (data: ReportParticipationTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
 						<Link
-							to={`/report-participations/detail/${data.report_participation_id}`}
+							to={`/report-participations/detail/${data.reportParticipationId}`}
 						>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>

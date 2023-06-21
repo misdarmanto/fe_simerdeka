@@ -7,6 +7,7 @@ import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
+import { StudyProgramTypes } from "../../models/study-program";
 
 const StudyProgramListView = () => {
 	const [listStudyProgram, setListStudyProgram] = useState<any>();
@@ -44,7 +45,7 @@ const StudyProgramListView = () => {
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudyProgramTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -53,27 +54,27 @@ const StudyProgramListView = () => {
 
 		{
 			title: "Nama Prodi",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudyProgramTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.study_program_name}
+					{data.studyProgramName}
 				</td>
 			),
 		},
 
 		{
 			title: "Email",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudyProgramTypes, index: number): ReactElement => (
 				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
-					{data.study_program_email}
+					{data.studyProgramEmail}
 				</td>
 			),
 		},
 
 		{
 			title: "Nama Jurusan",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudyProgramTypes, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.study_program_department_name}
+					{data.studyProgramDepartmentName}
 				</td>
 			),
 		},

@@ -27,7 +27,7 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, student }: ModalAddMataKuliahTypes
 
 	const handleSelectMataKuliah = (mataKuliah: MataKuliahTypes) => {
 		const newData: any = {
-			transkripStudentId: student?.student_id,
+			transkripStudentId: student?.studentId,
 			transkripMataKuliahId: mataKuliah.mataKuliahId,
 		};
 		setMataKuliahSelected(newData);

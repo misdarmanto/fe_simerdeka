@@ -7,6 +7,7 @@ import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RootContext } from "../../utils/contextApi";
+import { RecomendationLetterTypes } from "../../models/recomendation-letter";
 
 const RecomendationLetterList = () => {
 	const navigate = useNavigate();
@@ -48,7 +49,7 @@ const RecomendationLetterList = () => {
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -57,57 +58,55 @@ const RecomendationLetterList = () => {
 
 		{
 			title: "Nama Mahasiswa",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_name}
+					{data?.student?.studentName}
 				</td>
 			),
 		},
 
 		{
 			title: "NIM",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
 				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_nim.length > 10
-						? data.student.student_nim.slice(0, 10) + "..."
-						: data.student.student_nim}
+					{data.student?.studentNim}
 				</td>
 			),
 		},
 
 		{
 			title: "Jurusan",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_department_name}
+					{data.student.studentDepartmentName}
 				</td>
 			),
 		},
 
 		{
 			title: "Prodi",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
 				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.student.student_study_program_name}
+					{data.student.studentStudyProgramName}
 				</td>
 			),
 		},
 
 		{
 			title: "Nama Program",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
 				<td key={index + "program-name"} className="md:px-6 md:py-3 break-all">
-					{data.recomendation_letter_program_name.length > 10
-						? data.recomendation_letter_program_name.slice(0, 10) + "....."
-						: data.recomendation_letter_program_name}
+					{data.recomendationLetterProgramName.length > 10
+						? data.recomendationLetterProgramName.slice(0, 10) + "....."
+						: data.recomendationLetterProgramName}
 				</td>
 			),
 		},
 
 		{
 			title: "Status",
-			data: (data: any, index: number): ReactElement => {
-				if (data.recomendation_letter_status === "rejected") {
+			data: (data: RecomendationLetterTypes, index: number): ReactElement => {
+				if (data.recomendationLetterStatus === "rejected") {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="failure" className="w-20 text-center">
@@ -116,7 +115,7 @@ const RecomendationLetterList = () => {
 						</td>
 					);
 				}
-				if (data.recomendation_letter_status === "accepted") {
+				if (data.recomendationLetterStatus === "accepted") {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="success" className="w-20 text-center">
@@ -137,8 +136,8 @@ const RecomendationLetterList = () => {
 
 		{
 			title: "di teruskan ke",
-			data: (data: any, index: number): ReactElement => {
-				if (data.recomendation_letter_assign_to_academic) {
+			data: (data: RecomendationLetterTypes, index: number): ReactElement => {
+				if (data.recomendationLetterAssignToAcademic) {
 					return (
 						<td key={index + "s"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -148,7 +147,7 @@ const RecomendationLetterList = () => {
 					);
 				}
 
-				if (data.recomendation_letter_assign_to_lp3m) {
+				if (data.recomendationLetterAssignToLp3m) {
 					return (
 						<td key={index + "d"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -158,7 +157,7 @@ const RecomendationLetterList = () => {
 					);
 				}
 
-				if (data.recomendation_letter_assign_to_department) {
+				if (data.recomendationLetterAssignToDepartment) {
 					return (
 						<td key={index + "s"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -168,7 +167,7 @@ const RecomendationLetterList = () => {
 					);
 				}
 
-				if (data.recomendation_letter_assign_to_study_program) {
+				if (data.recomendationLetterAssignToStudyProgram) {
 					return (
 						<td key={index + "ss"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -181,7 +180,7 @@ const RecomendationLetterList = () => {
 				return (
 					<td key={index + "s"} className="md:px-6 md:py-3 break-all">
 						<Badge color="warning" className="w-20">
-							{data.recomendation_letter_status}
+							{data.recomendationLetterStatus}
 						</Badge>
 					</td>
 				);
@@ -190,11 +189,11 @@ const RecomendationLetterList = () => {
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
+			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div>
 						<Link
-							to={`/recomendation-letters/detail/${data.recomendation_letter_id}`}
+							to={`/recomendation-letters/detail/${data.recomendationLetterId}`}
 						>
 							<ButtonStyle title="Detail" color="light" />
 						</Link>

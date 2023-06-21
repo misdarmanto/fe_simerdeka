@@ -31,30 +31,25 @@ const ModalSelectStudyProgram = ({
 
 	const handleSelectStudyProgram = (studyProgram: StudyProgramTypes) => {
 		const check = studyProgramSelected.find((item) => {
-			return (
-				item.mbkm_program_prodi_study_program_id === studyProgram.study_program_id
-			);
+			return item.mbkmProgramProdiStudyProgramId === studyProgram.studyProgramId;
 		});
 
 		if (check) {
 			const newData = studyProgramSelected.filter((item) => {
 				return (
-					item.mbkm_program_prodi_study_program_id !==
-					studyProgram.study_program_id
+					item.mbkmProgramProdiStudyProgramId !== studyProgram.studyProgramId
 				);
 			});
 			setStudyProgramSelected(newData);
 		} else {
 			const data: MbkmProgramProdiCreateRequestTypes = {
-				mbkm_program_prodi_program_id: mbkmProgram?.mbkm_program_id,
-				mbkm_program_prodi_program_name: mbkmProgram?.mbkm_program_name,
-				mbkm_program_prodi_study_program_id: studyProgram.study_program_id,
-				mbkm_program_prodi_study_program_name: studyProgram.study_program_name,
-				mbkm_program_prodi_department_id:
-					studyProgram.study_program_department_id,
-				mbkm_program_prodi_department_name:
-					studyProgram.study_program_department_name,
-				mbkm_program_prodi_semester_id: mbkmProgram?.mbkm_program_semester_id,
+				mbkmProgramProdiProgramId: mbkmProgram?.mbkmProgramId || "",
+				mbkmProgramProdiProgramName: mbkmProgram?.mbkmProgramName || "",
+				mbkmProgramProdiStudyProgramId: studyProgram.studyProgramId,
+				mbkmProgramProdiStudyProgramName: studyProgram.studyProgramName,
+				mbkmProgramProdiDepartmentId: studyProgram.studyProgramDepartmentId,
+				mbkmProgramProdiDepartmentName: studyProgram.studyProgramDepartmentName,
+				mbkmProgramProdiSemesterId: mbkmProgram?.mbkmProgramSemesterId || "",
 			};
 
 			setStudyProgramSelected([...studyProgramSelected, data]);
@@ -98,7 +93,7 @@ const ModalSelectStudyProgram = ({
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudyProgramTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -107,27 +102,27 @@ const ModalSelectStudyProgram = ({
 
 		{
 			title: "Nama",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudyProgramTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.study_program_name}
+					{data.studyProgramName}
 				</td>
 			),
 		},
 
 		{
 			title: "email",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudyProgramTypes, index: number): ReactElement => (
 				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
-					{data.study_program_email}
+					{data.studyProgramEmail}
 				</td>
 			),
 		},
 
 		{
 			title: "jurusan",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudyProgramTypes, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.study_program_department_name}
+					{data.studyProgramDepartmentName}
 				</td>
 			),
 		},
@@ -135,11 +130,9 @@ const ModalSelectStudyProgram = ({
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => {
+			data: (data: StudyProgramTypes, index: number): ReactElement => {
 				const isButtonActive = studyProgramSelected.find((item) => {
-					return (
-						item.mbkm_program_prodi_study_program_id === data.study_program_id
-					);
+					return item.mbkmProgramProdiStudyProgramId === data.studyProgramId;
 				});
 
 				return (

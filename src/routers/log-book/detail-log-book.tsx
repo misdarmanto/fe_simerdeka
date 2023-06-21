@@ -51,29 +51,26 @@ const LogBookDetailView = () => {
 				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
 					<ListItemStyle
 						title="Nama"
-						description={logBook?.log_book_student_name}
+						description={logBook?.logBookStudentName}
 					/>
-					<ListItemStyle
-						title="NIM"
-						description={logBook?.log_book_student_nim}
-					/>
+					<ListItemStyle title="NIM" description={logBook?.logBookStudentNim} />
 					<ListItemStyle
 						title="Program Studi"
-						description={logBook?.log_book_study_program_name}
+						description={logBook?.logBookStudyProgramName}
 					/>
 					<ListItemStyle
 						title="Jurusan"
-						description={logBook?.log_book_department_name}
+						description={logBook?.logBookDepartmentName}
 					/>
 					<ListItemStyle
 						title="Laporam minggu ke"
-						description={logBook?.log_book_report_week + ""}
+						description={logBook?.logBookReportWeek + ""}
 					/>
 					<ListItemStyle
 						title="Diserahkan pada"
-						description={converDateTimeFromDB(logBook?.created_on)}
+						description={converDateTimeFromDB(logBook?.createdOn)}
 					/>
-					<ListItemStyle title="Log Book" url={logBook?.log_book_report_file} />
+					<ListItemStyle title="Log Book" url={logBook?.logBookReportFile} />
 				</dl>
 			</div>
 		</div>

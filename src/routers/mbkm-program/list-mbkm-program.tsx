@@ -38,7 +38,7 @@ const MbkmProgramListView = () => {
 	const handleDeleteMbkmProgram = async () => {
 		console.log(modalDeleteData);
 		await httpService.remove({
-			path: `/mbkm-programs?mbkm_program_id=${modalDeleteData?.mbkm_program_id}`,
+			path: `/mbkm-programs?mbkm_program_id=${modalDeleteData?.mbkmProgramId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
@@ -89,7 +89,7 @@ const MbkmProgramListView = () => {
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -98,29 +98,29 @@ const MbkmProgramListView = () => {
 
 		{
 			title: "Nama Program",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program_name}
+					{data.mbkmProgramName}
 				</td>
 			),
 		},
 
 		{
 			title: "Jenis Program",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.mbkm_program_category.length > 10
-						? data.mbkm_program_category.slice(0, 10) + "....."
-						: data.mbkm_program_category}
+					{data.mbkmProgramCategory.length > 10
+						? data.mbkmProgramCategory.slice(0, 10) + "....."
+						: data.mbkmProgramCategory}
 				</td>
 			),
 		},
 
 		{
 			title: "Semester",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
-					{data.semester.semester_name}
+					{data.semester.semesterName}
 				</td>
 			),
 		},
@@ -128,10 +128,10 @@ const MbkmProgramListView = () => {
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
+			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex">
-						<Link to={`/mbkm-programs/detail/${data.mbkm_program_id}`}>
+						<Link to={`/mbkm-programs/detail/${data.mbkmProgramId}`}>
 							<ButtonStyle
 								title="Detail"
 								size="xs"
@@ -188,7 +188,7 @@ const MbkmProgramListView = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					{user.user_role === "lp3m" && (
+					{user.userRole === "lp3m" && (
 						<ButtonStyle
 							title="Create"
 							color="light"
@@ -202,7 +202,7 @@ const MbkmProgramListView = () => {
 					>
 						<option value={"all"}>semua semester</option>
 						{listOfSemester.map((semester: any, index) => (
-							<option key={index} value={semester.semester_id}>
+							<option key={index} value={semester.semesterId}>
 								{semester.semester_name}
 							</option>
 						))}
@@ -216,7 +216,7 @@ const MbkmProgramListView = () => {
 			<TableStyle header={header} table={listMbkmProgram} />
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.mbkm_program_name}`}
+				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.mbkmProgramName}`}
 				isOpen={openModalDelete}
 				onBtnYesClick={handleDeleteMbkmProgram}
 				onOpen={handleModalDelete}

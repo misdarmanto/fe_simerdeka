@@ -32,21 +32,21 @@ const MbkmProgramEditView = () => {
 
 	const handleSelectSksConvertion = ({ studentId }: { studentId: string }) => {
 		const studentCheck = listSksConvertionSelected.find((item) => {
-			return item.sks_convertion_student_id === studentId;
+			return item.sksConvertionStudentId === studentId;
 		});
 
 		if (studentCheck) {
 			const newListSksConvertion = listSksConvertionSelected.filter((item) => {
-				return item.sks_convertion_student_id !== studentId;
+				return item.sksConvertionStudentId !== studentId;
 			});
 			setListSksConvertionSelected(newListSksConvertion);
 		} else {
 			setListSksConvertionSelected([
 				...listSksConvertionSelected,
 				{
-					sks_convertion_total: sksConvertionTotal!,
-					sks_convertion_mbkm_program_id: mbkmProgram?.mbkm_program_id!,
-					sks_convertion_student_id: studentId,
+					sksConvertionTotal: sksConvertionTotal!,
+					sksConvertionMbkmProgramId: mbkmProgram?.mbkmProgramId!,
+					sksConvertionStudentId: studentId,
 				},
 			]);
 		}
@@ -117,7 +117,7 @@ const MbkmProgramEditView = () => {
 			action: true,
 			data: (data: any, index: number): ReactElement => {
 				const isButtonActive = listSksConvertionSelected.find((item) => {
-					return item.sks_convertion_student_id === data.user_id;
+					return item.sksConvertionStudentId === data.user_id;
 				});
 
 				return (
@@ -171,15 +171,15 @@ const MbkmProgramEditView = () => {
 				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
 					<ListItemStyle
 						title="Nama"
-						description={mbkmProgram?.mbkm_program_name}
+						description={mbkmProgram?.mbkmProgramName}
 					/>
 					<ListItemStyle
 						title="kategori program"
-						description={mbkmProgram?.mbkm_program_category}
+						description={mbkmProgram?.mbkmProgramCategory}
 					/>
 					<ListItemStyle
 						title="Program Syllabus"
-						url={mbkmProgram?.mbkm_program_syllabus}
+						url={mbkmProgram?.mbkmProgramSyllabus}
 					/>
 				</dl>
 			</div>
