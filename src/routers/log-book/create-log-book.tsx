@@ -18,8 +18,8 @@ const LogBookCreateView = () => {
 		event.preventDefault();
 		try {
 			const data: LogBookCreateRequestTypes = {
-				log_book_report_week: logBookWeek,
-				log_book_report_file: logBookReportFile,
+				logBookReportWeek: logBookWeek,
+				logBookReportFile: logBookReportFile,
 			};
 
 			const httpService = new ServiceHttp();

@@ -8,7 +8,6 @@ import ErrorPage from "./error-page";
 import Root from "./routers/root";
 import FaQ from "./routers/faq";
 import LogActivity from "./routers/log-activity";
-import ProgramProposal from "./routers/program-proposal";
 import ManageUser from "./routers/manage-users";
 import Login from "./routers/auth/login";
 import Register from "./routers/auth/register";
@@ -147,11 +146,6 @@ const privateRouter = createBrowserRouter([
 				element: <MataKuliahCreateView />,
 			},
 
-			//program proposal
-			{
-				path: "/program-proposal",
-				element: <ProgramProposal />,
-			},
 			{
 				path: "/recomendation-letters",
 				element: <RecomendationLetterList />,

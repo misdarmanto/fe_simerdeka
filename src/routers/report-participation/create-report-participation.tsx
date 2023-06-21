@@ -23,7 +23,7 @@ const ReportParicipationCreateView = () => {
 		event.preventDefault();
 		try {
 			const data: ReportParticipationTypes = {
-				report_participation_letter: reportParticipationFile,
+				reportParticipationLetter: reportParticipationFile,
 			};
 			const httpService = new ServiceHttp();
 			await httpService.post({
@@ -37,7 +37,7 @@ const ReportParicipationCreateView = () => {
 	};
 
 	useEffect(() => {
-		if (user.user_role !== "student") {
+		if (user.userRole !== "student") {
 			navigate("/report-participations");
 		}
 	}, []);

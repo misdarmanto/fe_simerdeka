@@ -22,13 +22,13 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 	const httpService = new ServiceHttp();
 
 	const handleSelectStudent = (student: StudentTypes) => {
-		if (student.student_id === studentSelected?.student_id) {
+		if (student.studentId === studentSelected?.studentId) {
 			setStudentSelected({});
 			return;
 		}
 		const newData: StudentTypes = {
-			student_id: student.student_id,
-			student_mbkm_program_id: mbkmProgram?.mbkm_program.mbkm_program_id,
+			studentId: student.studentId,
+			studentMbkmProgramId: mbkmProgram?.mbkmProgram.mbkmProgramId,
 		};
 		setStudentSelected(newData);
 	};
@@ -86,7 +86,7 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 			title: "Nama",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student_name}
+					{data.studentName}
 				</td>
 			),
 		},
@@ -95,7 +95,7 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 			title: "total sks",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.student_email}
+					{data.studentEmail}
 				</td>
 			),
 		},
@@ -104,7 +104,7 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 			title: "Action",
 			action: true,
 			data: (data: StudentTypes, index: number): ReactElement => {
-				const isActive = data.student_id === studentSelected?.student_id;
+				const isActive = data.studentId === studentSelected?.studentId;
 				console.log(isActive);
 				return (
 					<td key={index + "action"}>

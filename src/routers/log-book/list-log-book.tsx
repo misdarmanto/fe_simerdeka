@@ -34,7 +34,7 @@ const LogBookListView = () => {
 
 	const handleDeleteLogBook = async () => {
 		await httpService.remove({
-			path: `/log-books?log_book_id=${modalDeleteData?.log_book_id}`,
+			path: `/log-books?logBook_id=${modalDeleteData?.logBookId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
@@ -70,7 +70,7 @@ const LogBookListView = () => {
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: LogBookTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -79,64 +79,64 @@ const LogBookListView = () => {
 
 		{
 			title: "Nama",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: LogBookTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.log_book_student_name}
+					{data.logBookStudentName}
 				</td>
 			),
 		},
 		{
 			title: "NIM",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: LogBookTypes, index: number): ReactElement => (
 				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
-					{data.log_book_student_nim}
+					{data.logBookStudentNim}
 				</td>
 			),
 		},
 
 		{
 			title: "prodi",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: LogBookTypes, index: number): ReactElement => (
 				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.log_book_study_program_name}
+					{data.logBookStudyProgramName}
 				</td>
 			),
 		},
 
 		{
 			title: "jurusan",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: LogBookTypes, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.log_book_department_name}
+					{data.logBookDepartmentName}
 				</td>
 			),
 		},
 		{
 			title: "minggu ke",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: LogBookTypes, index: number): ReactElement => (
 				<td key={index + "week"} className="md:px-6 md:py-3 break-all">
-					{data.log_book_report_week}
+					{data.logBookReportWeek}
 				</td>
 			),
 		},
 		{
 			title: "di serahkan pada",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: LogBookTypes, index: number): ReactElement => (
 				<td key={index + "submission"} className="md:px-6 md:py-3 break-all">
-					{converDateTimeFromDB(data.created_on)}
+					{converDateTimeFromDB(data.createdOn)}
 				</td>
 			),
 		},
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
+			data: (data: LogBookTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex items-center">
-						<Link to={`/log-books/detail/${data.log_book_id}`}>
+						<Link to={`/log-books/detail/${data.logBookId}`}>
 							<ButtonStyle title="Detail" size="xs" color="light" />
 						</Link>
-						{user.user_role === "student" && (
+						{user.userRole === "student" && (
 							<ButtonStyle
 								title="Hapus"
 								size="xs"
@@ -188,7 +188,7 @@ const LogBookListView = () => {
 						</select>
 					</div>
 
-					{user.user_role === "student" && (
+					{user.userRole === "student" && (
 						<ButtonStyle
 							title="Create"
 							color="light"
@@ -203,7 +203,7 @@ const LogBookListView = () => {
 
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus log book minggu ke-${modalDeleteData?.log_book_report_week}`}
+				title={`Apakah anda yakin ingin menghapus log book minggu ke-${modalDeleteData?.logBookReportWeek}`}
 				isOpen={openModalDelete}
 				onBtnYesClick={handleDeleteLogBook}
 				onOpen={handleModalDelete}

@@ -30,7 +30,7 @@ const SemesterListView = () => {
 
 	const handleDeleteSemester = async () => {
 		await httpService.remove({
-			path: `/semesters?semester_id=${modalDeleteData?.semester_id}`,
+			path: `/semesters?semester_id=${modalDeleteData?.semesterId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
@@ -66,7 +66,7 @@ const SemesterListView = () => {
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: SemesterTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -75,17 +75,17 @@ const SemesterListView = () => {
 
 		{
 			title: "Nama Semester",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: SemesterTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.semester_name}
+					{data.semesterName}
 				</td>
 			),
 		},
 
 		{
 			title: "Status",
-			data: (data: any, index: number): ReactElement => {
-				if (data.semester_status === "active") {
+			data: (data: SemesterTypes, index: number): ReactElement => {
+				if (data.semesterStatus === "active") {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
 							<Badge color="info" className="w-20 text-center">
@@ -107,18 +107,18 @@ const SemesterListView = () => {
 
 		{
 			title: "Di buat oleh",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: SemesterTypes, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.semester_created_by}
+					{data.semesterCreatedBy}
 				</td>
 			),
 		},
 
 		{
 			title: "Di buat pada",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: SemesterTypes, index: number): ReactElement => (
 				<td key={index + "created at"} className="md:px-6 md:py-3 break-all">
-					{converDateTimeFromDB(data.created_on)}
+					{converDateTimeFromDB(data.createdOn)}
 				</td>
 			),
 		},
@@ -126,10 +126,10 @@ const SemesterListView = () => {
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
+			data: (data: SemesterTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex items-center">
-						<Link to={`/semesters/detail/${data.semester_id}`}>
+						<Link to={`/semesters/detail/${data.semesterId}`}>
 							<ButtonStyle title="Detail" size="xs" color="light" />
 						</Link>
 						<ButtonStyle
@@ -195,7 +195,7 @@ const SemesterListView = () => {
 
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.semester_name}`}
+				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.semesterName}`}
 				isOpen={openModalDelete}
 				onBtnYesClick={handleDeleteSemester}
 				onOpen={handleModalDelete}

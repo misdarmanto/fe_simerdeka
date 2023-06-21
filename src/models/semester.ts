@@ -1,8 +1,8 @@
 export interface SemesterTypes {
-	created_on?: string;
-	modified_on?: string;
-	semester_id?: string;
-	semester_created_by?: string;
-	semester_name?: string;
-	semester_status?: "active" | "non-active" | string;
+	createdOn?: string;
+	modifiedOn?: string;
+	semesterId?: string;
+	semesterCreatedBy?: string;
+	semesterName?: string;
+	semesterStatus?: "active" | "non-active" | string;
 }

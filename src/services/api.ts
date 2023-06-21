@@ -14,10 +14,10 @@ export const getHeaders = () => {
 	const user = localStorage.getItem(CONFIG.local_storage_key) || "";
 	const result: UserTypes = JSON.parse(user);
 	return {
-		"x-user-id": result.user_id,
-		"x-department-id": result.major_id,
-		"x-study-program-id": result.study_program_id,
-		"x-user-role": result.user_role,
+		"x-user-id": result.userId,
+		"x-department-id": result.departmentId,
+		"x-study-program-id": result.studyProgramId,
+		"x-user-role": result.userRole,
 	};
 };
 

@@ -3,12 +3,7 @@ import { BiUser } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { MbkmProgramIcon, StudenIcon, StudyProgramIcon } from "../../components";
 import { ServiceHttp } from "../../services/api";
-
-interface SummariesTypes {
-	total_student: number;
-	total_study_program: number;
-	total_program: number;
-}
+import { SummariesTypes } from "../../models/summary.model";
 
 const Home = () => {
 	const navigation = useNavigate();
@@ -43,21 +38,21 @@ const Home = () => {
 				className="flex items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64"
 			>
 				<StudenIcon size={30} className="mr-5" />{" "}
-				<p>{summaries?.total_student} Mahasiswa</p>
+				<p>{summaries?.totalStudent} Mahasiswa</p>
 			</div>
 			<div
 				onClick={() => handleNavigate("/study-programs")}
 				className="flex items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64"
 			>
 				<StudyProgramIcon size={30} className="mr-5" />{" "}
-				<p>{summaries?.total_study_program} Prodi</p>
+				<p>{summaries?.totalStudyProgram} Prodi</p>
 			</div>
 			<div
 				onClick={() => handleNavigate("/mbkm-programs")}
 				className="flex items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64"
 			>
 				<MbkmProgramIcon size={30} className="mr-5" />{" "}
-				<p>{summaries?.total_program} Program MBKM</p>
+				<p>{summaries?.totalProgram} Program MBKM</p>
 			</div>
 		</div>
 	);

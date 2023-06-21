@@ -21,9 +21,9 @@ const SemesterCreateView = () => {
 		event.preventDefault();
 		try {
 			const data: SemesterTypes = {
-				semester_name: semesterName,
-				semester_created_by: currentUser.user_role,
-				semester_status: semesterStatus,
+				semesterName: semesterName,
+				semesterCreatedBy: currentUser.userRole,
+				semesterStatus: semesterStatus,
 			};
 
 			const httpService = new ServiceHttp();

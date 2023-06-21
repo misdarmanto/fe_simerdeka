@@ -36,8 +36,8 @@ const MbkmProgramProdiDetailView = () => {
 		await httpService.patch({
 			path: `/students`,
 			body: {
-				student_id: modalDeleteData?.student_id,
-				student_mbkm_program_id: null,
+				student_id: modalDeleteData?.studentId,
+				student_mbkmProgram_id: null,
 			},
 		});
 		setOpenModalDelete(false);
@@ -60,7 +60,7 @@ const MbkmProgramProdiDetailView = () => {
 				size: 10,
 				filters: {
 					search: "",
-					mbkm_program_id: mbkmProgramId,
+					mbkmProgram_id: mbkmProgramId,
 				},
 			});
 
@@ -72,7 +72,7 @@ const MbkmProgramProdiDetailView = () => {
 				size: 10,
 				filter: {
 					search: "",
-					mbkm_program_id: mbkmProgramId,
+					mbkmProgram_id: mbkmProgramId,
 				},
 			});
 		} catch (error: any) {
@@ -94,7 +94,7 @@ const MbkmProgramProdiDetailView = () => {
 			title: "Nama",
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student_name}
+					{data.studentName}
 				</td>
 			),
 		},
@@ -160,19 +160,19 @@ const MbkmProgramProdiDetailView = () => {
 				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
 					<ListItemStyle
 						title="Nama"
-						description={mbkmProgram?.mbkm_program.mbkm_program_name}
+						description={mbkmProgram?.mbkmProgram.mbkmProgramName}
 					/>
 					<ListItemStyle
 						title="kategori program"
-						description={mbkmProgram?.mbkm_program.mbkm_program_category}
+						description={mbkmProgram?.mbkmProgram.mbkmProgramCategory}
 					/>
 					<ListItemStyle
 						title="Semester"
-						description={mbkmProgram?.semester.semester_name}
+						description={mbkmProgram?.semester.semesterName}
 					/>
 					<ListItemStyle
 						title="Program Syllabus"
-						url={mbkmProgram?.mbkm_program.mbkm_program_syllabus}
+						url={mbkmProgram?.mbkmProgram.mbkmProgramSyllabus}
 					/>
 				</dl>
 			</div>
@@ -218,7 +218,7 @@ const MbkmProgramProdiDetailView = () => {
 
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.student_name}`}
+				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.studentName}`}
 				isOpen={openModalDelete}
 				onBtnYesClick={handleChangeMbkmProgramStudent}
 				onOpen={handleModalDelete}

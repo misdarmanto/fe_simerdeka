@@ -51,7 +51,7 @@ const SidebarStyle = () => {
 
 	const MBKMProgramStudentMenu = {
 		title: "Program Saya",
-		path: `/mbkm-programs/students/${user.user_id}`,
+		path: `/mbkm-programs/students/${user.userId}`,
 		icon: <AiOutlineFolderOpen />,
 	};
 
