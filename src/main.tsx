@@ -215,8 +215,24 @@ const publicRouter = createBrowserRouter([
 
 const isAuth = true;
 
+import { createTheme, ThemeProvider } from "@mui/material";
+
+const theme = createTheme({
+	palette: {
+		primary: {
+			main: "#DAA520", // Replace with your desired primary color
+		},
+		secondary: {
+			main: "#fefcbf", // Replace with your desired secondary color
+		},
+	},
+	// Other customizations for your theme
+});
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-	<React.StrictMode>
-		<RouterProvider router={isAuth ? privateRouter : publicRouter} />
-	</React.StrictMode>
+	<ThemeProvider theme={theme}>
+		<React.StrictMode>
+			<RouterProvider router={isAuth ? privateRouter : publicRouter} />
+		</React.StrictMode>
+	</ThemeProvider>
 );

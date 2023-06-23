@@ -8,6 +8,7 @@ import { UserTypes } from "../models/user";
 import { LIST_USER } from "../data/users";
 import { Footer } from "flowbite-react";
 import { ServiceHttp } from "../services/api";
+import AppLayout from "../layout/appLayout";
 
 const Root = () => {
 	const [role, setRole] = useState<string>();
@@ -54,20 +55,27 @@ const Root = () => {
 
 	return (
 		<RootContext.Provider value={{ role, setRole, currentUser }}>
-			<div className="flex flex-auto">
+			{/* <div className="flex flex-auto">
 				<SidebarStyle />
 				<div className="grow bg-gray-100">
 					<Navbar />
-					<div className="m-5 min-h-screen">
-						<Outlet />
-					</div>
+					<AppLayout>
+						<div className="m-5 min-h-screen">
+							<Outlet />
+						</div>
+					</AppLayout>
 					<Footer container={true}>
 						<div className="text-center">
 							<Footer.Copyright by="simerdeka™" year={2023} />
 						</div>
 					</Footer>
 				</div>
-			</div>
+			</div> */}
+			<AppLayout>
+				<div className="m-5 min-h-screen">
+					<Outlet />
+				</div>
+			</AppLayout>
 		</RootContext.Provider>
 	);
 };
