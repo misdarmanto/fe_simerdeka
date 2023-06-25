@@ -3,46 +3,46 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Home from "./routers/home";
+import Home from "./pages/home";
 import ErrorPage from "./error-page";
-import Root from "./routers/root";
-import FaQ from "./routers/faq";
-import LogActivity from "./routers/log-activity";
-import ManageUser from "./routers/manage-users";
-import Login from "./routers/auth/login";
-import Register from "./routers/auth/register";
-import RecomendationLetterList from "./routers/recomendation-letter/list-recomendation-letter";
-import RecomendationLetterCreate from "./routers/recomendation-letter/create-recomendation-letter";
-import RecomendationLetterDetail from "./routers/recomendation-letter/detail-detail-recomendation-letter";
-import ReportParticipationListView from "./routers/report-participation/list-report-participation";
-import ReportParicipationCreateView from "./routers/report-participation/create-report-participation";
-import ReportParicipationDetailView from "./routers/report-participation/detail-report-participation";
-import SemesterListView from "./routers/semester/list-semester";
-import SemesterCreateView from "./routers/semester/create-semester";
-import SemesterDetail from "./routers/semester/detail-semester";
-import StudentListView from "./routers/student/list-student";
-import StudentDetailView from "./routers/student/detail-student";
-import MbkmProgramStudentDetail from "./routers/mbkm-program-student/detail-mbkm-program-student";
-import MbkmProgramStudentList from "./routers/mbkm-program-student/list-mbkm-program-student";
-import MbkmProgramStudentCreat from "./routers/mbkm-program-student/create-mbkm-program-student";
-import MbkmProgramEditView from "./routers/mbkm-program/edit-mbkm-program";
-import MbkmProgramCreatView from "./routers/mbkm-program/create-mbkm-program";
-import MbkmProgramDetailView from "./routers/mbkm-program/detail-mbkm-program";
-import MbkmProgramListView from "./routers/mbkm-program/list-mbkm-program";
-import LogBookListView from "./routers/log-book/list-log-book";
-import StudyProgramListView from "./routers/study-program";
-import LogBooksCreateView from "./routers/log-book/create-log-book";
-import LogBookDetailView from "./routers/log-book/detail-log-book";
-import MbkmProgramProdiListView from "./routers/mbkm-program-prodi/list-mbkm-program-prodi";
-import MbkmProgramProdiDetailView from "./routers/mbkm-program-prodi/detail-mbkm-program-prodi";
-import MataKuliahListView from "./routers/mata-kuliah/list-mata-kuliah";
-import MataKuliahCreateView from "./routers/mata-kuliah/create-log-book";
-import MbkmProgramStudentMyProgramView from "./routers/mbkm-program-student/my-mbkm-program";
+import FaQ from "./pages/faq";
+import LogActivity from "./pages/log-activity";
+import ManageUser from "./pages/manage-users";
+import Login from "./pages/auth/login";
+import Register from "./pages/auth/register";
+import RecomendationLetterList from "./pages/recomendation-letter/list-recomendation-letter";
+import RecomendationLetterCreate from "./pages/recomendation-letter/create-recomendation-letter";
+import RecomendationLetterDetail from "./pages/recomendation-letter/detail-detail-recomendation-letter";
+import ReportParticipationListView from "./pages/report-participation/list-report-participation";
+import ReportParicipationCreateView from "./pages/report-participation/create-report-participation";
+import ReportParicipationDetailView from "./pages/report-participation/detail-report-participation";
+import SemesterListView from "./pages/semester/list-semester";
+import SemesterCreateView from "./pages/semester/create-semester";
+import SemesterDetail from "./pages/semester/detail-semester";
+import StudentListView from "./pages/student/list-student";
+import StudentDetailView from "./pages/student/detail-student";
+import MbkmProgramEditView from "./pages/mbkm-program/edit-mbkm-program";
+import MbkmProgramCreatView from "./pages/mbkm-program/create-mbkm-program";
+import MbkmProgramDetailView from "./pages/mbkm-program/detail-mbkm-program";
+import MbkmProgramListView from "./pages/mbkm-program/list-mbkm-program";
+import LogBookListView from "./pages/log-book/list-log-book";
+import StudyProgramListView from "./pages/study-program";
+import LogBooksCreateView from "./pages/log-book/create-log-book";
+import LogBookDetailView from "./pages/log-book/detail-log-book";
+import MbkmProgramProdiListView from "./pages/mbkm-program-prodi/list-mbkm-program-prodi";
+import MbkmProgramProdiDetailView from "./pages/mbkm-program-prodi/detail-mbkm-program-prodi";
+import MataKuliahListView from "./pages/mata-kuliah/list-mata-kuliah";
+import MataKuliahCreateView from "./pages/mata-kuliah/create-log-book";
+import MbkmProgramStudentMyProgramView from "./pages/mbkm-program-student/my-mbkm-program";
+
+import { themeConfig } from "./configs/themeConfig";
+import { ThemeProvider } from "@emotion/react";
+import AppLayout from "./layout/appLayout";
 
 const privateRouter = createBrowserRouter([
 	{
 		path: "/",
-		element: <Root />,
+		element: <AppLayout />,
 		errorElement: <ErrorPage />,
 		children: [
 			{
@@ -215,24 +215,10 @@ const publicRouter = createBrowserRouter([
 
 const isAuth = true;
 
-import { createTheme, ThemeProvider } from "@mui/material";
-
-const theme = createTheme({
-	palette: {
-		primary: {
-			main: "#DAA520", // Replace with your desired primary color
-		},
-		secondary: {
-			main: "#fefcbf", // Replace with your desired secondary color
-		},
-	},
-	// Other customizations for your theme
-});
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-	<ThemeProvider theme={theme}>
-		<React.StrictMode>
+	<React.StrictMode>
+		<ThemeProvider theme={themeConfig}>
 			<RouterProvider router={isAuth ? privateRouter : publicRouter} />
-		</React.StrictMode>
-	</ThemeProvider>
+		</ThemeProvider>
+	</React.StrictMode>
 );

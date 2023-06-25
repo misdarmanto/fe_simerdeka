@@ -6,6 +6,7 @@ import {
 	ListItemText,
 	ListSubheader,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 type MenuItems = { title: string; path: string; icon: any };
 
@@ -41,7 +42,7 @@ const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 			}
 		>
 			{items.map((item: MenuItems, index) => (
-				<>
+				<Link to={item.path}>
 					<ListItem
 						key={index}
 						sx={{
@@ -60,7 +61,7 @@ const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 							/>
 						</ListItemButton>
 					</ListItem>
-				</>
+				</Link>
 			))}
 		</List>
 	);
