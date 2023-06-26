@@ -156,9 +156,10 @@ const ReportParticipationListView = () => {
 				icon={BASE_MENU_ICON.ReportParicipationIcon}
 			/>
 
+			<h1 className="mb-5">Tabel Surat Rekomendasi</h1>
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
 				<div className="flex items-center">
-					<div className="w-full mr-2 flex flex-row justify-between md:justify-start">
+					<div className="w-full mr-2 flex flex-row justify-between md:justify-start itemes-center gap-5">
 						<select
 							name="size"
 							defaultValue={10}
@@ -172,7 +173,7 @@ const ReportParticipationListView = () => {
 						</select>
 					</div>
 
-					{currentUser.user_role === "student" && (
+					{currentUser.userRole === "student" && (
 						<ButtonStyle
 							title="Create"
 							color="light"

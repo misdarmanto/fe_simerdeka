@@ -236,7 +236,7 @@ const RecomendationLetterList = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					{currentUser.user_role === "student" && (
+					{currentUser.userRole === "student" && (
 						<ButtonStyle
 							title="Buat"
 							color="light"

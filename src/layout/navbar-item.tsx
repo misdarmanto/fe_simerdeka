@@ -31,7 +31,7 @@ const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 				<ListSubheader
 					component="h1"
 					sx={{
-						backgroundColor: "#F1F1F1",
+						backgroundColor: "#F7FAFC",
 						fontSize: 12,
 						height: "38px",
 						color: "#4B5563",
