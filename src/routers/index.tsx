@@ -15,9 +15,6 @@ export default function AppRouters() {
 
 	let router: { path: string; element: JSX.Element }[] = [];
 
-	console.log("5");
-	console.log(user.userRole);
-
 	switch (user.userRole) {
 		case "student":
 			router = studentRouters;
