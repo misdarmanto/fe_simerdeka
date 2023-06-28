@@ -3,15 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { MbkmProgramIcon, StudenIcon, StudyProgramIcon } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { SummariesTypes } from "../../models/summary.model";
-import { Button, CardActions, CardContent, Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import { ListGroup } from "flowbite-react";
-import {
-	HiCloudDownload,
-	HiInbox,
-	HiOutlineAdjustments,
-	HiUserCircle,
-} from "react-icons/hi";
 
 const Home = () => {
 	const navigation = useNavigate();
@@ -40,59 +31,51 @@ const Home = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-wrap">
-			<div
-				onClick={() => handleNavigate("/students")}
-				style={{ backgroundColor: "#17A2B8" }}
-				className="flex items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64"
-			>
-				<p className="text-white font-md">{summaries?.totalStudent}</p>
+		<div className="m-5">
+			<div className="flex flex-wrap">
+				<div
+					onClick={() => handleNavigate("/students")}
+					className="flex-col items-center cursor-pointer bg-cyan-500 border rounded-md shadow sm:mr-5 mb-5 p-2 w-full sm:w-64"
+				>
+					<h2 className="text-4xl mb-3 font-extrabold text-white">
+						{summaries?.totalStudent}
+					</h2>
+					<h1 className="text-white font-xl">mahasiswa</h1>
+				</div>
+				<div
+					onClick={() => handleNavigate("/study-programs")}
+					className="flex-col cursor-pointer bg-emerald-500 border rounded-md shadow sm:mr-5 mb-5 p-2 w-full sm:w-64"
+				>
+					<h2 className="text-4xl mb-3 font-extrabold text-white">
+						{summaries?.totalStudyProgram}
+					</h2>
+					<h1 className="text-white font-xl">Prodi</h1>
+				</div>
+				<div
+					onClick={() => handleNavigate("/mbkm-programs")}
+					className="cursor-pointer bg-amber-500 border rounded-lg shadow mb-5 p-2 sm:mr-5 w-full sm:w-64"
+				>
+					<h2 className="text-4xl mb-3 font-extrabold text-white">
+						{summaries?.totalProgram}
+					</h2>
+					<h1 className="text-white font-xl">Program MBKM</h1>
+				</div>
 			</div>
-			<div
-				onClick={() => handleNavigate("/study-programs")}
-				className="flex items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64"
-			>
-				<StudyProgramIcon size={30} className="mr-5" />{" "}
-				<p>{summaries?.totalStudyProgram} Prodi</p>
-			</div>
-			<div
-				onClick={() => handleNavigate("/mbkm-programs")}
-				className="flex items-center cursor-pointer bg-white border border-gray-200 rounded-lg shadow m-5 p-8 w-64"
-			>
-				<MbkmProgramIcon size={30} className="mr-5" />{" "}
-				<p>{summaries?.totalProgram} Program MBKM</p>
+			<div className="p-6 mt-10 bg-white border border-gray-200 rounded-lg shadow">
+				<h1 className="text-1xl mb-3 text-gray-700 font-extrabold">
+					Tentang Simerdeka
+				</h1>
+				<p className="text-gray-500">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+					eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+					minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+					aliquip ex ea commodo consequat. Duis aute irure dolor in
+					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+					culpa qui officia deserunt mollit anim id est laborum
+				</p>
 			</div>
 		</div>
-	);
-};
-
-interface CardStyleTypes {
-	title: string;
-	total: string;
-	url: string;
-}
-
-const CardStyle = (props: CardStyleTypes) => {
-	return (
-		<Card sx={{ minWidth: 275 }}>
-			<CardContent>
-				<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-					Word of the Day
-				</Typography>
-
-				<Typography sx={{ mb: 1.5 }} color="text.secondary">
-					adjective
-				</Typography>
-				<Typography variant="body2">
-					well meaning and kindly.
-					<br />
-					{'"a benevolent smile"'}
-				</Typography>
-			</CardContent>
-			<CardActions>
-				<Button size="small">Learn More</Button>
-			</CardActions>
-		</Card>
 	);
 };
 

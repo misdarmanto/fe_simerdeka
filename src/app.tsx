@@ -1,13 +1,10 @@
 import { RootContext } from "./utils/contextApi";
 import AppRouters from "./routers";
-import { themeConfig } from "./configs/themeConfig";
 import { UserTypes } from "./models/user";
 import { useEffect, useState } from "react";
 import { ServiceHttp } from "./services/api";
 import { CONFIG } from "./configs";
 import { LIST_USER } from "./data/users";
-import { ThemeProvider, makeStyles } from "@mui/material/styles";
-import { Backdrop, CircularProgress } from "@mui/material";
 
 export default function App() {
 	const [role, setRole] = useState<string>();
@@ -56,27 +53,11 @@ export default function App() {
 		console.log("route load");
 	}, [role]);
 
-	if (isLoading) return <LoadingComponent />;
+	if (isLoading) return <p>Loading</p>;
 
 	return (
-		<ThemeProvider theme={themeConfig}>
-			<RootContext.Provider value={{ role, setRole, currentUser }}>
-				<AppRouters />
-			</RootContext.Provider>
-		</ThemeProvider>
+		<RootContext.Provider value={{ role, setRole, currentUser }}>
+			<AppRouters />
+		</RootContext.Provider>
 	);
 }
-
-const LoadingComponent = () => {
-	return (
-		<Backdrop
-			sx={{
-				zIndex: 1,
-				backgroundColor: "#f3f3f3",
-			}}
-			open={true}
-		>
-			<CircularProgress color="primary" />
-		</Backdrop>
-	);
-};

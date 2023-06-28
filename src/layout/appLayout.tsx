@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/material";
 import Logo from "../assets/logos/bgw_simerdeka.jpeg";
 import { RootContext } from "../utils/contextApi";
 import { UserTypes } from "../models/user";
@@ -19,21 +18,12 @@ import { FiLogOut } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
 import { BiMenu } from "react-icons/bi";
 
-type MyComponentProps = {
-	windowObject?: () => Window;
-};
-
-const AppLayout: React.FC<MyComponentProps> = ({ windowObject }) => {
-	const [mobileOpen, setMobileOpen] = useState(false);
+const AppLayout: React.FC = () => {
 	const { currentUser, role, setRole }: any = useContext(RootContext);
 	const [openSideBar, setOpenSideBar] = useState(false);
 
 	const handleOpenSideBar = () => {
 		setOpenSideBar(!openSideBar);
-	};
-
-	const handleDrawerToggle = () => {
-		setMobileOpen(!mobileOpen);
 	};
 
 	const navigate = useNavigate();
@@ -82,112 +72,7 @@ const AppLayout: React.FC<MyComponentProps> = ({ windowObject }) => {
 			break;
 	}
 
-	const drawer = (
-		<div>
-			<NavbarItemGroup title="Menu Utama" items={MENUS?.persiapan || []} />
-			<NavbarItemGroup title="Persiapan MBKM" items={MENUS?.pelaksanaan || []} />
-			<NavbarItemGroup title="Laporan Kegiatan" items={MENUS?.akhir || []} />
-		</div>
-	);
-
 	return (
-		// 	<Box component="div" sx={{ display: "flex" }}>
-		// 		<CssBaseline />
-		// 		<AppBar sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} elevation={0}>
-		// 			<Toolbar>
-		// 				<IconButton
-		// 					aria-label="open drawer"
-		// 					edge="start"
-		// 					onClick={handleDrawerToggle}
-		// 					sx={{ mr: 2, display: { sm: "none" } }}
-		// 				>
-		// 					<MenuIcon />
-		// 				</IconButton>
-		// 				<Typography
-		// 					variant="body2"
-		// 					noWrap
-		// 					component="div"
-		// 					color={"#FFF"}
-		// 					sx={{
-		// 						flexGrow: 1,
-		// 						[theme.breakpoints.down("sm")]: {
-		// 							display: "none",
-		// 						},
-		// 					}}
-		// 				>
-		// 					Semester Aktif: 2022/2023 Genap
-		// 				</Typography>
-		// 				<Stack direction={"row"} spacing={2}>
-		// 					<Button sx={{ color: "#FFF" }} startIcon={<FaUser />}>
-		// 						<Dropdown
-		// 							inline={true}
-		// 							label={currentUser?.userName}
-		// 							dismissOnClick={true}
-		// 						>
-		// 							{LIST_USER.map((user: UserTypes) => (
-		// 								<Dropdown.Item onClick={() => handleSelectRole(user)}>
-		// 									{user.userName}
-		// 								</Dropdown.Item>
-		// 							))}
-		// 						</Dropdown>
-		// 					</Button>
-
-		// 					<Button sx={{ color: "#FFF" }} startIcon={<Logout />}>
-		// 						Logout
-		// 					</Button>
-		// 				</Stack>
-		// 			</Toolbar>
-		// 		</AppBar>
-		// 		<Box
-		// 			component="nav"
-		// 			sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-		// 			aria-label="mailbox folders"
-		// 		>
-		// 			<Drawer
-		// 				container={container}
-		// 				variant="temporary"
-		// 				open={mobileOpen}
-		// 				onClose={handleDrawerToggle}
-		// 				ModalProps={{
-		// 					keepMounted: true,
-		// 				}}
-		// 				sx={{
-		// 					display: { xs: "block", sm: "none" },
-		// 					"& .MuiDrawer-paper": {
-		// 						boxSizing: "border-box",
-		// 						width: drawerWidth,
-		// 					},
-		// 				}}
-		// 			>
-		// 				{drawer}
-		// 			</Drawer>
-		// 			<Drawer
-		// 				variant="permanent"
-		// 				sx={{
-		// 					display: { xs: "none", sm: "block" },
-		// 					"& .MuiDrawer-paper": {
-		// 						boxSizing: "border-box",
-		// 						width: drawerWidth,
-		// 						border: "none",
-		// 					},
-		// 				}}
-		// 				open
-		// 			>
-		// 				{drawer}
-		// 			</Drawer>
-		// 		</Box>
-		// 		<Box
-		// 			component="main"
-		// 			sx={{
-		// 				flexGrow: 1,
-		// 				width: { sm: `calc(100% - ${drawerWidth}px)` },
-		// 			}}
-		// 		>
-		// 			<Toolbar />
-		// 			<Outlet />
-		// 		</Box>
-		// 	</Box>
-
 		<div>
 			<div className="flex items-center mx-auto">
 				<img className="p-1 mx-2" src={Logo} alt="Logo" />
@@ -223,32 +108,23 @@ const AppLayout: React.FC<MyComponentProps> = ({ windowObject }) => {
 					<p className="text-white text-sm flex-grow">Logout</p>
 				</div>
 			</div>
-			<div className="flex">
+			<div className="flex w-full">
 				<ul
 					className={`${
-						openSideBar ? "w-96" : "hidden"
-					} sm:block min-h-screen duration-100 p-2`}
+						openSideBar ? "w-1/3" : "hidden"
+					} sm:block min-h-screen duration-100 p-2 z-5`}
 				>
-					{/* <li
-					onClick={handleOpenSideBar}
-					className={`flex items-center gap-x-6 p-2 my-1 text-base font-normal rounded-lg cursor-pointer hover:bg-gray-200`}
-				>
-					{openSideBar ? (
-						<>
-							<RiCloseLine className="text-3xl text-gray-500" />
-							<small>Close</small>
-						</>
-					) : (
-						<BiMenu
-							onClick={handleOpenSideBar}
-							className="text-3xl text-gray-500"
-						/>
-					)}
-				</li> */}
-
-					{drawer}
+					<NavbarItemGroup title="Menu Utama" items={MENUS?.persiapan || []} />
+					<NavbarItemGroup
+						title="Persiapan MBKM"
+						items={MENUS?.pelaksanaan || []}
+					/>
+					<NavbarItemGroup
+						title="Laporan Kegiatan"
+						items={MENUS?.akhir || []}
+					/>
 				</ul>
-				<div className="grow">
+				<div className="grow ">
 					<Outlet />
 				</div>
 			</div>

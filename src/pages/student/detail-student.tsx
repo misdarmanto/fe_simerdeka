@@ -62,7 +62,6 @@ const StudentDetailView = () => {
 			path: `/students/detail/${studentId}`,
 		});
 		setStudentDetails(result);
-		console.log(result);
 	};
 
 	const fecthData = async () => {
@@ -143,40 +142,47 @@ const StudentDetailView = () => {
 
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
 				{studentDetails ? (
-					<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
-						<ListItemStyle
-							title="Nama"
-							description={studentDetails?.studentName}
-						/>
-						<ListItemStyle
-							title="NIM"
-							description={studentDetails?.studentNim}
-						/>
-						<ListItemStyle
-							title="Prodi"
-							description={studentDetails?.studentStudyProgramName}
-						/>
-						<ListItemStyle
-							title="Jurusan"
-							description={studentDetails?.studentDepartmentName}
-						/>
-						<ListItemStyle
-							title="Program MBKM"
-							description={studentDetails?.mbkmProgram?.mbkmProgramName}
-						/>
-						<ListItemStyle
-							title="Kategori Program MBKM"
-							description={studentDetails?.mbkmProgram?.mbkmProgramCategory}
-						/>
-						<ListItemStyle
-							title="Total Konversi SKS"
-							description={studentDetails?.studentSksTotal + "" || "_"}
-						/>
-						<ListItemStyle
-							title="Silabus"
-							url={studentDetails?.mbkmProgram?.mbkmProgramSyllabus}
-						/>
-					</dl>
+					<div className="sm:flex justify-between gap-5">
+						<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
+							<ListItemStyle
+								title="Nama"
+								description={studentDetails?.studentName}
+							/>
+							<ListItemStyle
+								title="NIM"
+								description={studentDetails?.studentNim}
+							/>
+							<ListItemStyle
+								title="Prodi"
+								description={studentDetails?.studentStudyProgramName}
+							/>
+							<ListItemStyle
+								title="Jurusan"
+								description={studentDetails?.studentDepartmentName}
+							/>
+						</dl>
+
+						<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
+							<ListItemStyle
+								title="Program MBKM"
+								description={studentDetails?.mbkmProgram?.mbkmProgramName}
+							/>
+							<ListItemStyle
+								title="Kategori Program MBKM"
+								description={
+									studentDetails?.mbkmProgram?.mbkmProgramCategory
+								}
+							/>
+							<ListItemStyle
+								title="Total Konversi SKS"
+								description={studentDetails?.studentSksTotal + "" || "_"}
+							/>
+							<ListItemStyle
+								title="Silabus"
+								url={studentDetails?.mbkmProgram?.mbkmProgramSyllabus}
+							/>
+						</dl>
+					</div>
 				) : (
 					<Alert color="failure" icon={FiAlertTriangle}>
 						<span>

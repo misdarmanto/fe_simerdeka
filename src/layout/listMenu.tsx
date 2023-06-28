@@ -6,8 +6,8 @@ import {
 	AiOutlineHome,
 	AiOutlineSearch,
 } from "react-icons/ai";
-import { BiBookOpen, BiMenu, BiUser } from "react-icons/bi";
-import { FaRegListAlt, FaUser, FaUserGraduate } from "react-icons/fa";
+import { BiBookOpen, BiUser } from "react-icons/bi";
+import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
 import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
 

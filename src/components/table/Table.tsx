@@ -59,7 +59,7 @@ export const TableStyle = ({
 										<tr
 											key={i}
 											className={`${
-												i % 2 === 0 ? "bg-white" : "bg-gray-50"
+												i % 2 === 0 ? "bg-white" : "bg-gray-100"
 											}`}
 										>
 											{header.map((head, j) => {

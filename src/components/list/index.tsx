@@ -12,8 +12,8 @@ const ListItemStyle = ({
 	isDownloadButton?: boolean;
 }) => {
 	return (
-		<div className="flex flex-col pb-3">
-			<dt className="mb-1 text-gray-500">{title}</dt>
+		<div className="flex gap-2 items-center py-2 text-gray-500 ">
+			<dt>{title}</dt> :
 			{url ? (
 				<a href={url} target="blank">
 					<ButtonStyle
@@ -22,7 +22,7 @@ const ListItemStyle = ({
 					/>
 				</a>
 			) : (
-				<dd className="text-sm font-semibold">{description}</dd>
+				<dd className="text-sm">{description || "_"}</dd>
 			)}
 		</div>
 	);

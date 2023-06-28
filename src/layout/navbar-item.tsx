@@ -1,12 +1,5 @@
-import {
-	List,
-	ListItem,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-	ListSubheader,
-} from "@mui/material";
 import { Link } from "react-router-dom";
+import { CustomFlowbiteTheme, ListGroup } from "flowbite-react";
 
 type MenuItems = { title: string; path: string; icon: any };
 
@@ -14,8 +7,6 @@ interface NavbarItemGroupTypes {
 	title: String;
 	items: MenuItems[];
 }
-
-import { CustomFlowbiteTheme, Flowbite, ListGroup } from "flowbite-react";
 
 const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 	const customTheme: CustomFlowbiteTheme["listGroup"] = {
@@ -40,7 +31,7 @@ const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 	};
 
 	return (
-		<ListGroup theme={customTheme} className="m-3 mb-8 w-80 hover:color-gray">
+		<ListGroup theme={customTheme} className="m-3 mb-5 w-80 hover:color-gray">
 			<ListGroup.Item className="bg-gray-200">
 				<p>{title}</p>
 			</ListGroup.Item>
@@ -57,57 +48,5 @@ const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 		</ListGroup>
 	);
 };
-
-// const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
-// 	return (
-// 		<List
-// 			sx={{
-// 				border: 1,
-// 				borderColor: "#DDDDDD",
-// 				mx: 1,
-// 				mt: 3,
-// 				mb: 5,
-// 				p: 0,
-// 				boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.010)",
-// 			}}
-// 			subheader={
-// 				<ListSubheader
-// 					component="h1"
-// 					sx={{
-// 						backgroundColor: "#F7FAFC",
-// 						fontSize: 12,
-
-// 						color: "#4B5563",
-// 					}}
-// 				>
-// 					{title}
-// 				</ListSubheader>
-// 			}
-// 		>
-// 			{items.map((item: MenuItems, index) => (
-// 				<Link to={item.path}>
-// 					<ListItem
-// 						key={index}
-// 						sx={{
-// 							color: "#4B5563",
-// 							border: 1,
-// 							borderColor: "#DDDDDD",
-// 							height: "38px",
-// 						}}
-// 						disablePadding
-// 					>
-// 						<ListItemButton>
-// 							<ListItemIcon>{item.icon}</ListItemIcon>
-// 							<ListItemText
-// 								primary={item.title}
-// 								primaryTypographyProps={{ style: { fontSize: "12px" } }}
-// 							/>
-// 						</ListItemButton>
-// 					</ListItem>
-// 				</Link>
-// 			))}
-// 		</List>
-// 	);
-// };
 
 export default NavbarItemGroup;
