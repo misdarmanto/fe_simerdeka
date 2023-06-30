@@ -1,17 +1,17 @@
 import { ref } from "firebase/storage";
 import { FileInput, Label, Select, TextInput, Textarea } from "flowbite-react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../configs/firebase";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
-import { RootContext } from "../../utils/contextApi";
 import { RecomendationLetterCreateRequestTypes } from "../../models/recomendation-letter";
 import { UserTypes } from "../../models/user";
+import { useAppContext } from "../../context/app.context";
 
 const RecomendationLetterCreate = () => {
-	const { currentUser }: any = useContext(RootContext);
+	const { currentUser } = useAppContext();
 	const user: UserTypes = currentUser;
 
 	const [recomendatationStudentTranskrip, setRecomendatationStudentTranskrip] =

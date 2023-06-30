@@ -1,20 +1,20 @@
 import { Badge, TextInput } from "flowbite-react";
-import { ReactElement, useContext, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { RootContext } from "../../utils/contextApi";
 import { RecomendationLetterTypes } from "../../models/recomendation-letter";
+import { useAppContext } from "../../context/app.context";
 
 const RecomendationLetterList = () => {
 	const navigate = useNavigate();
 
 	const [listOfRecomendationLetter, setListOfRecomendationLetter] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { currentUser }: any = useContext(RootContext);
+	const { currentUser } = useAppContext();
 
 	const fecthRecomendationLetter = async () => {
 		const httpService = new ServiceHttp();
@@ -27,8 +27,6 @@ const RecomendationLetterList = () => {
 				search: "",
 			},
 		});
-
-		console.log(result);
 		setListOfRecomendationLetter({
 			link: "recomendation-letters",
 			data: result,
@@ -38,7 +36,6 @@ const RecomendationLetterList = () => {
 				search: "",
 			},
 		});
-
 		setIsLoading(false);
 	};
 
@@ -50,17 +47,8 @@ const RecomendationLetterList = () => {
 		{
 			title: "No",
 			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
-				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
+				<td key={index + "-no"} className="md:px-6 md:py-3">
 					{index + 1}
-				</td>
-			),
-		},
-
-		{
-			title: "Nama Mahasiswa",
-			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
-				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data?.student?.studentName}
 				</td>
 			),
 		},
@@ -75,10 +63,10 @@ const RecomendationLetterList = () => {
 		},
 
 		{
-			title: "Jurusan",
+			title: "Nama Mahasiswa",
 			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
-				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.student.studentDepartmentName}
+				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
+					{data?.student?.studentName}
 				</td>
 			),
 		},

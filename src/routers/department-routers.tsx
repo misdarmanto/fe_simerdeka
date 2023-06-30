@@ -2,7 +2,7 @@ import Home from "../pages/home";
 import FaQ from "../pages/faq";
 import LogBookDetailView from "../pages/log-book/detail-log-book";
 import LogBookListView from "../pages/log-book/list-log-book";
-import MataKuliahCreateView from "../pages/mata-kuliah/create-log-book";
+import MataKuliahCreateView from "../pages/mata-kuliah/mata-kuliah-create";
 import MataKuliahListView from "../pages/mata-kuliah/list-mata-kuliah";
 import MbkmProgramProdiDetailView from "../pages/mbkm-program-prodi/detail-mbkm-program-prodi";
 import MbkmProgramProdiListView from "../pages/mbkm-program-prodi/list-mbkm-program-prodi";

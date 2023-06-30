@@ -1,21 +1,20 @@
-import { Badge, TextInput } from "flowbite-react";
-import { ReactElement, useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { BASE_ICON, BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { TextInput } from "flowbite-react";
+import { ReactElement, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { RootContext } from "../../utils/contextApi";
-import { converDateTimeFromDB } from "../../utils/convert";
 import ModalStyle from "../../components/modal";
 import { UserTypes } from "../../models/user";
 import { LogBookTypes } from "../../models/log-book";
+import { useAppContext } from "../../context/app.context";
 
 const MataKuliahListView = () => {
 	const [listMataKuliah, setListMataKuliah] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { currentUser }: any = useContext(RootContext);
+	const { currentUser } = useAppContext();
 	const user: UserTypes = currentUser;
 	const navigate = useNavigate();
 	const httpService = new ServiceHttp();
@@ -33,7 +32,7 @@ const MataKuliahListView = () => {
 
 	const handleDeleteMataKuliah = async () => {
 		await httpService.remove({
-			path: `/log-books?log_book_id=${modalDeleteData?.log_book_id}`,
+			path: `/log-books?log-book-id=${modalDeleteData?.logBookId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
@@ -99,7 +98,7 @@ const MataKuliahListView = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex items-center">
-						{user.user_role === "study_program" && (
+						{user.userRole === "studyProgram" && (
 							<ButtonStyle
 								title="Hapus"
 								size="xs"
@@ -151,7 +150,7 @@ const MataKuliahListView = () => {
 						</select>
 					</div>
 
-					{user.user_role === "study_program" && (
+					{user.userRole === "studyProgram" && (
 						<ButtonStyle
 							title="Create"
 							color="light"
@@ -166,7 +165,7 @@ const MataKuliahListView = () => {
 
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus mata kuliah ${modalDeleteData?.log_book_report_week}?`}
+				title={`Apakah anda yakin ingin menghapus mata kuliah ${modalDeleteData?.logBookReportWeek}?`}
 				isOpen={openModalDelete}
 				onBtnYesClick={handleDeleteMataKuliah}
 				onOpen={handleModalDelete}

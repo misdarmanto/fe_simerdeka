@@ -10,7 +10,6 @@ import ButtonUploadFile from "../../components/button/button-upload";
 
 const MbkmProgramCreatView = () => {
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
-
 	const [mbkmProgramSyllabus, setMbkmProgramSyllabus] = useState("");
 	const [mbkmProgramName, setMbkmProgramName] = useState("");
 	const [mbkmProgramCategory, setMbkmProgramCategory] = useState("");

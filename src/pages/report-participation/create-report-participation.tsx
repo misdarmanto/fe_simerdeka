@@ -1,20 +1,12 @@
-import { ref } from "firebase/storage";
-import { Alert, FileInput, Label } from "flowbite-react";
-import { useContext, useEffect, useState } from "react";
+import { Label } from "flowbite-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { storage } from "../../configs/firebase";
-import { uploadImageToFirebase } from "../../utils/firebase";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
-import { RootContext } from "../../utils/contextApi";
-import { UserTypes } from "../../models/user";
 import { ReportParticipationTypes } from "../../models/report-participation";
 import FileUploadButton from "../../components/button/button-upload";
 
 const ReportParicipationCreateView = () => {
-	const { currentUser }: any = useContext(RootContext);
-	const user: UserTypes = currentUser;
-
 	const [reportParticipationFile, setReportParticipationFile] = useState<string>("");
 
 	const navigate = useNavigate();
@@ -36,12 +28,6 @@ const ReportParicipationCreateView = () => {
 		}
 	};
 
-	useEffect(() => {
-		if (user.userRole !== "student") {
-			navigate("/report-participations");
-		}
-	}, []);
-
 	return (
 		<div className="m-5">
 			<BreadcrumbStyle
@@ -57,16 +43,7 @@ const ReportParicipationCreateView = () => {
 				]}
 				icon={BASE_MENU_ICON.ReportParicipationIcon}
 			/>
-			{/* {!user.user_is_registered && (
-				<Alert color="failure" icon={BASE_MENU_ICON.FaQIcon} className="my-5">
-					<span>
-						<p>
-							<span className="font-medium">Info alert! </span>
-							Anda belum mengajukan surat rekomendasi
-						</p>
-					</span>
-				</Alert>
-			)} */}
+
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 					<div>
@@ -80,12 +57,7 @@ const ReportParicipationCreateView = () => {
 					</div>
 
 					<div className="flex justify-end">
-						<ButtonStyle
-							title="Submit"
-							type="submit"
-							color="dark"
-							// disabled={!user.user_is_registered}
-						/>
+						<ButtonStyle title="Submit" type="submit" color="dark" />
 					</div>
 				</form>
 			</div>

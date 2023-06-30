@@ -11,15 +11,15 @@ interface NavbarItemGroupTypes {
 const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 	const customTheme: CustomFlowbiteTheme["listGroup"] = {
 		root: {
-			base: "list-none rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-700 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-left",
+			base: "list-none rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-700 text-left",
 		},
 		item: {
 			base: "[&>*]:first:rounded-t-lg [&>*]:last:rounded-b-lg [&>*]:last:border-b-0",
 			link: {
-				base: "flex w-full border-b border-gray-200 py-2 px-4 dark:border-gray-600",
+				base: "flex w-full border-b border-gray-200 py-2 px-4 ",
 				active: {
-					off: "hover:bg-gray-100 hover:text-gray-700 focus:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:text-white dark:focus:ring-gray-500",
-					on: "bg-gray-700 text-white dark:bg-gray-800",
+					off: "hover:bg-gray-100 hover:text-gray-700 focus:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-700",
+					on: "bg-gray-700 text-white",
 				},
 				href: {
 					off: "",
@@ -37,10 +37,10 @@ const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 			</ListGroup.Item>
 			{items.map((item: MenuItems, index) => (
 				<ListGroup.Item className="hover:bg-yellow-100" key={index}>
-					<Link to={item.path} className="w-100">
+					<Link to={item.path}>
 						<div className="flex gap-5">
-							{item.icon}
-							{item.title}
+							<div>{item.icon}</div>
+							<div>{item.title}</div>
 						</div>
 					</Link>
 				</ListGroup.Item>

@@ -1,16 +1,13 @@
-import { Label, Select, TextInput } from "flowbite-react";
-import { useContext, useState } from "react";
+import { Label, TextInput } from "flowbite-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
-import { RootContext } from "../../utils/contextApi";
 import { MataKuliahCreateRequestTypes } from "../../models/mata-kuliah";
 
 const MataKuliahCreateView = () => {
 	const [mataKuliahName, setMataKuliahName] = useState("");
 	const [mataKuliahSksTotal, setMataKuliahSksTotal] = useState<number>(0);
-
-	const { currentUser }: any = useContext(RootContext);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

@@ -1,18 +1,14 @@
-import { Badge, TextInput } from "flowbite-react";
-import { ReactElement, useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { BASE_ICON, BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
-import { ButtonStyle } from "../../components";
+import { TextInput } from "flowbite-react";
+import { ReactElement, useEffect, useState } from "react";
+import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { RootContext } from "../../utils/contextApi";
 import { StudyProgramTypes } from "../../models/study-program";
 
 const StudyProgramListView = () => {
 	const [listStudyProgram, setListStudyProgram] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { currentUser }: any = useContext(RootContext);
 	const httpService = new ServiceHttp();
 
 	const fecthData = async () => {

@@ -1,23 +1,14 @@
-import { Label, Textarea } from "flowbite-react";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
-import { RootContext } from "../../utils/contextApi";
-import {
-	ReportParticipationDetailTypes,
-	ReportParticipationUpdateTypes,
-} from "../../models/report-participation";
 import ListItemStyle from "../../components/list";
-import { converDateTimeFromDB, convertStatusName } from "../../utils/convert";
+import { converDateTimeFromDB } from "../../utils/convert";
 import { LogBookTypes } from "../../models/log-book";
 
 const LogBookDetailView = () => {
 	const [logBook, setLogBook] = useState<LogBookTypes>();
-
 	const { logBookId } = useParams();
-	const { currentUser }: any = useContext(RootContext);
-	const navigation = useNavigate();
 	const httpService = new ServiceHttp();
 
 	const fecthLogBook = async () => {

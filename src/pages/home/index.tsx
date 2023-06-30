@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MbkmProgramIcon, StudenIcon, StudyProgramIcon } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { SummariesTypes } from "../../models/summary.model";
 
@@ -22,11 +21,7 @@ const Home = () => {
 		navigation(path);
 	};
 
-	const isAuth = true;
 	useEffect(() => {
-		if (!isAuth) {
-			navigation("/login");
-		}
 		fecthSummaries();
 	}, []);
 
@@ -63,7 +58,7 @@ const Home = () => {
 			</div>
 			<div className="p-6 mt-10 bg-white border border-gray-200 rounded-lg shadow">
 				<h1 className="text-1xl mb-3 text-gray-700 font-extrabold">
-					Tentang Simerdeka
+					Info Simerdeka
 				</h1>
 				<p className="text-gray-500">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

@@ -7,12 +7,13 @@ import { CONFIG } from "../../configs";
 import { RootContext } from "../../utils/contextApi";
 import { ServiceHttp } from "../../services/api";
 import { ReportParticipationTypes } from "../../models/report-participation";
+import { useAppContext } from "../../context/app.context";
 
 const ReportParticipationListView = () => {
 	const [listProgram, setListProgram] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const navigate = useNavigate();
-	const { currentUser }: any = useContext(RootContext);
+	const { currentUser } = useAppContext();
 
 	const fecthData = async () => {
 		const httpService = new ServiceHttp();
@@ -53,21 +54,19 @@ const ReportParticipationListView = () => {
 				</td>
 			),
 		},
-
-		{
-			title: "Nama",
-			data: (data: ReportParticipationTypes, index: number): ReactElement => (
-				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.student?.studentName}
-				</td>
-			),
-		},
-
 		{
 			title: "NIM",
 			data: (data: ReportParticipationTypes, index: number): ReactElement => (
 				<td key={index + "NIM"} className="md:px-6 md:py-3 break-all">
 					{data.student?.studentNim}
+				</td>
+			),
+		},
+		{
+			title: "Nama",
+			data: (data: ReportParticipationTypes, index: number): ReactElement => (
+				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
+					{data.student?.studentName}
 				</td>
 			),
 		},

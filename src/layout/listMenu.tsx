@@ -114,13 +114,13 @@ export const studentMenus = {
 	akhir: [MBKMLogBookMenu, FaQMenu],
 };
 
-export const prodiMenus = {
+export const studyProgramMenus = {
 	persiapan: [HomeMenu, ReportParticipationMenu, RecomendationLetterMenu],
 	pelaksanaan: [StudentMenu, MBKMProgramProdiMenu, MataKuliahMenu],
 	akhir: [MBKMLogBookMenu, FaQMenu],
 };
 
-export const jurusanMenus = {
+export const departmentMenus = {
 	persiapan: [HomeMenu, ReportParticipationMenu, RecomendationLetterMenu],
 	pelaksanaan: [StudentMenu, StudyProgramMenu, MBKMProgramMenu],
 	akhir: [MBKMLogBookMenu, FaQMenu],

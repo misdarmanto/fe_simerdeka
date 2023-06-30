@@ -1,22 +1,21 @@
-import { Badge, TextInput } from "flowbite-react";
-import { ReactElement, useContext, useEffect, useState } from "react";
+import { TextInput } from "flowbite-react";
+import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BASE_ICON, BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { RootContext } from "../../utils/contextApi";
 import { converDateTimeFromDB } from "../../utils/convert";
 import ModalStyle from "../../components/modal";
-import { SemesterTypes } from "../../models/semester";
 import { UserTypes } from "../../models/user";
 import { LogBookTypes } from "../../models/log-book";
+import { useAppContext } from "../../context/app.context";
 
 const LogBookListView = () => {
 	const [listLogBook, setListLogBook] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { currentUser }: any = useContext(RootContext);
+	const { currentUser } = useAppContext();
 	const user: UserTypes = currentUser;
 	const navigate = useNavigate();
 	const httpService = new ServiceHttp();

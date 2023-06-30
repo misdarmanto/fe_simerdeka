@@ -1,26 +1,19 @@
 import { Select, TextInput } from "flowbite-react";
-import { ReactElement, useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { ReactElement, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { RootContext } from "../../utils/contextApi";
 import { SemesterTypes } from "../../models/semester";
-import { UserTypes } from "../../models/user";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 
 const MbkmProgramProdiListView = () => {
-	const navigate = useNavigate();
-
 	const [listMbkmProgram, setListMbkmProgram] = useState<any>();
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
 	const [semesterId, setSemesterId] = useState<string>("all");
 	const [isLoading, setIsLoading] = useState(true);
-
-	const { currentUser }: any = useContext(RootContext);
-	const user: UserTypes = currentUser;
 	const httpService = new ServiceHttp();
 
 	const fecthData = async () => {

@@ -1,27 +1,29 @@
-import { Button, FileInput, Label, Textarea, Timeline } from "flowbite-react";
-import { useContext, useEffect, useState } from "react";
+import { Textarea, Timeline } from "flowbite-react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
-import { RootContext } from "../../utils/contextApi";
-import { BiCalendar, BiUpload } from "react-icons/bi";
-import { RecomendationLetterTypes } from "../../models/recomendation-letter";
-import { storage } from "../../configs/firebase";
-import { ref } from "firebase/storage";
-import { uploadImageToFirebase } from "../../utils/firebase";
+import { BiCalendar } from "react-icons/bi";
+import {
+	RecomendationLetterTypes,
+	RequestChangeStatusApprovalTypes,
+	RequestChangeStatusAssignMentTypes,
+} from "../../models/recomendation-letter";
 import ListItemStyle from "../../components/list";
 import { convertStatusName } from "../../utils/convert";
 import FileUploadButton from "../../components/button/button-upload";
+import { useAppContext } from "../../context/app.context";
 
 const RecomendationLetterDetail = () => {
 	const [recomendationLetter, setRecomendationLetter] =
 		useState<RecomendationLetterTypes>();
-	const [statusMessage, setStatusMessage] = useState<string>("");
-	const [recomendationLetterApproval, setRecomendationLetterApproval] =
+	const [recomendationLetterStatusMessage, setRecomendationLetterStatusMessage] =
+		useState<string>("");
+	const [recomendationLetterApprovalLetter, setRecomendationLetterApprovalLetter] =
 		useState<string>("");
 
-	const { recomendationLetterId } = useParams();
-	const { currentUser }: any = useContext(RootContext);
+	const { recomendationLetterId }: any = useParams();
+	const { currentUser } = useAppContext();
 	const navigation = useNavigate();
 	const httpService = new ServiceHttp();
 
@@ -29,42 +31,34 @@ const RecomendationLetterDetail = () => {
 		const result = await httpService.get({
 			path: `/recomendation-letters/detail/${recomendationLetterId}`,
 		});
-		console.log(result);
 		setRecomendationLetter(result);
 	};
 
-	const handleAddCoverLetter = async (event: any) => {
-		const file = event.target.files[0];
-		const imageRef = ref(storage, "request-Lor/" + file.name);
-		try {
-			const url = await uploadImageToFirebase({ imageRef, file });
-			console.log(url);
-			setRecomendationLetterApproval(url);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
 	const handleChangeStatusAssignMent = async () => {
+		const payload: RequestChangeStatusAssignMentTypes = {
+			recomendationLetterId,
+			recomendationLetterApprovalLetter,
+		};
+
 		await httpService.patch({
 			path: `/recomendation-letters/change-status`,
-			body: {
-				recomendationLetter_id: recomendationLetterId,
-				recomendationLetter_approval_letter: recomendationLetterApproval,
-			},
+			body: payload,
 		});
 
 		navigation("/recomendation-letters");
 	};
 
-	const handleChangeStatusApproval = async (status: string) => {
+	const handleChangeStatusApproval = async (
+		recomendationLetterStatus: "waiting" | "accepted" | "rejected"
+	) => {
+		const payload: RequestChangeStatusApprovalTypes = {
+			recomendationLetterId,
+			recomendationLetterStatus,
+			recomendationLetterStatusMessage,
+		};
 		await httpService.patch({
 			path: `/recomendation-letter/change-status`,
-			body: {
-				recomendationLetter_id: recomendationLetterId,
-				status: status,
-				status_message: statusMessage,
-			},
+			body: payload,
 		});
 		navigation("/recomendation-letters");
 	};
@@ -91,7 +85,7 @@ const RecomendationLetterDetail = () => {
 				icon={BASE_ICON.MENU.RecomendationLetterIcon}
 			/>
 
-			<div className="bg-white border border-gray-200 rounded-lg shadow my-5 p-2 sm:p-8">
+			<div className="bg-white border border-gray-200 rounded-lg shadow my-5 p-10 sm:p-8">
 				<Timeline horizontal={true}>
 					{recomendationLetter?.recomendationLetterAssignToStudyProgram && (
 						<Timeline.Item>
@@ -143,117 +137,118 @@ const RecomendationLetterDetail = () => {
 			</div>
 
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
-				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
-					<ListItemStyle
-						title="Status"
-						description={convertStatusName(
-							recomendationLetter?.recomendationLetterStatus
-						)}
-					/>
-					{recomendationLetter?.recomendationLetterStatusMessage && (
+				<div className="sm:flex justify-between gap-5">
+					<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
+						<ListItemStyle
+							title="Status"
+							description={convertStatusName(
+								recomendationLetter?.recomendationLetterStatus
+							)}
+						/>
+
 						<ListItemStyle
 							title="Pesan"
 							description={
 								recomendationLetter?.recomendationLetterStatusMessage
 							}
 						/>
-					)}
-					<ListItemStyle
-						title="Nama"
-						description={recomendationLetter?.student?.studentName}
-					/>
-					<ListItemStyle
-						title="NIM"
-						description={recomendationLetter?.student?.studentNim}
-					/>
-					<ListItemStyle
-						title="Prodi"
-						description={
-							recomendationLetter?.student?.studentStudyProgramName
-						}
-					/>
-					<ListItemStyle
-						title="Jurusan"
-						description={recomendationLetter?.student?.studentDepartmentName}
-					/>
-					<ListItemStyle
-						title="Dosen Wali"
-						description={recomendationLetter?.recomendationLetterDosenWali}
-					/>
-					<ListItemStyle
-						title="Program Yang Diikuti"
-						description={recomendationLetter?.recomendationLetterProgramName}
-					/>
-					<ListItemStyle
-						title="Keterkaitan Pembelajaran Dengan Program Studi"
-						description={
-							recomendationLetter?.recomendationLetterProgramCorrelation
-						}
-					/>
-					<ListItemStyle
-						title="Surat Persetujuan Dosen Wali"
-						url={recomendationLetter?.recomendationLetterApprovalLetter}
-					/>
-					<ListItemStyle
-						title="Transkrip semester 1-4"
-						url={recomendationLetter?.recomendationLetterStudentTranskrip}
-					/>
 
-					{recomendationLetter?.recomendationLetterFromStudyProgram && (
+						<ListItemStyle
+							title="Nama"
+							description={recomendationLetter?.student?.studentName}
+						/>
+						<ListItemStyle
+							title="NIM"
+							description={recomendationLetter?.student?.studentNim}
+						/>
+						<ListItemStyle
+							title="Prodi"
+							description={
+								recomendationLetter?.student?.studentStudyProgramName
+							}
+						/>
+						<ListItemStyle
+							title="Jurusan"
+							description={
+								recomendationLetter?.student?.studentDepartmentName
+							}
+						/>
+						<ListItemStyle
+							title="Dosen Wali"
+							description={
+								recomendationLetter?.recomendationLetterDosenWali
+							}
+						/>
+						<ListItemStyle
+							title="Program Yang Diikuti"
+							description={
+								recomendationLetter?.recomendationLetterProgramName
+							}
+						/>
+						<ListItemStyle
+							title="Keterkaitan Pembelajaran Dengan Program Studi"
+							description={
+								recomendationLetter?.recomendationLetterProgramCorrelation
+							}
+						/>
+					</dl>
+					<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
+						<ListItemStyle
+							title="Transkrip semester 1-4"
+							url={recomendationLetter?.recomendationLetterStudentTranskrip}
+						/>
+						<ListItemStyle
+							title="Surat Persetujuan Dosen Wali"
+							url={recomendationLetter?.recomendationLetterStatus}
+						/>
+
 						<ListItemStyle
 							title="Surat Pengantar Prodi"
-							url={
-								recomendationLetter?.recomendationLetterFromStudyProgram +
-								""
-							}
+							url={recomendationLetter?.recomendationLetterFromStudyProgram}
 						/>
-					)}
-					{recomendationLetter?.recomendationLetterFromDepartment && (
+
 						<ListItemStyle
 							title="Surat Pengantar Jurusan"
-							url={
-								recomendationLetter?.recomendationLetterFromDepartment +
-								""
-							}
+							url={recomendationLetter?.recomendationLetterFromDepartment}
 						/>
-					)}
-					{recomendationLetter?.recomendationLetterFromLp3m && (
+
 						<ListItemStyle
 							title="Surat Pengantar LP3M"
-							url={recomendationLetter?.recomendationLetterFromLp3m + ""}
+							url={recomendationLetter?.recomendationLetterFromLp3m}
 						/>
-					)}
-					{recomendationLetter?.recomendationLetterFromAcademic && (
+
 						<ListItemStyle
 							title="Download Surat Rekomendasi"
 							isDownloadButton={true}
-							url={
-								recomendationLetter?.recomendationLetterFromAcademic + ""
-							}
+							url={recomendationLetter?.recomendationLetterFromAcademic}
 						/>
-					)}
-				</dl>
+					</dl>
+				</div>
 			</div>
 
-			{currentUser.user_role !== "student" && (
+			{currentUser.userRole !== "student" && (
 				<div className="bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
-					<div>
+					<div className="flex gap-5 items-center">
 						<div className="mb-2 block">
-							<label htmlFor="file">surat pengantar</label>
+							<label htmlFor="file">surat pengantar : </label>
 						</div>
-						<FileUploadButton onUpload={setRecomendationLetterApproval} />
+						<FileUploadButton
+							onUpload={setRecomendationLetterApprovalLetter}
+						/>
 					</div>
 
-					<div id="textarea" className="mt-5">
+					<div id="textarea" className="mt-5 flex gap-5 items-center">
 						<div className="mb-2 block">
-							<Label htmlFor="comment" value="Tinggalkan Pesan" />
+							<label htmlFor="file">surat pengantar : </label>
 						</div>
 						<Textarea
 							id="comment"
 							placeholder="message..."
 							required={true}
-							value={statusMessage}
-							onChange={(e) => setStatusMessage(e.target.value)}
+							value={recomendationLetterStatusMessage}
+							onChange={(e) =>
+								setRecomendationLetterStatusMessage(e.target.value)
+							}
 							rows={4}
 						/>
 					</div>
@@ -266,9 +261,9 @@ const RecomendationLetterDetail = () => {
 						/>
 						<ButtonStyle
 							title="Terima"
-							disabled={recomendationLetterApproval === ""}
+							disabled={recomendationLetterApprovalLetter === ""}
 							className="mx-2"
-							onClick={() => handleChangeStatusAssignMent()}
+							onClick={handleChangeStatusAssignMent}
 						/>
 					</div>
 				</div>

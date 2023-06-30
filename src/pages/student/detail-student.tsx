@@ -10,7 +10,6 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { CONFIG } from "../../configs";
 import ModalAddMataKuliah from "./modal-add-mata-kuliahi";
-import { TranskripTypes } from "../../models/transkrip";
 import { MataKuliahTypes } from "../../models/mata-kuliah";
 
 const StudentDetailView = () => {

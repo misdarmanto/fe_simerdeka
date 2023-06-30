@@ -1,17 +1,14 @@
 import { Label, Select } from "flowbite-react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
-import { RootContext } from "../../utils/contextApi";
 import FileUploadButton from "../../components/button/button-upload";
 import { LogBookCreateRequestTypes } from "../../models/log-book";
 
 const LogBookCreateView = () => {
 	const [logBookWeek, setLogBookWeek] = useState<number>(0);
 	const [logBookReportFile, setLogBookReportFile] = useState<string>("");
-
-	const { currentUser }: any = useContext(RootContext);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

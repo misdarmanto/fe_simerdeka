@@ -8,18 +8,18 @@ import { studentRouters } from "./student-routes";
 import { departmentRouters } from "./department-routers";
 import { lp3mRouters } from "./lp3m-routers";
 import { academicRouters } from "./academic-routers";
+import { useAppContext } from "../context/app.context";
 
 export default function AppRouters() {
-	const { currentUser }: any = useContext(RootContext);
-	const user: UserTypes = currentUser;
+	const { currentUser } = useAppContext();
 
 	let router: { path: string; element: JSX.Element }[] = [];
 
-	switch (user.userRole) {
+	switch (currentUser.userRole) {
 		case "student":
 			router = studentRouters;
 			break;
-		case "study_program":
+		case "studyProgram":
 			router = studentRouters;
 			break;
 		case "department":

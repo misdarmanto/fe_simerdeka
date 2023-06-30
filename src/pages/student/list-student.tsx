@@ -1,18 +1,15 @@
 import { TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { Link, useNavigate } from "react-router-dom";
-import { ReactElement, useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ReactElement, useEffect, useState } from "react";
 import { CONFIG } from "../../configs";
-import { RootContext } from "../../utils/contextApi";
 import { ServiceHttp } from "../../services/api";
 import { StudentTypes } from "../../models/student";
 
 const StudentListView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const navigate = useNavigate();
-	const { currentUser }: any = useContext(RootContext);
 
 	const fecthStudents = async () => {
 		const httpService = new ServiceHttp();
@@ -25,8 +22,6 @@ const StudentListView = () => {
 				search: "",
 			},
 		});
-
-		console.log(result);
 
 		setListOfStudent({
 			link: "/students",

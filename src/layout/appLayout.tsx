@@ -6,9 +6,9 @@ import NavbarItemGroup from "./navbar-item";
 import {
 	AcademicMenus,
 	LP3MMenus,
-	jurusanMenus,
-	prodiMenus,
+	departmentMenus,
 	studentMenus,
+	studyProgramMenus,
 } from "./listMenu";
 import { CONFIG } from "../configs";
 import { LIST_USER } from "../data/users";
@@ -17,9 +17,10 @@ import { Dropdown } from "flowbite-react";
 import { FiLogOut } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
 import { BiMenu } from "react-icons/bi";
+import { useAppContext } from "../context/app.context";
 
 const AppLayout: React.FC = () => {
-	const { currentUser, role, setRole }: any = useContext(RootContext);
+	const { currentUser, appRole, setAppRole } = useAppContext();
 	const [openSideBar, setOpenSideBar] = useState(false);
 
 	const handleOpenSideBar = () => {
@@ -37,7 +38,7 @@ const AppLayout: React.FC = () => {
 
 	const handleSelectRole = (user: UserTypes) => {
 		handleSaveUserCredential(user);
-		setRole(user.userRole);
+		setAppRole(user.userRole);
 		navigate("/");
 		window.location.reload();
 	};
@@ -52,15 +53,15 @@ const AppLayout: React.FC = () => {
 
 	let MENUS: MenuTypes | null = null;
 
-	switch (role) {
+	switch (appRole) {
 		case "student":
 			MENUS = studentMenus;
 			break;
-		case "study_program":
-			MENUS = prodiMenus;
+		case "studyProgram":
+			MENUS = studyProgramMenus;
 			break;
 		case "department":
-			MENUS = jurusanMenus;
+			MENUS = departmentMenus;
 			break;
 		case "lp3m":
 			MENUS = LP3MMenus;
@@ -96,8 +97,11 @@ const AppLayout: React.FC = () => {
 						label={currentUser.userName}
 						dismissOnClick={true}
 					>
-						{LIST_USER.map((user: UserTypes) => (
-							<Dropdown.Item onClick={() => handleSelectRole(user)}>
+						{LIST_USER.map((user: UserTypes, index) => (
+							<Dropdown.Item
+								key={index}
+								onClick={() => handleSelectRole(user)}
+							>
 								{user.userName}
 							</Dropdown.Item>
 						))}
@@ -109,10 +113,10 @@ const AppLayout: React.FC = () => {
 				</div>
 			</div>
 			<div className="flex w-full">
-				<ul
+				<div
 					className={`${
-						openSideBar ? "w-1/3" : "hidden"
-					} sm:block min-h-screen duration-100 p-2 z-5`}
+						openSideBar ? "absolute w-1/3 z-50" : "hidden"
+					} sm:block min-h-screen duration-100 p-2`}
 				>
 					<NavbarItemGroup title="Menu Utama" items={MENUS?.persiapan || []} />
 					<NavbarItemGroup
@@ -123,7 +127,7 @@ const AppLayout: React.FC = () => {
 						title="Laporan Kegiatan"
 						items={MENUS?.akhir || []}
 					/>
-				</ul>
+				</div>
 				<div className="grow ">
 					<Outlet />
 				</div>

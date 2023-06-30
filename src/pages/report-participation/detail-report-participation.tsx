@@ -1,24 +1,22 @@
 import { Label, Textarea } from "flowbite-react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
-import { RootContext } from "../../utils/contextApi";
 import {
 	ReportParticipationDetailTypes,
 	ReportParticipationUpdateTypes,
 } from "../../models/report-participation";
 import ListItemStyle from "../../components/list";
 import { convertStatusName } from "../../utils/convert";
+import { useAppContext } from "../../context/app.context";
 
 const ReportParicipationDetailView = () => {
 	const [reportParticipation, setReportParticipation] =
 		useState<ReportParticipationDetailTypes>();
-
 	const [statusMessage, setStatusMessage] = useState<string>("");
-
 	const { reportParticipationId } = useParams();
-	const { currentUser }: any = useContext(RootContext);
+	const { currentUser } = useAppContext();
 	const navigation = useNavigate();
 	const httpService = new ServiceHttp();
 
@@ -72,14 +70,12 @@ const ReportParicipationDetailView = () => {
 						)}
 					/>
 
-					{reportParticipation?.reportParticipationStatusMessage && (
-						<ListItemStyle
-							title="pesan"
-							description={
-								reportParticipation?.reportParticipationStatusMessage
-							}
-						/>
-					)}
+					<ListItemStyle
+						title="pesan"
+						description={
+							reportParticipation?.reportParticipationStatusMessage
+						}
+					/>
 
 					<ListItemStyle
 						title="Nama"
@@ -106,7 +102,7 @@ const ReportParicipationDetailView = () => {
 				</dl>
 			</div>
 
-			{currentUser.user_role === "academic" && (
+			{currentUser.userRole === "academic" && (
 				<div className="bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 					<div id="textarea" className="mt-5">
 						<div className="mb-2 block">

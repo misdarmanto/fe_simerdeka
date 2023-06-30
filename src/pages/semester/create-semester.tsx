@@ -1,15 +1,15 @@
-import { Label, Radio, TextInput } from "flowbite-react";
-import { useContext, useState } from "react";
+import { Label, TextInput } from "flowbite-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { SemesterTypes } from "../../models/semester";
-import { RootContext } from "../../utils/contextApi";
+import { useAppContext } from "../../context/app.context";
 
 const SemesterCreateView = () => {
 	const [semesterName, setSemesterName] = useState<string>("");
 	const [semesterStatus, setSemesterStatus] = useState<string>("active");
-	const { currentUser }: any = useContext(RootContext);
+	const { currentUser } = useAppContext();
 
 	const navigate = useNavigate();
 

@@ -1,19 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { SemesterTypes } from "../../models/semester";
-import { Label, Radio, TextInput } from "flowbite-react";
-import { RootContext } from "../../utils/contextApi";
+import { Label, TextInput } from "flowbite-react";
+import { useAppContext } from "../../context/app.context";
 
 const SemesterDetail = () => {
 	const [semester, setSemester] = useState<SemesterTypes>();
 	const [semesterName, setSemesterName] = useState<string>();
-	const { currentUser }: any = useContext(RootContext);
+	const { currentUser } = useAppContext();
 	const { semesterId } = useParams();
-
 	const navigate = useNavigate();
-
 	const httpService = new ServiceHttp();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

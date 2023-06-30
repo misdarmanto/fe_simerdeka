@@ -1,16 +1,16 @@
 import { Select, TextInput } from "flowbite-react";
-import { ReactElement, useContext, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { RootContext } from "../../utils/contextApi";
 import { SemesterTypes } from "../../models/semester";
 import { UserTypes } from "../../models/user";
 import ModalStyle from "../../components/modal";
 import { MbkmProgramTypes } from "../../models/mbkm-program";
+import { useAppContext } from "../../context/app.context";
 
 const MbkmProgramListView = () => {
 	const navigate = useNavigate();
@@ -22,8 +22,8 @@ const MbkmProgramListView = () => {
 
 	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [modalDeleteData, setModalDeleteData] = useState<MbkmProgramTypes>();
+	const { currentUser } = useAppContext();
 
-	const { currentUser }: any = useContext(RootContext);
 	const user: UserTypes = currentUser;
 	const httpService = new ServiceHttp();
 

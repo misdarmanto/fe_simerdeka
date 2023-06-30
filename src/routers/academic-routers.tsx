@@ -3,8 +3,7 @@ import FaQ from "../pages/faq";
 import LogActivity from "../pages/log-activity";
 import LogBookDetailView from "../pages/log-book/detail-log-book";
 import LogBookListView from "../pages/log-book/list-log-book";
-import ManageUser from "../pages/manage-users";
-import MataKuliahCreateView from "../pages/mata-kuliah/create-log-book";
+import MataKuliahCreateView from "../pages/mata-kuliah/mata-kuliah-create";
 import MataKuliahListView from "../pages/mata-kuliah/list-mata-kuliah";
 import MbkmProgramProdiDetailView from "../pages/mbkm-program-prodi/detail-mbkm-program-prodi";
 import MbkmProgramProdiListView from "../pages/mbkm-program-prodi/list-mbkm-program-prodi";
@@ -167,10 +166,5 @@ export const academicRouters = [
 	{
 		path: "/study-programs",
 		element: <StudyProgramListView />,
-	},
-
-	{
-		path: "/manage-users",
-		element: <ManageUser />,
 	},
 ];
