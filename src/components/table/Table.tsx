@@ -37,14 +37,14 @@ export const TableStyle = ({
 						{/* Desktop only  */}
 						<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg hidden md:block">
 							<table className="min-w-full divide-y overflow-scroll divide-gray-200">
-								<thead className="bg-gray-50">
+								<thead className="bg-gray-100">
 									<tr>
 										{header?.map((value: any, i: number) => {
 											if (value) {
 												return (
 													<th
 														scope="col"
-														className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+														className="px-6 py-4 text-left text-sm font-medium font-extrabold uppercase tracking-wider"
 														key={i}
 													>
 														{value.title}
@@ -59,7 +59,7 @@ export const TableStyle = ({
 										<tr
 											key={i}
 											className={`${
-												i % 2 === 0 ? "bg-white" : "bg-gray-50"
+												i % 2 === 0 ? "bg-white" : "bg-gray-100"
 											}`}
 										>
 											{header.map((head, j) => {

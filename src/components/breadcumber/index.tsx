@@ -12,7 +12,7 @@ export interface BreadcrumbStyleTypes {
 
 export const BreadcrumbStyle = ({ icon, listPath }: BreadcrumbStyleTypes) => {
 	return (
-		<Breadcrumb className="my-5">
+		<Breadcrumb className="mb-5 bg-gray-200 rounded p-2">
 			{listPath.map((item, index) => {
 				if (index == 0) {
 					return (

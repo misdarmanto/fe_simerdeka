@@ -31,3 +31,14 @@ export interface RecomendationLetterCreateRequestTypes {
 	recomendationLetterProgramName: string;
 	recomendationLetterProgramCorrelation: string;
 }
+
+export interface RequestChangeStatusAssignMentTypes {
+	recomendationLetterId: string;
+	recomendationLetterApprovalLetter: string;
+}
+
+export interface RequestChangeStatusApprovalTypes {
+	recomendationLetterId: string;
+	recomendationLetterStatus: "waiting" | "accepted" | "rejected";
+	recomendationLetterStatusMessage: string;
+}
