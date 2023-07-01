@@ -1,14 +1,13 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AppLayout from "../layout/appLayout";
 import ErrorPage from "../error-page";
-import { useContext } from "react";
-import { RootContext } from "../utils/contextApi";
-import { UserTypes } from "../models/user";
 import { studentRouters } from "./student-routes";
 import { departmentRouters } from "./department-routers";
 import { lp3mRouters } from "./lp3m-routers";
 import { academicRouters } from "./academic-routers";
 import { useAppContext } from "../context/app.context";
+import { studyProgramMenus } from "../layout/listMenu";
+import { studyProgramRouters } from "./study-program-routers";
 
 export default function AppRouters() {
 	const { currentUser } = useAppContext();
@@ -20,7 +19,7 @@ export default function AppRouters() {
 			router = studentRouters;
 			break;
 		case "studyProgram":
-			router = studentRouters;
+			router = studyProgramRouters;
 			break;
 		case "department":
 			router = departmentRouters;

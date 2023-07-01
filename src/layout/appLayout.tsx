@@ -1,7 +1,6 @@
 import Logo from "../assets/logos/bgw_simerdeka.jpeg";
-import { RootContext } from "../utils/contextApi";
 import { UserTypes } from "../models/user";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import NavbarItemGroup from "./navbar-item";
 import {
 	AcademicMenus,
@@ -13,14 +12,22 @@ import {
 import { CONFIG } from "../configs";
 import { LIST_USER } from "../data/users";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Dropdown } from "flowbite-react";
+import { Alert, Dropdown } from "flowbite-react";
 import { FiLogOut } from "react-icons/fi";
 import { FaUser } from "react-icons/fa";
 import { BiMenu } from "react-icons/bi";
-import { useAppContext } from "../context/app.context";
+import { AppContextTypes, useAppContext } from "../context/app.context";
+import { HiInformationCircle } from "react-icons/hi";
 
 const AppLayout: React.FC = () => {
-	const { currentUser, appRole, setAppRole } = useAppContext();
+	const {
+		currentUser,
+		appRole,
+		setAppRole,
+		errorMessage,
+		setErrorMessage,
+	}: AppContextTypes = useAppContext();
+
 	const [openSideBar, setOpenSideBar] = useState(false);
 
 	const handleOpenSideBar = () => {
@@ -74,12 +81,12 @@ const AppLayout: React.FC = () => {
 	}
 
 	return (
-		<div>
+		<div className="max-w-full">
 			<div className="flex items-center mx-auto">
 				<img className="p-1 mx-2" src={Logo} alt="Logo" />
 			</div>
 
-			<div className="h-12 w-full bg-yellow-400 flex items-center px-5 gap-5">
+			<div className="h-12 bg-yellow-400 flex items-center px-5 gap-5">
 				<div className="text-white text-sm flex-grow">
 					<div className="flex items-center gap-2">
 						<div className="sm:hidden">
@@ -112,11 +119,11 @@ const AppLayout: React.FC = () => {
 					<p className="text-white text-sm flex-grow">Logout</p>
 				</div>
 			</div>
-			<div className="flex w-full">
+			<div className="flex gap-5 p-5">
 				<div
 					className={`${
 						openSideBar ? "absolute w-1/3 z-50" : "hidden"
-					} sm:block min-h-screen duration-100 p-2`}
+					} sm:block min-h-screen duration-100`}
 				>
 					<NavbarItemGroup title="Menu Utama" items={MENUS?.persiapan || []} />
 					<NavbarItemGroup
@@ -128,7 +135,24 @@ const AppLayout: React.FC = () => {
 						items={MENUS?.akhir || []}
 					/>
 				</div>
-				<div className="grow ">
+				<div className="grow">
+					{errorMessage.isError && (
+						<Alert
+							color="failure"
+							icon={HiInformationCircle}
+							onDismiss={() =>
+								setErrorMessage({ isError: false, message: "" })
+							}
+							className="mb-5"
+						>
+							<span>
+								<p>
+									<span className="font-medium">Error! </span>
+									{errorMessage.message}
+								</p>
+							</span>
+						</Alert>
+					)}
 					<Outlet />
 				</div>
 			</div>

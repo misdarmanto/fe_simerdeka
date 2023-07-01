@@ -31,7 +31,7 @@ const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 	};
 
 	return (
-		<ListGroup theme={customTheme} className="m-3 mb-5 w-80 hover:color-gray">
+		<ListGroup theme={customTheme} className="mb-5 w-80 hover:color-gray">
 			<ListGroup.Item className="bg-gray-200">
 				<p>{title}</p>
 			</ListGroup.Item>

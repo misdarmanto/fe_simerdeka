@@ -14,7 +14,6 @@ import { useAppContext } from "../../context/app.context";
 
 const MbkmProgramListView = () => {
 	const navigate = useNavigate();
-
 	const [listMbkmProgram, setListMbkmProgram] = useState<any>();
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
 	const [semesterId, setSemesterId] = useState<string>("all");
@@ -158,7 +157,7 @@ const MbkmProgramListView = () => {
 	if (isLoading) return <div>loading...</div>;
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{

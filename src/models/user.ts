@@ -1,6 +1,9 @@
-export interface AppRoleTypes {
-	appRole: "student" | "studyProgram" | "department" | "lp3m" | "academic";
-}
+export type AppRoleTypes =
+	| "student"
+	| "studyProgram"
+	| "department"
+	| "lp3m"
+	| "academic";
 
 export interface UserTypes {
 	userId: string;

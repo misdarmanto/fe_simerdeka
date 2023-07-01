@@ -146,7 +146,7 @@ const MbkmProgramDetailView = () => {
 	if (isLoading) return <p>loading...</p>;
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{

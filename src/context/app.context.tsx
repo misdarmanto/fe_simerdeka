@@ -1,16 +1,31 @@
 import { createContext, useContext, useReducer } from "react";
 import { AppRoleTypes, UserTypes } from "../models/user";
 
+type ErrorMessageTypes = { isError: boolean; message: string };
+
+export interface AppContextTypes {
+	appRole: AppRoleTypes;
+	setAppRole: (value: AppRoleTypes) => void;
+	currentUser: UserTypes;
+	setCurrentUser: (value: UserTypes) => void;
+	isLoading: boolean;
+	setIsLoading: (value: boolean) => void;
+	errorMessage: ErrorMessageTypes;
+	setErrorMessage: (value: ErrorMessageTypes) => void;
+}
+
 export enum AppAction {
 	APP_ROLE = "APP_ROLE",
 	CURRENT_USER = "CURRENT_USER",
 	IS_LOADING = "IS_LOADING",
+	ERROR_MESSAGE = "ERROR_MESSAGE",
 }
 
 type State = {
 	appRole: AppRoleTypes | any;
 	currentUser: UserTypes | any;
 	isLoading: boolean | any;
+	errorMessage: ErrorMessageTypes | any;
 };
 
 type Action = { type: AppAction; payload?: State };
@@ -34,6 +49,9 @@ function appReducer(state: State, action: Action) {
 		case AppAction.IS_LOADING: {
 			return { ...state, isLoading: action.payload?.isLoading };
 		}
+		case AppAction.ERROR_MESSAGE: {
+			return { ...state, errorMessage: action.payload?.errorMessage };
+		}
 		default: {
 			throw new Error(`Unhandled action type: ${action.type}`);
 		}
@@ -51,6 +69,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 			departmentId: "",
 			studyProgramId: "",
 		},
+		errorMessage: { isError: false, message: "" },
 		isLoading: false,
 	});
 
@@ -88,6 +107,14 @@ export function useAppContext() {
 				type: AppAction.IS_LOADING,
 				payload: {
 					isLoading: value,
+				},
+			});
+		},
+		setErrorMessage: (value: ErrorMessageTypes) => {
+			return context.dispatch({
+				type: AppAction.ERROR_MESSAGE,
+				payload: {
+					errorMessage: value,
 				},
 			});
 		},

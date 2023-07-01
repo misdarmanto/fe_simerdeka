@@ -46,7 +46,7 @@ const ReportParicipationDetailView = () => {
 	}, []);
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{

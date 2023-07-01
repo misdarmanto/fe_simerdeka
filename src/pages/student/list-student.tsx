@@ -6,33 +6,42 @@ import { ReactElement, useEffect, useState } from "react";
 import { CONFIG } from "../../configs";
 import { ServiceHttp } from "../../services/api";
 import { StudentTypes } from "../../models/student";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
 
 const StudentListView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
+	const { setErrorMessage }: AppContextTypes = useAppContext();
+	const httpService = new ServiceHttp();
 
 	const fecthStudents = async () => {
-		const httpService = new ServiceHttp();
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/students",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
-		});
+		try {
+			const result = await httpService.getTableData({
+				url: CONFIG.base_url_api + "/students",
+				pagination: true,
+				page: 0,
+				size: 10,
+				filters: {
+					search: "",
+				},
+			});
 
-		setListOfStudent({
-			link: "/students",
-			data: result,
-			page: 0,
-			size: 10,
-			filter: {
-				search: "",
-			},
-		});
-		setIsLoading(false);
+			setListOfStudent({
+				link: "/students",
+				data: result,
+				page: 0,
+				size: 10,
+				filter: {
+					search: "",
+				},
+			});
+			setIsLoading(false);
+		} catch (error: any) {
+			setErrorMessage({
+				isError: true,
+				message: error.message,
+			});
+		}
 	};
 
 	useEffect(() => {
@@ -126,7 +135,7 @@ const StudentListView = () => {
 	if (isLoading) return <div>loading...</div>;
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{

@@ -6,7 +6,7 @@ import {
 	AiOutlineHome,
 	AiOutlineSearch,
 } from "react-icons/ai";
-import { BiBookOpen, BiUser } from "react-icons/bi";
+import { BiBookOpen } from "react-icons/bi";
 import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
 import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
@@ -33,13 +33,6 @@ const MBKMProgramMenu = {
 	title: "Program MBKM",
 	path: "/mbkm-programs",
 	icon: <AiOutlineFolderOpen fontSize={20} />,
-	child: [
-		{
-			title: "Program MBKM",
-			path: "/mbkm-programs",
-			icon: <AiOutlineFolderOpen fontSize={20} />,
-		},
-	],
 };
 
 const MBKMProgramProdiMenu = {
@@ -88,12 +81,6 @@ const MataKuliahMenu = {
 	title: "Mata Kuliah",
 	path: "/mata-kuliah",
 	icon: <BiBookOpen fontSize={20} />,
-};
-
-const ManageUserMenu = {
-	title: "Manage User",
-	path: "/manage-users",
-	icon: <BiUser fontSize={20} />,
 };
 
 const LogActivityMenu = {

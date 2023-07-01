@@ -1,6 +1,5 @@
 import Home from "../pages/home";
 import FaQ from "../pages/faq";
-import MbkmProgramStudentMyProgramView from "../pages/mbkm-program-student/my-mbkm-program";
 import ReportParticipationListView from "../pages/report-participation/list-report-participation";
 import ReportParicipationCreateView from "../pages/report-participation/create-report-participation";
 import ReportParicipationDetailView from "../pages/report-participation/detail-report-participation";
@@ -18,12 +17,6 @@ export const studentRouters = [
 	{
 		path: "/faq",
 		element: <FaQ />,
-	},
-
-	//student program
-	{
-		path: "/mbkm-programs/students",
-		element: <MbkmProgramStudentMyProgramView />,
 	},
 
 	//report participation

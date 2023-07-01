@@ -38,7 +38,7 @@ const SemesterCreateView = () => {
 	};
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{

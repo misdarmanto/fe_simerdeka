@@ -2,42 +2,46 @@ import { Badge, TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { Link, useNavigate } from "react-router-dom";
-import { ReactElement, useContext, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { CONFIG } from "../../configs";
-import { RootContext } from "../../utils/contextApi";
 import { ServiceHttp } from "../../services/api";
 import { ReportParticipationTypes } from "../../models/report-participation";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
 
 const ReportParticipationListView = () => {
 	const [listProgram, setListProgram] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const navigate = useNavigate();
-	const { currentUser } = useAppContext();
+	const { currentUser, setErrorMessage }: AppContextTypes = useAppContext();
+	const httpService = new ServiceHttp();
 
 	const fecthData = async () => {
-		const httpService = new ServiceHttp();
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/report-participations",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
-		});
+		try {
+			const result = await httpService.getTableData({
+				url: CONFIG.base_url_api + "/report-participations",
+				pagination: true,
+				page: 0,
+				size: 10,
+				filters: {
+					search: "",
+				},
+			});
+			setListProgram({
+				link: "report-participations",
+				data: result,
+				page: 0,
+				size: 10,
+				filter: {
+					search: "",
+				},
+			});
+		} catch (error: any) {
+			setErrorMessage({
+				isError: true,
+				message: error.message,
+			});
+		}
 
-		console.log(result);
-
-		setListProgram({
-			link: "report-participations",
-			data: result,
-			page: 0,
-			size: 10,
-			filter: {
-				search: "",
-			},
-		});
 		setIsLoading(false);
 	};
 
@@ -140,7 +144,7 @@ const ReportParticipationListView = () => {
 	if (isLoading) return <div>loading...</div>;
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{

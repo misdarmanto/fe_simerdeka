@@ -37,7 +37,8 @@ export class ServiceHttp {
 			});
 			return result.data.data;
 		} catch (error: any) {
-			throw Error(error.message);
+			console.log(error.response.data.error_message);
+			throw Error(error.response.data.error_message);
 		}
 	}
 
@@ -54,7 +55,8 @@ export class ServiceHttp {
 			});
 			return result.data;
 		} catch (error: any) {
-			throw Error(error.message);
+			console.log(error.response.data.error_message);
+			throw Error(error.response.data.error_message);
 		}
 	}
 
@@ -71,7 +73,8 @@ export class ServiceHttp {
 			});
 			return result.data;
 		} catch (error: any) {
-			throw Error(error.message);
+			console.log(error.response.data.error_message);
+			throw Error(error.response.data.error_message);
 		}
 	}
 
@@ -88,7 +91,8 @@ export class ServiceHttp {
 			});
 			return result.data;
 		} catch (error: any) {
-			throw Error(error.message);
+			console.log(error.response.data.error_message);
+			throw Error(error.response.data.error_message);
 		}
 	}
 
@@ -114,7 +118,8 @@ export class ServiceHttp {
 				size: size,
 			};
 		} catch (error: any) {
-			throw Error(error.message);
+			console.log(error.response.data.error_message);
+			throw Error(error.response.data.error_message);
 		}
 	}
 }

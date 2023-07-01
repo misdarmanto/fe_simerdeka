@@ -7,7 +7,6 @@ import MataKuliahCreateView from "../pages/mata-kuliah/mata-kuliah-create";
 import MataKuliahListView from "../pages/mata-kuliah/list-mata-kuliah";
 import MbkmProgramProdiDetailView from "../pages/mbkm-program-prodi/detail-mbkm-program-prodi";
 import MbkmProgramProdiListView from "../pages/mbkm-program-prodi/list-mbkm-program-prodi";
-import MbkmProgramStudentMyProgramView from "../pages/mbkm-program-student/my-mbkm-program";
 import MbkmProgramCreatView from "../pages/mbkm-program/create-mbkm-program";
 import MbkmProgramDetailView from "../pages/mbkm-program/detail-mbkm-program";
 import MbkmProgramEditView from "../pages/mbkm-program/edit-mbkm-program";
@@ -67,24 +66,6 @@ export const lp3mRouters = [
 		path: "/mbkm-programs/prodi/detail/:mbkmProgramId",
 		element: <MbkmProgramProdiDetailView />,
 	},
-
-	//student program
-	{
-		path: "/mbkm-programs/students/:studentId",
-		element: <MbkmProgramStudentMyProgramView />,
-	},
-	// {
-	// 	path: "/mbkm-programs/students/",
-	// 	element: <MbkmProgramStudentList />,
-	// },
-	// {
-	// 	path: "/mbkm-programs/students/create",
-	// 	element: <MbkmProgramStudentCreat />,
-	// },
-	// {
-	// 	path: "/mbkm-programs/students/:programId",
-	// 	element: <MbkmProgramStudentDetail />,
-	// },
 
 	//report participation
 	{

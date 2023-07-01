@@ -70,7 +70,7 @@ const RecomendationLetterDetail = () => {
 	const dateTime = new Date();
 
 	return (
-		<div className="sm:m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{
@@ -230,7 +230,12 @@ const RecomendationLetterDetail = () => {
 				<div className="bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 					<div className="flex gap-5 items-center">
 						<div className="mb-2 block">
-							<label htmlFor="file">surat pengantar : </label>
+							<label htmlFor="file">
+								{currentUser.userRole === "academic"
+									? "surat rekomendasi"
+									: "surat pengantar"}
+								:
+							</label>
 						</div>
 						<FileUploadButton
 							onUpload={setRecomendationLetterApprovalLetter}
