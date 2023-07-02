@@ -131,7 +131,7 @@ const SemesterListView = () => {
 							<ButtonStyle title="Detail" size="xs" color="light" />
 						</Link>
 						<ButtonStyle
-							title="Hapus"
+							title="Edit"
 							size="xs"
 							color="failure"
 							className="mx-2"

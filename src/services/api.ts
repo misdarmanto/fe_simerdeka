@@ -37,8 +37,8 @@ export class ServiceHttp {
 			});
 			return result.data.data;
 		} catch (error: any) {
-			console.log(error.response.data.error_message);
-			throw Error(error.response.data.error_message);
+			console.log(error.response.data.error_message || error.message);
+			throw Error(error.response.data.error_message || error.message);
 		}
 	}
 
@@ -55,8 +55,8 @@ export class ServiceHttp {
 			});
 			return result.data;
 		} catch (error: any) {
-			console.log(error.response.data.error_message);
-			throw Error(error.response.data.error_message);
+			console.log(error.response.data.error_message || error.message);
+			throw Error(error.response.data.error_message || error.message);
 		}
 	}
 
@@ -73,8 +73,8 @@ export class ServiceHttp {
 			});
 			return result.data;
 		} catch (error: any) {
-			console.log(error.response.data.error_message);
-			throw Error(error.response.data.error_message);
+			console.log(error.response.data.error_message || error.message);
+			throw Error(error.response.data.error_message || error.message);
 		}
 	}
 
@@ -91,8 +91,8 @@ export class ServiceHttp {
 			});
 			return result.data;
 		} catch (error: any) {
-			console.log(error.response.data.error_message);
-			throw Error(error.response.data.error_message);
+			console.log(error.response.data.error_message || error.message);
+			throw Error(error.response.data.error_message || error.message);
 		}
 	}
 
@@ -118,8 +118,8 @@ export class ServiceHttp {
 				size: size,
 			};
 		} catch (error: any) {
-			console.log(error.response.data.error_message);
-			throw Error(error.response.data.error_message);
+			console.log(error.response.data.error_message || error.message);
+			throw Error(error.response.data.error_message || error.message);
 		}
 	}
 }

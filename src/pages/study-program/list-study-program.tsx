@@ -1,25 +1,19 @@
 import { TextInput } from "flowbite-react";
 import { ReactElement, useEffect, useState } from "react";
-import { BASE_ICON, BreadcrumbStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { CONFIG } from "../../configs";
+import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudyProgramTypes } from "../../models/study-program";
+import { Link } from "react-router-dom";
+import { useHttp } from "../../hooks/useHttp";
 
 const StudyProgramListView = () => {
 	const [listStudyProgram, setListStudyProgram] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const httpService = new ServiceHttp();
+	const { handleGetTableDataRequest } = useHttp();
 
 	const fecthData = async () => {
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/study-programs?registered=true",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
+		const result = await handleGetTableDataRequest({
+			path: "/study-programs?registered=true",
 		});
 
 		setListStudyProgram({
@@ -71,6 +65,19 @@ const StudyProgramListView = () => {
 			data: (data: StudyProgramTypes, index: number): ReactElement => (
 				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
 					{data.studyProgramDepartmentName}
+				</td>
+			),
+		},
+		{
+			title: "Action",
+			action: true,
+			data: (data: StudyProgramTypes, index: number): ReactElement => (
+				<td key={index + "action"}>
+					<div className="flex items-center">
+						<Link to={`/study-programs/detail/${data.studyProgramId}`}>
+							<ButtonStyle title="Detail" size="xs" color="light" />
+						</Link>
+					</div>
 				</td>
 			),
 		},

@@ -3,45 +3,29 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { Link } from "react-router-dom";
 import { ReactElement, useEffect, useState } from "react";
-import { CONFIG } from "../../configs";
-import { ServiceHttp } from "../../services/api";
 import { StudentTypes } from "../../models/student";
-import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
 
 const StudentListView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { setErrorMessage }: AppContextTypes = useAppContext();
-	const httpService = new ServiceHttp();
+	const { handleGetTableDataRequest } = useHttp();
 
 	const fecthStudents = async () => {
-		try {
-			const result = await httpService.getTableData({
-				url: CONFIG.base_url_api + "/students",
-				pagination: true,
-				page: 0,
-				size: 10,
-				filters: {
-					search: "",
-				},
-			});
+		const result = await handleGetTableDataRequest({
+			path: "/students",
+		});
 
-			setListOfStudent({
-				link: "/students",
-				data: result,
-				page: 0,
-				size: 10,
-				filter: {
-					search: "",
-				},
-			});
-			setIsLoading(false);
-		} catch (error: any) {
-			setErrorMessage({
-				isError: true,
-				message: error.message,
-			});
-		}
+		setListOfStudent({
+			link: "/students",
+			data: result,
+			page: 0,
+			size: 10,
+			filter: {
+				search: "",
+			},
+		});
+		setIsLoading(false);
 	};
 
 	useEffect(() => {
@@ -170,7 +154,6 @@ const StudentListView = () => {
 					<TextInput type="text" placeholder="search..." />
 				</div>
 			</div>
-
 			<TableStyle header={header} table={listOfStudent} />
 		</div>
 	);

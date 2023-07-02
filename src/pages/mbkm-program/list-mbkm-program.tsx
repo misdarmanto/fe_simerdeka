@@ -35,7 +35,6 @@ const MbkmProgramListView = () => {
 	};
 
 	const handleDeleteMbkmProgram = async () => {
-		console.log(modalDeleteData);
 		await httpService.remove({
 			path: `/mbkm-programs?mbkm_program_id=${modalDeleteData?.mbkmProgramId}`,
 		});
@@ -65,9 +64,6 @@ const MbkmProgramListView = () => {
 			size: 10,
 			filters,
 		});
-
-		console.log(result);
-
 		setIsLoading(false);
 	};
 
@@ -116,10 +112,12 @@ const MbkmProgramListView = () => {
 		},
 
 		{
-			title: "Semester",
+			title: "Silabus",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
-				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
-					{data.semester.semesterName}
+				<td key={index + "silabus"} className="md:px-6 md:py-3 break-all">
+					<a href={data.mbkmProgramSyllabus} target="blank">
+						<ButtonStyle color="light" title={`Lihat file`} />
+					</a>
 				</td>
 			),
 		},
@@ -139,7 +137,7 @@ const MbkmProgramListView = () => {
 							/>
 						</Link>
 						<ButtonStyle
-							title="Hapus"
+							title="edit"
 							size="xs"
 							color="failure"
 							className="mx-2"
@@ -199,7 +197,7 @@ const MbkmProgramListView = () => {
 						onChange={(e) => setSemesterId(e.target.value)}
 						className="mx-2"
 					>
-						<option value={"all"}>semua semester</option>
+						<option value={"all"}>semester saat ini</option>
 						{listOfSemester.map((semester: any, index) => (
 							<option key={index} value={semester.semesterId}>
 								{semester.semester_name}

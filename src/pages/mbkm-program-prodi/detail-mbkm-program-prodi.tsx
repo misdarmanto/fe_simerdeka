@@ -10,6 +10,7 @@ import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 import ModalStyle from "../../components/modal";
 import ModalAddStudent from "./modal-add-student";
 import { StudentTypes } from "../../models/student";
+import { useHttp } from "../../hooks/useHttp";
 
 const MbkmProgramProdiDetailView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
@@ -18,7 +19,8 @@ const MbkmProgramProdiDetailView = () => {
 
 	const [isLoading, setIsLoading] = useState(true);
 	const { mbkmProgramId } = useParams();
-	const httpService = new ServiceHttp();
+	const { handleGetRequest, handleUpdateRequest, handleGetTableDataRequest } =
+		useHttp();
 
 	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [modalDeleteData, setModalDeleteData] = useState<StudentTypes>();
@@ -32,58 +34,45 @@ const MbkmProgramProdiDetailView = () => {
 	};
 
 	const handleChangeMbkmProgramStudent = async () => {
-		console.log(modalDeleteData);
-		await httpService.patch({
+		await handleUpdateRequest({
 			path: `/students`,
 			body: {
-				student_id: modalDeleteData?.studentId,
-				student_mbkmProgram_id: null,
+				studentId: modalDeleteData?.studentId,
+				studentMbkmProgramId: null,
 			},
 		});
+
 		setOpenModalDelete(false);
 		window.location.reload();
 	};
 
 	const fecthDetailMbkmProgram = async () => {
-		const result = await httpService.get({
+		const result = await handleGetRequest({
 			path: `/mbkm-programs/prodi/detail/${mbkmProgramId}`,
 		});
 		setMbkmProgram(result);
 	};
 
 	const fecthStudents = async () => {
-		try {
-			const result = await httpService.getTableData({
-				url: CONFIG.base_url_api + `/students`,
-				pagination: true,
-				page: 0,
-				size: 10,
-				filters: {
-					search: "",
-					mbkmProgram_id: mbkmProgramId,
-				},
-			});
+		const result = await handleGetTableDataRequest({
+			path: `/students?mbkmProgramId=${mbkmProgramId}&&`,
+		});
 
-			console.log(result);
-			setListOfStudent({
-				link: `/students`,
-				data: result,
-				page: 0,
-				size: 10,
-				filter: {
-					search: "",
-					mbkmProgram_id: mbkmProgramId,
-				},
-			});
-		} catch (error: any) {
-			console.log(error.message);
-		}
+		setListOfStudent({
+			link: `/students`,
+			data: result,
+			page: 0,
+			size: 10,
+			filter: {
+				mbkmProgramId: mbkmProgramId,
+			},
+		});
 	};
 
 	const tableHeaderStudent: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -91,8 +80,17 @@ const MbkmProgramProdiDetailView = () => {
 		},
 
 		{
+			title: "NIM",
+			data: (data: StudentTypes, index: number): ReactElement => (
+				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
+					{data.studentNim}
+				</td>
+			),
+		},
+
+		{
 			title: "Nama",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
 					{data.studentName}
 				</td>
@@ -100,18 +98,9 @@ const MbkmProgramProdiDetailView = () => {
 		},
 
 		{
-			title: "total sks",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.student_email}
-				</td>
-			),
-		},
-
-		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
+			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<ButtonStyle
 						title="Hapus"
@@ -160,26 +149,22 @@ const MbkmProgramProdiDetailView = () => {
 				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
 					<ListItemStyle
 						title="Nama"
-						description={mbkmProgram?.mbkmProgram.mbkmProgramName}
+						description={mbkmProgram?.mbkmPrograms.mbkmProgramName}
 					/>
 					<ListItemStyle
 						title="kategori program"
-						description={mbkmProgram?.mbkmProgram.mbkmProgramCategory}
-					/>
-					<ListItemStyle
-						title="Semester"
-						description={mbkmProgram?.semester.semesterName}
+						description={mbkmProgram?.mbkmPrograms.mbkmProgramCategory}
 					/>
 					<ListItemStyle
 						title="Program Syllabus"
-						url={mbkmProgram?.mbkmProgram.mbkmProgramSyllabus}
+						url={mbkmProgram?.mbkmPrograms.mbkmProgramSyllabus}
 					/>
 				</dl>
 			</div>
 
 			<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 				<div className="mb-2 block">
-					<Label value="Daftar Mahasiswa " />
+					<Label value="Daftar Mahasiswa Yang Mengikuti " />
 				</div>
 				<div className="flex flex-col md:flex-row justify-between md:px-0">
 					<div className="flex items-center justify-between">

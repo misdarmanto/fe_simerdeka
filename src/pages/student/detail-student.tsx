@@ -1,29 +1,38 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import ListItemStyle from "../../components/list";
 import { StudentTypes } from "../../models/student";
-import { MbkmProgramTypes } from "../../models/mbkm-program";
-import { Alert, Label, TextInput } from "flowbite-react";
-import { FiAlertTriangle } from "react-icons/fi";
+import { Label, TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { CONFIG } from "../../configs";
 import ModalAddMataKuliah from "./modal-add-mata-kuliahi";
 import { MataKuliahTypes } from "../../models/mata-kuliah";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
-import { AxiosError } from "axios";
+import { useHttp } from "../../hooks/useHttp";
+import { TranskripTypes } from "../../models/transkrip";
+import ModalStyle from "../../components/modal";
+
+interface SksConvertionTypes {
+	mataKuliah: {
+		mataKuliahName: string;
+		mataKuliahSksTotal: number;
+	};
+	transkripId: string;
+	transkripMataKuliahGrade: number;
+}
 
 const StudentDetailView = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const { studentId } = useParams();
 	const [studentDetails, setStudentDetails] = useState<StudentTypes>();
-	const httpService = new ServiceHttp();
 	const [listOfMataKuliahTranskrip, setListOfMataKuliahTranskrip] = useState<any>();
-	const [openModalAddMataKuliah, setOpenModalAddMataKuliah] = useState(false);
 	const [openModalDelete, setOpenModalDelete] = useState(false);
-	const [modalDeleteData, setModalDeleteData] = useState<MataKuliahTypes>();
-	const { currentUser, setErrorMessage }: AppContextTypes = useAppContext();
+	const [modalDeleteData, setModalDeleteData] = useState<TranskripTypes>();
+	const { currentUser }: AppContextTypes = useAppContext();
+	const navigate = useNavigate();
+
+	const { handleGetRequest, handleGetTableDataRequest, handleRemoveRequest } =
+		useHttp();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);
@@ -33,48 +42,37 @@ const StudentDetailView = () => {
 		setModalDeleteData(item);
 	};
 
-	const fecthMataKuliahTranskrip = async () => {
-		try {
-			const result = await httpService.getTableData({
-				url: CONFIG.base_url_api + `/transkrip`,
-				pagination: true,
-				page: 0,
-				size: 10,
-				filters: {
-					search: "",
-				},
-			});
+	const handleDeleteMbkmProgram = async () => {
+		await handleRemoveRequest({
+			path: `/transkrip?id=${modalDeleteData?.transkripId}`,
+		});
+		setOpenModalDelete(false);
+		window.location.reload();
+	};
 
-			setListOfMataKuliahTranskrip({
-				link: `/transkrip`,
-				data: result,
-				page: 0,
-				size: 10,
-				filter: {
-					search: "",
-				},
-			});
-		} catch (error: any) {
-			setErrorMessage({
-				isError: true,
-				message: error.message,
-			});
-			console.log(error.message);
-		}
+	console.log(listOfMataKuliahTranskrip);
+
+	const fecthMataKuliahTranskrip = async () => {
+		const result = await handleGetTableDataRequest({
+			path: `/transkrip`,
+		});
+
+		setListOfMataKuliahTranskrip({
+			link: `/transkrip`,
+			data: result,
+			page: 0,
+			size: 10,
+			filter: {
+				search: "",
+			},
+		});
 	};
 
 	const fecthDetailStudent = async () => {
-		try {
-			const result = await httpService.get({
-				path: `/students/detail/${studentId}`,
-			});
-			setStudentDetails(result);
-		} catch (error: any) {
-			setErrorMessage({
-				isError: true,
-				message: error.message,
-			});
-		}
+		const result = await handleGetRequest({
+			path: `/students/detail/${studentId}`,
+		});
+		setStudentDetails(result);
 	};
 
 	const fecthData = async () => {
@@ -92,7 +90,7 @@ const StudentDetailView = () => {
 	const tableHeaderMataKuliah: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: MataKuliahTypes, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -101,18 +99,27 @@ const StudentDetailView = () => {
 
 		{
 			title: "Nama",
-			data: (data: MataKuliahTypes, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mataKuliahName}
+					{data.mataKuliah.mataKuliahName}
 				</td>
 			),
 		},
 
 		{
 			title: "total sks",
-			data: (data: MataKuliahTypes, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.mataKuliahSksTotal}
+					{data.mataKuliah.mataKuliahSksTotal || "_"}
+				</td>
+			),
+		},
+
+		{
+			title: "Nilai",
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
+				<td key={index + "nilai"} className="md:px-6 md:py-3 break-all">
+					{data.transkripMataKuliahGrade || "T"}
 				</td>
 			),
 		},
@@ -120,7 +127,7 @@ const StudentDetailView = () => {
 		{
 			title: "Action",
 			action: true,
-			data: (data: MataKuliahTypes, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<ButtonStyle
 						title="Hapus"
@@ -195,7 +202,7 @@ const StudentDetailView = () => {
 				</div>
 			</div>
 
-			{currentUser.userRole === "studyProgram" && (
+			{currentUser.userRole === "studyProgram" && studentDetails?.mbkmProgram && (
 				<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 					<div className="mb-2 block">
 						<Label value="Daftar Mata Kuliah" />
@@ -218,7 +225,11 @@ const StudentDetailView = () => {
 							<ButtonStyle
 								title="Tambah Mata Kuliah"
 								color="light"
-								onClick={() => setOpenModalAddMataKuliah(true)}
+								onClick={() =>
+									navigate(
+										`/students/detail/${studentId}/create-sks-convertion`
+									)
+								}
 							/>
 						</div>
 						<div className="mt-1 w-full md:w-1/5">
@@ -231,10 +242,12 @@ const StudentDetailView = () => {
 						table={listOfMataKuliahTranskrip}
 					/>
 
-					<ModalAddMataKuliah
-						student={studentDetails}
-						isOpen={openModalAddMataKuliah}
-						onOpen={setOpenModalAddMataKuliah}
+					<ModalStyle
+						onBtnNoClick={handleModalDelete}
+						title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.mataKuliah.mataKuliahName}`}
+						isOpen={openModalDelete}
+						onBtnYesClick={handleDeleteMbkmProgram}
+						onOpen={handleModalDelete}
 					/>
 				</div>
 			)}

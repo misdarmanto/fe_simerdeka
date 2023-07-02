@@ -18,7 +18,8 @@ import ReportParicipationDetailView from "../pages/report-participation/detail-r
 import ReportParticipationListView from "../pages/report-participation/list-report-participation";
 import StudentDetailView from "../pages/student/detail-student";
 import StudentListView from "../pages/student/list-student";
-import StudyProgramListView from "../pages/study-program";
+import StudyProgramListView from "../pages/study-program/list-study-program";
+import StudyProgramDetailView from "../pages/study-program/detail-study-program";
 
 export const departmentRouters = [
 	{
@@ -127,5 +128,9 @@ export const departmentRouters = [
 	{
 		path: "/study-programs",
 		element: <StudyProgramListView />,
+	},
+	{
+		path: "/study-programs/detail/:studyProgramId",
+		element: <StudyProgramDetailView />,
 	},
 ];

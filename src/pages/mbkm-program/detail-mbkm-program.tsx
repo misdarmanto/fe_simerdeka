@@ -90,7 +90,7 @@ const MbkmProgramDetailView = () => {
 			title: "Nama",
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mbkmProgramProdiProgramName}
+					{data.mbkmPrograms.mbkmProgramName}
 				</td>
 			),
 		},
@@ -99,19 +99,19 @@ const MbkmProgramDetailView = () => {
 			title: "Prodi",
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.mbkmProgramProdiStudyProgramName}
+					{data.mbkmPrograms.mbkmProgramName}
 				</td>
 			),
 		},
 
-		{
-			title: "jurusan",
-			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
-				<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-					{data.mbkmProgramProdiDepartmentName}
-				</td>
-			),
-		},
+		// {
+		// 	title: "jurusan",
+		// 	data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
+		// 		<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
+		// 			{data.mbkmPrograms.}
+		// 		</td>
+		// 	),
+		// },
 
 		{
 			title: "Action",
@@ -223,7 +223,7 @@ const MbkmProgramDetailView = () => {
 
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.mbkmProgramProdiStudyProgramName}`}
+				title={`Apakah anda yakin ingin menghapus`}
 				isOpen={openModalDelete}
 				onBtnYesClick={handleDeleteMbkmProgramParticipation}
 				onOpen={handleModalDelete}

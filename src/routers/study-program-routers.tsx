@@ -14,6 +14,7 @@ import ReportParicipationDetailView from "../pages/report-participation/detail-r
 import ReportParticipationListView from "../pages/report-participation/list-report-participation";
 import StudentDetailView from "../pages/student/detail-student";
 import StudentListView from "../pages/student/list-student";
+import StudentCreateSksView from "../pages/student/create-sks-convertion";
 
 export const studyProgramRouters = [
 	{
@@ -97,5 +98,9 @@ export const studyProgramRouters = [
 	{
 		path: "/students/detail/:studentId",
 		element: <StudentDetailView />,
+	},
+	{
+		path: "/students/detail/:studentId/create-sks-convertion",
+		element: <StudentCreateSksView />,
 	},
 ];

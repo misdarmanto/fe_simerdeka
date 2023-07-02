@@ -7,6 +7,7 @@ import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudentTypes } from "../../models/student";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
+import { useHttp } from "../../hooks/useHttp";
 
 interface ModalAddStudentTypes {
 	onOpen: (item: boolean) => void;
@@ -19,7 +20,9 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 	const [studentSelected, setStudentSelected] = useState<StudentTypes>();
 
 	const [isLoading, setIsLoading] = useState(true);
-	const httpService = new ServiceHttp();
+
+	const { handleGetRequest, handleGetTableDataRequest, handleUpdateRequest } =
+		useHttp();
 
 	const handleSelectStudent = (student: StudentTypes) => {
 		if (student.studentId === studentSelected?.studentId) {
@@ -28,14 +31,14 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 		}
 		const newData: StudentTypes = {
 			studentId: student.studentId,
-			studentMbkmProgramId: mbkmProgram?.mbkmProgram.mbkmProgramId,
+			studentMbkmProgramId: mbkmProgram?.mbkmPrograms.mbkmProgramId,
 		};
 		setStudentSelected(newData);
 	};
 
 	const handleSubmit = async () => {
 		if (studentSelected) {
-			await httpService.patch({
+			await handleUpdateRequest({
 				path: `/students`,
 				body: studentSelected,
 			});
@@ -45,31 +48,16 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 	};
 
 	const fecthStudents = async () => {
-		try {
-			const result = await httpService.getTableData({
-				url: CONFIG.base_url_api + `/students`,
-				pagination: true,
-				page: 0,
-				size: 10,
-				filters: {
-					search: "",
-					mbkm_program_id: null,
-				},
-			});
+		const result = await handleGetTableDataRequest({
+			path: `/students?mbkmProgramId=null&&`,
+		});
 
-			setListOfStudent({
-				link: `/students`,
-				data: result,
-				page: 0,
-				size: 10,
-				filter: {
-					search: "",
-					mbkm_program_id: null,
-				},
-			});
-		} catch (error: any) {
-			console.log(error.message);
-		}
+		setListOfStudent({
+			link: `/students`,
+			data: result,
+			page: 0,
+			size: 10,
+		});
 	};
 
 	const tableHeaderStudent: TableHeader[] = [
