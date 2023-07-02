@@ -12,7 +12,7 @@ const StudentCreateSksView = () => {
 	const [mataKuliahSelected, setMataKuliahSelected] = useState<MataKuliahTypes>();
 	const [mataKuliahGrade, setMataKuliahGrade] = useState("A");
 	const navigate = useNavigate();
-	const { handlePostRequest } = useHttp();
+	const { handlePostRequest, handleUpdateRequest } = useHttp();
 	const { studentId } = useParams();
 
 	const handleModalAddMataKuliah = () => {
@@ -61,17 +61,13 @@ const StudentCreateSksView = () => {
 
 					{mataKuliahSelected && (
 						<ListGroup>
-							<ListGroup.Item>
+							<ListGroup.Item className="text-gray-600 text-md mx-2">
 								Nama Mata Kuliah:
-								<small className="text-gray-600 text-md mx-2">
-									{mataKuliahSelected.mataKuliahName}
-								</small>
+								{mataKuliahSelected.mataKuliahName}
 							</ListGroup.Item>
-							<ListGroup.Item>
-								Total SKS:{" "}
-								<small className="text-gray-600 text-md mx-2">
-									{mataKuliahSelected.mataKuliahSksTotal} SKS
-								</small>
+							<ListGroup.Item className="text-gray-600 text-md mx-2">
+								Total SKS:
+								{mataKuliahSelected.mataKuliahSksTotal} SKS
 							</ListGroup.Item>
 						</ListGroup>
 					)}

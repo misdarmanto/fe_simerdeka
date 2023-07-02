@@ -6,7 +6,7 @@ import {
 	AiOutlineHome,
 	AiOutlineSearch,
 } from "react-icons/ai";
-import { BiBookOpen } from "react-icons/bi";
+import { BiBookOpen, BiTask } from "react-icons/bi";
 import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
 import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
@@ -23,9 +23,15 @@ const RecomendationLetterMenu = {
 	icon: <AiOutlineAudit fontSize={20} />,
 };
 
-const MBKMProgramStudentMenu = {
+const TranskripMenu = {
+	title: "Transkrip",
+	path: `/transkrip`,
+	icon: <BiTask fontSize={20} />,
+};
+
+const MyMbkmProgramMenu = {
 	title: "Program Saya",
-	path: `/mbkm-programs/students`,
+	path: `/my-mbkm-program`,
 	icon: <AiOutlineFolderOpen fontSize={20} />,
 };
 
@@ -96,8 +102,8 @@ const FaQMenu = {
 };
 
 export const studentMenus = {
-	persiapan: [HomeMenu, ReportParticipationMenu, RecomendationLetterMenu],
-	pelaksanaan: [MBKMProgramStudentMenu],
+	persiapan: [HomeMenu, MyMbkmProgramMenu, TranskripMenu],
+	pelaksanaan: [ReportParticipationMenu, RecomendationLetterMenu],
 	akhir: [MBKMLogBookMenu, FaQMenu],
 };
 

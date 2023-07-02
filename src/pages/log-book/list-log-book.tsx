@@ -77,18 +77,19 @@ const LogBookListView = () => {
 		},
 
 		{
-			title: "Nama",
-			data: (data: LogBookTypes, index: number): ReactElement => (
-				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.logBookStudentName}
-				</td>
-			),
-		},
-		{
 			title: "NIM",
 			data: (data: LogBookTypes, index: number): ReactElement => (
 				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
 					{data.logBookStudentNim}
+				</td>
+			),
+		},
+
+		{
+			title: "Nama",
+			data: (data: LogBookTypes, index: number): ReactElement => (
+				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
+					{data.logBookStudentName}
 				</td>
 			),
 		},

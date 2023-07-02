@@ -101,12 +101,10 @@ const MbkmProgramListView = () => {
 		},
 
 		{
-			title: "Jenis Program",
+			title: "Kategori",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.mbkmProgramCategory.length > 10
-						? data.mbkmProgramCategory.slice(0, 10) + "....."
-						: data.mbkmProgramCategory}
+					{data.mbkmProgramCategory}
 				</td>
 			),
 		},
@@ -128,22 +126,13 @@ const MbkmProgramListView = () => {
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex">
-						<Link to={`/mbkm-programs/detail/${data.mbkmProgramId}`}>
-							<ButtonStyle
-								title="Detail"
-								size="xs"
-								color="light"
-								className="mx-1"
-							/>
-						</Link>
 						<ButtonStyle
 							title="edit"
 							size="xs"
 							color="failure"
 							className="mx-2"
 							onClick={() => {
-								handleModalDelete();
-								handleModaDataSelected(data);
+								navigate(`/mbkm-programs/edit/${data.mbkmProgramId}`);
 							}}
 						/>
 					</div>

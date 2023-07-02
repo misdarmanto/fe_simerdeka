@@ -94,14 +94,6 @@ const StudentListView = () => {
 			),
 		},
 		{
-			title: "sks",
-			data: (data: StudentTypes, index: number): ReactElement => (
-				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.studentSksTotal || "_"}
-				</td>
-			),
-		},
-		{
 			title: "Action",
 			action: true,
 			data: (data: StudentTypes, index: number): ReactElement => (

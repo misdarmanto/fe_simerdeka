@@ -8,6 +8,8 @@ import LogBookDetailView from "../pages/log-book/detail-log-book";
 import RecomendationLetterCreate from "../pages/recomendation-letter/create-recomendation-letter";
 import RecomendationLetterDetail from "../pages/recomendation-letter/detail-detail-recomendation-letter";
 import RecomendationLetterList from "../pages/recomendation-letter/list-recomendation-letter";
+import MyMbkmProgramVies from "../pages/my-mbkm-program/my-mbkm-programs";
+import TranskripDetailView from "../pages/transkrip/transkrip-detail";
 
 export const studentRouters = [
 	{
@@ -34,6 +36,17 @@ export const studentRouters = [
 		element: <ReportParicipationDetailView />,
 	},
 
+	//my program
+	{
+		path: "/my-mbkm-program",
+		element: <MyMbkmProgramVies />,
+	},
+
+	//transkrip
+	{
+		path: "/transkrip",
+		element: <TranskripDetailView />,
+	},
 	//log books
 
 	{

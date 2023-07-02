@@ -5,8 +5,6 @@ import ListItemStyle from "../../components/list";
 import { StudentTypes } from "../../models/student";
 import { Label, TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import ModalAddMataKuliah from "./modal-add-mata-kuliahi";
-import { MataKuliahTypes } from "../../models/mata-kuliah";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
 import { TranskripTypes } from "../../models/transkrip";
@@ -49,8 +47,6 @@ const StudentDetailView = () => {
 		setOpenModalDelete(false);
 		window.location.reload();
 	};
-
-	console.log(listOfMataKuliahTranskrip);
 
 	const fecthMataKuliahTranskrip = async () => {
 		const result = await handleGetTableDataRequest({
@@ -123,8 +119,10 @@ const StudentDetailView = () => {
 				</td>
 			),
 		},
+	];
 
-		{
+	if (currentUser.userRole === "studyProgram" && studentDetails?.mbkmProgram) {
+		tableHeaderMataKuliah.push({
 			title: "Action",
 			action: true,
 			data: (data: SksConvertionTypes, index: number): ReactElement => (
@@ -141,8 +139,8 @@ const StudentDetailView = () => {
 					/>
 				</td>
 			),
-		},
-	];
+		});
+	}
 
 	return (
 		<div>
@@ -191,10 +189,6 @@ const StudentDetailView = () => {
 							description={studentDetails?.mbkmProgram?.mbkmProgramCategory}
 						/>
 						<ListItemStyle
-							title="Total Konversi SKS"
-							description={studentDetails?.studentSksTotal + "" || "_"}
-						/>
-						<ListItemStyle
 							title="Silabus"
 							url={studentDetails?.mbkmProgram?.mbkmProgramSyllabus}
 						/>
@@ -202,40 +196,42 @@ const StudentDetailView = () => {
 				</div>
 			</div>
 
-			{currentUser.userRole === "studyProgram" && studentDetails?.mbkmProgram && (
+			{studentDetails?.mbkmProgram && (
 				<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 					<div className="mb-2 block">
-						<Label value="Daftar Mata Kuliah" />
+						<Label value={"Transkrip Nilai"} />
 					</div>
-					<div className="flex flex-col md:flex-row justify-between md:px-0">
-						<div className="flex items-center justify-between">
-							<div className="mr-2 flex flex-row justify-between md:justify-start">
-								<select
-									name="size"
-									defaultValue={10}
-									className="block w-32 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
-								>
-									<option value="2">2</option>
-									<option value="5">5</option>
-									<option value="10">10</option>
-									<option value="50">50</option>
-									<option value="100">100</option>
-								</select>
+					{currentUser.userRole === "studyProgram" && (
+						<div className="flex flex-col md:flex-row justify-between md:px-0">
+							<div className="flex items-center justify-between">
+								<div className="mr-2 flex flex-row justify-between md:justify-start">
+									<select
+										name="size"
+										defaultValue={10}
+										className="block w-32 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
+									>
+										<option value="2">2</option>
+										<option value="5">5</option>
+										<option value="10">10</option>
+										<option value="50">50</option>
+										<option value="100">100</option>
+									</select>
+								</div>
+								<ButtonStyle
+									title="Tambah Mata Kuliah"
+									color="light"
+									onClick={() =>
+										navigate(
+											`/students/detail/${studentId}/create-sks-convertion`
+										)
+									}
+								/>
 							</div>
-							<ButtonStyle
-								title="Tambah Mata Kuliah"
-								color="light"
-								onClick={() =>
-									navigate(
-										`/students/detail/${studentId}/create-sks-convertion`
-									)
-								}
-							/>
+							<div className="mt-1 w-full md:w-1/5">
+								<TextInput type="text" placeholder="search..." />
+							</div>
 						</div>
-						<div className="mt-1 w-full md:w-1/5">
-							<TextInput type="text" placeholder="search..." />
-						</div>
-					</div>
+					)}
 
 					<TableStyle
 						header={tableHeaderMataKuliah}

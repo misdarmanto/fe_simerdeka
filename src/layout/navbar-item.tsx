@@ -32,18 +32,17 @@ const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 
 	return (
 		<ListGroup theme={customTheme} className="mb-5 w-80 hover:color-gray">
-			<ListGroup.Item className="bg-gray-200">
+			<div className="bg-gray-200 p-2 ">
 				<p>{title}</p>
-			</ListGroup.Item>
+			</div>
+
 			{items.map((item: MenuItems, index) => (
-				<ListGroup.Item className="hover:bg-yellow-100" key={index}>
-					<Link to={item.path}>
-						<div className="flex gap-5">
-							<div>{item.icon}</div>
-							<div>{item.title}</div>
-						</div>
-					</Link>
-				</ListGroup.Item>
+				<Link to={item.path}>
+					<div className="flex gap-5 p-2 hover:bg-yellow-100 border rounded-sm">
+						<div>{item.icon}</div>
+						<div>{item.title}</div>
+					</div>
+				</Link>
 			))}
 		</ListGroup>
 	);

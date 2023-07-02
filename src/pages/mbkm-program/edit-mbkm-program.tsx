@@ -1,155 +1,62 @@
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { MbkmProgramTypes } from "../../models/mbkm-program";
-import ListItemStyle from "../../components/list";
-import { Label, TextInput } from "flowbite-react";
-import { CONFIG } from "../../configs";
-import { TableHeader, TableStyle } from "../../components/table/Table";
-import { SksConvertionCreateTypes } from "../../models/sks-convertion";
+import { MbkmProgramCreateTypes, MbkmProgramTypes } from "../../models/mbkm-program";
+import { Label, Select, TextInput } from "flowbite-react";
+import ButtonUploadFile from "../../components/button/button-upload";
+import { listProgramType } from "../../data/program-type";
+import { SemesterTypes } from "../../models/semester";
+import { useHttp } from "../../hooks/useHttp";
 
 const MbkmProgramEditView = () => {
-	const [listOfStudent, setListOfStudent] = useState<any>();
-	const [mbkmProgram, setMbkmProgram] = useState<MbkmProgramTypes>();
-	const [sksConvertionTotal, setSksConvertionTotal] = useState<number>();
-	const [listSksConvertionSelected, setListSksConvertionSelected] = useState<
-		SksConvertionCreateTypes[]
-	>([]);
+	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
+	const [mbkmProgramSyllabus, setMbkmProgramSyllabus] = useState("");
+	const [mbkmProgramName, setMbkmProgramName] = useState("");
+	const [mbkmProgramCategory, setMbkmProgramCategory] = useState("");
 
-	const [isLoading, setIsLoading] = useState(true);
+	const navigate = useNavigate();
 	const { mbkmProgramId } = useParams();
-	const httpService = new ServiceHttp();
-	const navigation = useNavigate();
+	const { handleGetRequest, handleUpdateRequest } = useHttp();
 
-	const handleSubmit = async () => {
-		await httpService.post({
-			path: `/sks-convertions`,
-			body: listSksConvertionSelected,
+	const fecthDetailMbkmProgram = async () => {
+		const result: MbkmProgramTypes = await handleGetRequest({
+			path: `/mbkm-programs/detail/${mbkmProgramId}`,
 		});
-		navigation("/mbkm-programs");
+		setMbkmProgramName(result.mbkmProgramName);
+		setMbkmProgramSyllabus(result.mbkmProgramSyllabus);
+		setMbkmProgramCategory(result.mbkmProgramCategory);
 	};
 
-	const handleSelectSksConvertion = ({ studentId }: { studentId: string }) => {
-		const studentCheck = listSksConvertionSelected.find((item) => {
-			return item.sksConvertionStudentId === studentId;
+	const fecthSemester = async () => {
+		const result = await handleGetRequest({
+			path: "/semesters?semester_status=active",
 		});
-
-		if (studentCheck) {
-			const newListSksConvertion = listSksConvertionSelected.filter((item) => {
-				return item.sksConvertionStudentId !== studentId;
-			});
-			setListSksConvertionSelected(newListSksConvertion);
-		} else {
-			setListSksConvertionSelected([
-				...listSksConvertionSelected,
-				{
-					sksConvertionTotal: sksConvertionTotal!,
-					sksConvertionMbkmProgramId: mbkmProgram?.mbkmProgramId!,
-					sksConvertionStudentId: studentId,
-				},
-			]);
+		if (result) {
+			setListOfSemester(result.items);
 		}
 	};
 
-	console.log(listSksConvertionSelected);
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 
-	const fecthDetailMbkmProgram = async () => {
-		const result = await httpService.get({
-			path: `/mbkm-programs/detail/${mbkmProgramId}`,
-		});
-		setMbkmProgram(result);
-	};
-
-	const fecthStudents = async () => {
-		const httpService = new ServiceHttp();
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/users/students/registered",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
+		await handleUpdateRequest({
+			path: "/mbkm-programs",
+			body: {
+				mbkmProgramId,
+				mbkmProgramCreatedBy: "lp3m",
+				mbkmProgramName: mbkmProgramName,
+				mbkmProgramCategory: mbkmProgramCategory,
+				mbkmProgramSyllabus: mbkmProgramSyllabus,
+				mbkmProgramSemesterId: listOfSemester[0].semesterId,
 			},
 		});
-
-		setListOfStudent({
-			link: "/users/students/registered",
-			data: result,
-			page: 0,
-			size: 10,
-			filter: {
-				search: "",
-			},
-		});
-	};
-
-	const header: TableHeader[] = [
-		{
-			title: "No",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
-					{index + 1}
-				</td>
-			),
-		},
-
-		{
-			title: "Nama",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.user_name}
-				</td>
-			),
-		},
-
-		{
-			title: "email",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "email"} className="md:px-6 md:py-3 break-all">
-					{data.user_email}
-				</td>
-			),
-		},
-
-		{
-			title: "Action",
-			action: true,
-			data: (data: any, index: number): ReactElement => {
-				const isButtonActive = listSksConvertionSelected.find((item) => {
-					return item.sksConvertionStudentId === data.user_id;
-				});
-
-				return (
-					<td key={index + "action"}>
-						<div>
-							<ButtonStyle
-								title="pilih"
-								color={isButtonActive ? "dark" : "light"}
-								onClick={() => {
-									handleSelectSksConvertion({
-										studentId: data.user_id,
-									});
-								}}
-							/>
-						</div>
-					</td>
-				);
-			},
-		},
-	];
-
-	const fecthData = async () => {
-		await fecthDetailMbkmProgram();
-		await fecthStudents();
-		setIsLoading(false);
+		navigate("/mbkm-programs");
 	};
 
 	useEffect(() => {
-		fecthData();
+		fecthDetailMbkmProgram();
+		fecthSemester();
 	}, []);
-
-	if (isLoading) return <p>loading...</p>;
 
 	return (
 		<div>
@@ -157,58 +64,61 @@ const MbkmProgramEditView = () => {
 				listPath={[
 					{
 						link: "/mbkm-programs",
-						title: "My Programs",
+						title: "MBKM Program",
 					},
 					{
-						link: "/mbkm-programs/detail/" + mbkmProgramId,
-						title: "Detail",
+						link: "/mbkm-programs/edit",
+						title: "Create",
 					},
 				]}
-				icon={BASE_MENU_ICON.MyProgramIcon}
+				icon={BASE_MENU_ICON.MbkmProgramIcon}
 			/>
-
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
-				<dl className="max-w-md text-gray-900 divide-y divide-gray-200">
-					<ListItemStyle
-						title="Nama"
-						description={mbkmProgram?.mbkmProgramName}
-					/>
-					<ListItemStyle
-						title="kategori program"
-						description={mbkmProgram?.mbkmProgramCategory}
-					/>
-					<ListItemStyle
-						title="Program Syllabus"
-						url={mbkmProgram?.mbkmProgramSyllabus}
-					/>
-				</dl>
-			</div>
-
-			<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
-				<div>
-					<div className="mb-2 block">
-						<Label htmlFor="sks" value="Konversi SKS" />
+				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+					<div>
+						<div className="mb-2 block">
+							<Label htmlFor="name" value="Nama" />
+						</div>
+						<TextInput
+							value={mbkmProgramName}
+							onChange={(e) => setMbkmProgramName(e.target.value)}
+							type="text"
+							placeholder="nama..."
+							required={true}
+						/>
 					</div>
-					<TextInput
-						min={0}
-						required
-						type="number"
-						onChange={(e) => setSksConvertionTotal(+e.target.value)}
-					/>
-				</div>
 
-				<div className="mb-2 block">
-					<Label value="Daftar Mahasiswa" />
-				</div>
-				<TableStyle header={header} table={listOfStudent} />
-				<div className="flex justify-end">
-					<ButtonStyle
-						title="Buat"
-						type="submit"
-						color="dark"
-						onClick={handleSubmit}
-					/>
-				</div>
+					<div id="select">
+						<div className="mb-2 block">
+							<Label
+								htmlFor="jenis program MBKM yang di ikuti"
+								value="jenis program MBKM yang di ikuti"
+							/>
+						</div>
+						<Select
+							onChange={(e) => setMbkmProgramCategory(e.target.value)}
+							required={true}
+						>
+							<option value={""}>pilih jenis program</option>
+							{listProgramType.map((name, index) => (
+								<option key={index} value={name}>
+									{name}
+								</option>
+							))}
+						</Select>
+					</div>
+
+					<div>
+						<div className="mb-2 block">
+							<Label htmlFor="file" value="upload syllabus" />
+						</div>
+						<ButtonUploadFile onUpload={setMbkmProgramSyllabus} />
+					</div>
+
+					<div className="flex justify-end">
+						<ButtonStyle title="Submit" type="submit" color="dark" />
+					</div>
+				</form>
 			</div>
 		</div>
 	);

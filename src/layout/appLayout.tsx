@@ -147,7 +147,7 @@ const AppLayout: React.FC = () => {
 						>
 							<span>
 								<p>
-									<span className="font-medium">Error! </span>
+									<span className="font-medium"></span>
 									{errorMessage.message}
 								</p>
 							</span>

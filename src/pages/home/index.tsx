@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ServiceHttp } from "../../services/api";
 import { SummariesTypes } from "../../models/summary.model";
+import { useHttp } from "../../hooks/useHttp";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
 
 const Home = () => {
-	const navigation = useNavigate();
-	const httpService = new ServiceHttp();
-
 	const [summaries, setSummaries] = useState<SummariesTypes>();
+	const navigation = useNavigate();
+	const { handleGetRequest } = useHttp();
+	const { currentUser }: AppContextTypes = useAppContext();
 
 	const fecthSummaries = async () => {
-		const result = await httpService.get({
+		const result = await handleGetRequest({
 			path: "/summaries",
 		});
-		console.log(result);
 		setSummaries(result);
 	};
 
@@ -29,7 +29,14 @@ const Home = () => {
 		<div>
 			<div className="flex flex-wrap">
 				<div
-					onClick={() => handleNavigate("/students")}
+					onClick={() => {
+						if (
+							currentUser.userRole === "academic" ||
+							currentUser.userRole === "lp3m"
+						) {
+							handleNavigate("/students");
+						}
+					}}
 					className="flex-col items-center cursor-pointer bg-cyan-500 border rounded-md shadow sm:mr-5 mb-5 p-2 w-full sm:w-64"
 				>
 					<h2 className="text-4xl mb-3 font-extrabold text-white">
@@ -38,7 +45,14 @@ const Home = () => {
 					<h1 className="text-white font-xl">mahasiswa</h1>
 				</div>
 				<div
-					onClick={() => handleNavigate("/study-programs")}
+					onClick={() => {
+						if (
+							currentUser.userRole === "academic" ||
+							currentUser.userRole === "lp3m"
+						) {
+							handleNavigate("/study-programs");
+						}
+					}}
 					className="flex-col cursor-pointer bg-emerald-500 border rounded-md shadow sm:mr-5 mb-5 p-2 w-full sm:w-64"
 				>
 					<h2 className="text-4xl mb-3 font-extrabold text-white">
@@ -47,7 +61,14 @@ const Home = () => {
 					<h1 className="text-white font-xl">Prodi</h1>
 				</div>
 				<div
-					onClick={() => handleNavigate("/mbkm-programs")}
+					onClick={() => {
+						if (
+							currentUser.userRole === "academic" ||
+							currentUser.userRole === "lp3m"
+						) {
+							handleNavigate("/mbkm-programs");
+						}
+					}}
 					className="cursor-pointer bg-amber-500 border rounded-lg shadow mb-5 p-2 sm:mr-5 w-full sm:w-64"
 				>
 					<h2 className="text-4xl mb-3 font-extrabold text-white">
