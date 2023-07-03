@@ -1,78 +1,51 @@
 import { ReactElement, useEffect, useState } from "react";
 import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { MbkmProgramTypes } from "../../models/mbkm-program";
 import { Modal, TextInput } from "flowbite-react";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { StudyProgramTypes } from "../../models/study-program";
-import { MbkmProgramProdiCreateRequestTypes } from "../../models/mbkm-program-prodi";
 import { MataKuliahTypes } from "../../models/mata-kuliah";
-import { TranskripCreateRequestTypes, TranskripTypes } from "../../models/transkrip";
-import { StudentTypes } from "../../models/student";
+import { useHttp } from "../../hooks/useHttp";
 
 interface ModalAddMataKuliahTypes {
 	onOpen: (item: boolean) => void;
 	isOpen: boolean;
-	student?: StudentTypes;
+	onSelect: (item: any) => void;
 }
 
-const ModalAddMataKuliah = ({ onOpen, isOpen, student }: ModalAddMataKuliahTypes) => {
+const ModalAddMataKuliah = ({ onOpen, isOpen, onSelect }: ModalAddMataKuliahTypes) => {
 	const [listOfMataKuliah, setListOfMataKuliah] = useState<any>();
-
-	const [mataKuliahSelected, setMataKuliahSelected] = useState<TranskripTypes>();
-
 	const [isLoading, setIsLoading] = useState(true);
-	const httpService = new ServiceHttp();
+	const [mataKuliahSelected, setMataKuliahSelected] = useState<MataKuliahTypes>();
+	const { handleGetTableDataRequest } = useHttp();
 
 	const handleSelectMataKuliah = (mataKuliah: MataKuliahTypes) => {
-		const newData: any = {
-			transkripStudentId: student?.studentId,
-			transkripMataKuliahId: mataKuliah.mataKuliahId,
-		};
-		setMataKuliahSelected(newData);
-
-		console.log(mataKuliahSelected);
-	};
-
-	const handleSubmit = async () => {
-		if (mataKuliahSelected) {
-			await httpService.post({
-				path: `/transkrip`,
-				body: mataKuliahSelected,
-			});
-		}
+		onSelect(mataKuliah);
+		setMataKuliahSelected(mataKuliah);
 		onOpen(false);
-		window.location.reload();
 	};
 
 	const fecthMataKuliah = async () => {
-		try {
-			const result = await httpService.getTableData({
-				url: CONFIG.base_url_api + `/mata-kuliah`,
-				pagination: true,
-				page: 0,
-				size: 10,
-				filters: {
-					search: "",
-				},
-			});
-
-			console.log(result);
-
-			setListOfMataKuliah({
-				link: `/mata-kuliah`,
-				data: result,
-				page: 0,
-				size: 10,
-				filter: {
-					search: "",
-				},
-			});
-		} catch (error: any) {
-			alert(error.message);
-		}
+		const result = await handleGetTableDataRequest({
+			path: `/mata-kuliah`,
+		});
+		setListOfMataKuliah({
+			link: `/mata-kuliah`,
+			data: result,
+			page: 0,
+			size: 10,
+			filter: {
+				search: "",
+			},
+		});
 	};
+
+	const fecthData = async () => {
+		await fecthMataKuliah();
+		setIsLoading(false);
+	};
+
+	useEffect(() => {
+		fecthData();
+	}, []);
 
 	const tableHeaderMataKuliah: TableHeader[] = [
 		{
@@ -106,9 +79,7 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, student }: ModalAddMataKuliahTypes
 			title: "Action",
 			action: true,
 			data: (data: MataKuliahTypes, index: number): ReactElement => {
-				const isActive =
-					data.mataKuliahId === mataKuliahSelected?.transkripMataKuliahId;
-				console.log(isActive);
+				const isActive = data.mataKuliahId === mataKuliahSelected?.mataKuliahId;
 				return (
 					<td key={index + "action"}>
 						<ButtonStyle
@@ -123,15 +94,6 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, student }: ModalAddMataKuliahTypes
 			},
 		},
 	];
-
-	const fecthData = async () => {
-		await fecthMataKuliah();
-		setIsLoading(false);
-	};
-
-	useEffect(() => {
-		fecthData();
-	}, []);
 
 	if (isLoading) return <p>loading...</p>;
 
@@ -160,14 +122,6 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, student }: ModalAddMataKuliahTypes
 					</div>
 				</div>
 				<TableStyle header={tableHeaderMataKuliah} table={listOfMataKuliah} />
-				<div className="flex justify-end">
-					<ButtonStyle
-						title="Tambahkan"
-						type="submit"
-						color="dark"
-						onClick={handleSubmit}
-					/>
-				</div>
 			</Modal.Body>
 		</Modal>
 	);

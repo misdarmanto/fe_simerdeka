@@ -1,19 +1,19 @@
 import AppRouters from "./routers";
 import { UserTypes } from "./models/user";
 import { useEffect, useState } from "react";
-import { ServiceHttp } from "./services/api";
 import { CONFIG } from "./configs";
 import { LIST_USER } from "./data/users";
 import { useAppContext } from "./context/app.context";
+import { useHttp } from "./hooks/useHttp";
 
 export default function App() {
 	const [isLoading, setIsLoading] = useState(true);
+	const { handleGetRequest } = useHttp();
 
-	const { appRole, setAppRole, setCurrentUser } = useAppContext();
+	const { appRole, setAppRole, setCurrentUser, setCurrentStudent } = useAppContext();
 
 	const fecthCurrentUser = async () => {
-		const serviceHttp = new ServiceHttp();
-		const result = await serviceHttp.get({
+		const result = await handleGetRequest({
 			path: "/users",
 		});
 		setCurrentUser(result);

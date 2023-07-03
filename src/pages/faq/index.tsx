@@ -25,7 +25,7 @@ const faqList = [
 
 const FaQ = () => {
 	return (
-		<div className="bg-white border border-gray-200 rounded-lg shadow m-5 p-8">
+		<div className="bg-white border border-gray-200 rounded-lg shadow sp-8">
 			<Accordion>
 				{faqList.map((item, index) => (
 					<Accordion.Panel key={index}>

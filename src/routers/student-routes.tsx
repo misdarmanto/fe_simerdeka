@@ -1,6 +1,5 @@
 import Home from "../pages/home";
 import FaQ from "../pages/faq";
-import MbkmProgramStudentMyProgramView from "../pages/mbkm-program-student/my-mbkm-program";
 import ReportParticipationListView from "../pages/report-participation/list-report-participation";
 import ReportParicipationCreateView from "../pages/report-participation/create-report-participation";
 import ReportParicipationDetailView from "../pages/report-participation/detail-report-participation";
@@ -9,6 +8,8 @@ import LogBookDetailView from "../pages/log-book/detail-log-book";
 import RecomendationLetterCreate from "../pages/recomendation-letter/create-recomendation-letter";
 import RecomendationLetterDetail from "../pages/recomendation-letter/detail-detail-recomendation-letter";
 import RecomendationLetterList from "../pages/recomendation-letter/list-recomendation-letter";
+import MyMbkmProgramVies from "../pages/my-mbkm-program/my-mbkm-programs";
+import TranskripDetailView from "../pages/transkrip/transkrip-detail";
 
 export const studentRouters = [
 	{
@@ -18,12 +19,6 @@ export const studentRouters = [
 	{
 		path: "/faq",
 		element: <FaQ />,
-	},
-
-	//student program
-	{
-		path: "/mbkm-programs/students",
-		element: <MbkmProgramStudentMyProgramView />,
 	},
 
 	//report participation
@@ -41,6 +36,17 @@ export const studentRouters = [
 		element: <ReportParicipationDetailView />,
 	},
 
+	//my program
+	{
+		path: "/my-mbkm-program",
+		element: <MyMbkmProgramVies />,
+	},
+
+	//transkrip
+	{
+		path: "/transkrip",
+		element: <TranskripDetailView />,
+	},
 	//log books
 
 	{

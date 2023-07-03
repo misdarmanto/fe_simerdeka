@@ -3,24 +3,17 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { Link } from "react-router-dom";
 import { ReactElement, useEffect, useState } from "react";
-import { CONFIG } from "../../configs";
-import { ServiceHttp } from "../../services/api";
 import { StudentTypes } from "../../models/student";
+import { useHttp } from "../../hooks/useHttp";
 
 const StudentListView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
+	const { handleGetTableDataRequest } = useHttp();
 
 	const fecthStudents = async () => {
-		const httpService = new ServiceHttp();
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/students",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
+		const result = await handleGetTableDataRequest({
+			path: "/students",
 		});
 
 		setListOfStudent({
@@ -101,14 +94,6 @@ const StudentListView = () => {
 			),
 		},
 		{
-			title: "sks",
-			data: (data: StudentTypes, index: number): ReactElement => (
-				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.studentSksTotal || "_"}
-				</td>
-			),
-		},
-		{
 			title: "Action",
 			action: true,
 			data: (data: StudentTypes, index: number): ReactElement => (
@@ -126,7 +111,7 @@ const StudentListView = () => {
 	if (isLoading) return <div>loading...</div>;
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{
@@ -161,7 +146,6 @@ const StudentListView = () => {
 					<TextInput type="text" placeholder="search..." />
 				</div>
 			</div>
-
 			<TableStyle header={header} table={listOfStudent} />
 		</div>
 	);

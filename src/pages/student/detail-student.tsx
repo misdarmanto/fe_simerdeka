@@ -1,26 +1,36 @@
 import { ReactElement, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import ListItemStyle from "../../components/list";
 import { StudentTypes } from "../../models/student";
-import { MbkmProgramTypes } from "../../models/mbkm-program";
-import { Alert, Label, TextInput } from "flowbite-react";
-import { FiAlertTriangle } from "react-icons/fi";
+import { Label, TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { CONFIG } from "../../configs";
-import ModalAddMataKuliah from "./modal-add-mata-kuliahi";
-import { MataKuliahTypes } from "../../models/mata-kuliah";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { TranskripTypes } from "../../models/transkrip";
+import ModalStyle from "../../components/modal";
+
+interface SksConvertionTypes {
+	mataKuliah: {
+		mataKuliahName: string;
+		mataKuliahSksTotal: number;
+	};
+	transkripId: string;
+	transkripMataKuliahGrade: number;
+}
 
 const StudentDetailView = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const { studentId } = useParams();
 	const [studentDetails, setStudentDetails] = useState<StudentTypes>();
-	const httpService = new ServiceHttp();
 	const [listOfMataKuliahTranskrip, setListOfMataKuliahTranskrip] = useState<any>();
-	const [openModalAddMataKuliah, setOpenModalAddMataKuliah] = useState(false);
 	const [openModalDelete, setOpenModalDelete] = useState(false);
-	const [modalDeleteData, setModalDeleteData] = useState<MataKuliahTypes>();
+	const [modalDeleteData, setModalDeleteData] = useState<TranskripTypes>();
+	const { currentUser }: AppContextTypes = useAppContext();
+	const navigate = useNavigate();
+
+	const { handleGetRequest, handleGetTableDataRequest, handleRemoveRequest } =
+		useHttp();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);
@@ -30,34 +40,32 @@ const StudentDetailView = () => {
 		setModalDeleteData(item);
 	};
 
-	const fecthMataKuliahTranskrip = async () => {
-		try {
-			const result = await httpService.getTableData({
-				url: CONFIG.base_url_api + `/transkrip`,
-				pagination: true,
-				page: 0,
-				size: 10,
-				filters: {
-					search: "",
-				},
-			});
+	const handleDeleteMbkmProgram = async () => {
+		await handleRemoveRequest({
+			path: `/transkrip?id=${modalDeleteData?.transkripId}`,
+		});
+		setOpenModalDelete(false);
+		window.location.reload();
+	};
 
-			setListOfMataKuliahTranskrip({
-				link: `/transkrip`,
-				data: result,
-				page: 0,
-				size: 10,
-				filter: {
-					search: "",
-				},
-			});
-		} catch (error: any) {
-			console.log(error.message);
-		}
+	const fecthMataKuliahTranskrip = async () => {
+		const result = await handleGetTableDataRequest({
+			path: `/transkrip`,
+		});
+
+		setListOfMataKuliahTranskrip({
+			link: `/transkrip`,
+			data: result,
+			page: 0,
+			size: 10,
+			filter: {
+				search: "",
+			},
+		});
 	};
 
 	const fecthDetailStudent = async () => {
-		const result = await httpService.get({
+		const result = await handleGetRequest({
 			path: `/students/detail/${studentId}`,
 		});
 		setStudentDetails(result);
@@ -78,7 +86,7 @@ const StudentDetailView = () => {
 	const tableHeaderMataKuliah: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: MataKuliahTypes, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -87,26 +95,37 @@ const StudentDetailView = () => {
 
 		{
 			title: "Nama",
-			data: (data: MataKuliahTypes, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mataKuliahName}
+					{data.mataKuliah.mataKuliahName}
 				</td>
 			),
 		},
 
 		{
 			title: "total sks",
-			data: (data: MataKuliahTypes, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.mataKuliahSksTotal}
+					{data.mataKuliah.mataKuliahSksTotal || "_"}
 				</td>
 			),
 		},
 
 		{
+			title: "Nilai",
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
+				<td key={index + "nilai"} className="md:px-6 md:py-3 break-all">
+					{data.transkripMataKuliahGrade || "T"}
+				</td>
+			),
+		},
+	];
+
+	if (currentUser.userRole === "studyProgram" && studentDetails?.mbkmProgram) {
+		tableHeaderMataKuliah.push({
 			title: "Action",
 			action: true,
-			data: (data: MataKuliahTypes, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<ButtonStyle
 						title="Hapus"
@@ -120,11 +139,11 @@ const StudentDetailView = () => {
 					/>
 				</td>
 			),
-		},
-	];
+		});
+	}
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{
@@ -140,98 +159,94 @@ const StudentDetailView = () => {
 			/>
 
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
-				{studentDetails ? (
-					<div className="sm:flex justify-between gap-5">
-						<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
-							<ListItemStyle
-								title="Nama"
-								description={studentDetails?.studentName}
-							/>
-							<ListItemStyle
-								title="NIM"
-								description={studentDetails?.studentNim}
-							/>
-							<ListItemStyle
-								title="Prodi"
-								description={studentDetails?.studentStudyProgramName}
-							/>
-							<ListItemStyle
-								title="Jurusan"
-								description={studentDetails?.studentDepartmentName}
-							/>
-						</dl>
-
-						<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
-							<ListItemStyle
-								title="Program MBKM"
-								description={studentDetails?.mbkmProgram?.mbkmProgramName}
-							/>
-							<ListItemStyle
-								title="Kategori Program MBKM"
-								description={
-									studentDetails?.mbkmProgram?.mbkmProgramCategory
-								}
-							/>
-							<ListItemStyle
-								title="Total Konversi SKS"
-								description={studentDetails?.studentSksTotal + "" || "_"}
-							/>
-							<ListItemStyle
-								title="Silabus"
-								url={studentDetails?.mbkmProgram?.mbkmProgramSyllabus}
-							/>
-						</dl>
-					</div>
-				) : (
-					<Alert color="failure" icon={FiAlertTriangle}>
-						<span>
-							<h1> Sedang Menunggu Konversi SKS!</h1>
-						</span>
-					</Alert>
-				)}
-			</div>
-
-			<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
-				<div className="mb-2 block">
-					<Label value="Daftar Mata Kuliah" />
-				</div>
-				<div className="flex flex-col md:flex-row justify-between md:px-0">
-					<div className="flex items-center justify-between">
-						<div className="mr-2 flex flex-row justify-between md:justify-start">
-							<select
-								name="size"
-								defaultValue={10}
-								className="block w-32 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
-							>
-								<option value="2">2</option>
-								<option value="5">5</option>
-								<option value="10">10</option>
-								<option value="50">50</option>
-								<option value="100">100</option>
-							</select>
-						</div>
-						<ButtonStyle
-							title="Tambah Mata Kuliah"
-							color="light"
-							onClick={() => setOpenModalAddMataKuliah(true)}
+				<div className="sm:flex justify-between gap-5">
+					<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
+						<ListItemStyle
+							title="Nama"
+							description={studentDetails?.studentName}
 						/>
-					</div>
-					<div className="mt-1 w-full md:w-1/5">
-						<TextInput type="text" placeholder="search..." />
-					</div>
+						<ListItemStyle
+							title="NIM"
+							description={studentDetails?.studentNim}
+						/>
+						<ListItemStyle
+							title="Prodi"
+							description={studentDetails?.studentStudyProgramName}
+						/>
+						<ListItemStyle
+							title="Jurusan"
+							description={studentDetails?.studentDepartmentName}
+						/>
+					</dl>
+
+					<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
+						<ListItemStyle
+							title="Program MBKM"
+							description={studentDetails?.mbkmProgram?.mbkmProgramName}
+						/>
+						<ListItemStyle
+							title="Kategori Program MBKM"
+							description={studentDetails?.mbkmProgram?.mbkmProgramCategory}
+						/>
+						<ListItemStyle
+							title="Silabus"
+							url={studentDetails?.mbkmProgram?.mbkmProgramSyllabus}
+						/>
+					</dl>
 				</div>
-
-				<TableStyle
-					header={tableHeaderMataKuliah}
-					table={listOfMataKuliahTranskrip}
-				/>
-
-				<ModalAddMataKuliah
-					student={studentDetails}
-					isOpen={openModalAddMataKuliah}
-					onOpen={setOpenModalAddMataKuliah}
-				/>
 			</div>
+
+			{studentDetails?.mbkmProgram && (
+				<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
+					<div className="mb-2 block">
+						<Label value={"Transkrip Nilai"} />
+					</div>
+					{currentUser.userRole === "studyProgram" && (
+						<div className="flex flex-col md:flex-row justify-between md:px-0">
+							<div className="flex items-center justify-between">
+								<div className="mr-2 flex flex-row justify-between md:justify-start">
+									<select
+										name="size"
+										defaultValue={10}
+										className="block w-32 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-sm"
+									>
+										<option value="2">2</option>
+										<option value="5">5</option>
+										<option value="10">10</option>
+										<option value="50">50</option>
+										<option value="100">100</option>
+									</select>
+								</div>
+								<ButtonStyle
+									title="Tambah Mata Kuliah"
+									color="light"
+									onClick={() =>
+										navigate(
+											`/students/detail/${studentId}/create-sks-convertion`
+										)
+									}
+								/>
+							</div>
+							<div className="mt-1 w-full md:w-1/5">
+								<TextInput type="text" placeholder="search..." />
+							</div>
+						</div>
+					)}
+
+					<TableStyle
+						header={tableHeaderMataKuliah}
+						table={listOfMataKuliahTranskrip}
+					/>
+
+					<ModalStyle
+						onBtnNoClick={handleModalDelete}
+						title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.mataKuliah.mataKuliahName}`}
+						isOpen={openModalDelete}
+						onBtnYesClick={handleDeleteMbkmProgram}
+						onOpen={handleModalDelete}
+					/>
+				</div>
+			)}
 		</div>
 	);
 };

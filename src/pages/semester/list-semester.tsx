@@ -131,7 +131,7 @@ const SemesterListView = () => {
 							<ButtonStyle title="Detail" size="xs" color="light" />
 						</Link>
 						<ButtonStyle
-							title="Hapus"
+							title="Edit"
 							size="xs"
 							color="failure"
 							className="mx-2"
@@ -149,7 +149,7 @@ const SemesterListView = () => {
 	if (isLoading) return <div>loading...</div>;
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{

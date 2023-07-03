@@ -5,9 +5,11 @@ import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { ReportParticipationTypes } from "../../models/report-participation";
 import FileUploadButton from "../../components/button/button-upload";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
 
 const ReportParicipationCreateView = () => {
 	const [reportParticipationFile, setReportParticipationFile] = useState<string>("");
+	const { setErrorMessage }: AppContextTypes = useAppContext();
 
 	const navigate = useNavigate();
 
@@ -24,12 +26,13 @@ const ReportParicipationCreateView = () => {
 			});
 			navigate("/report-participations");
 		} catch (error: any) {
+			setErrorMessage({ isError: true, message: error.message });
 			console.error(error.message);
 		}
 	};
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{

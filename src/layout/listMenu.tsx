@@ -6,7 +6,7 @@ import {
 	AiOutlineHome,
 	AiOutlineSearch,
 } from "react-icons/ai";
-import { BiBookOpen, BiUser } from "react-icons/bi";
+import { BiBookOpen, BiTask } from "react-icons/bi";
 import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
 import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
@@ -23,9 +23,15 @@ const RecomendationLetterMenu = {
 	icon: <AiOutlineAudit fontSize={20} />,
 };
 
-const MBKMProgramStudentMenu = {
+const TranskripMenu = {
+	title: "Transkrip",
+	path: `/transkrip`,
+	icon: <BiTask fontSize={20} />,
+};
+
+const MyMbkmProgramMenu = {
 	title: "Program Saya",
-	path: `/mbkm-programs/students`,
+	path: `/my-mbkm-program`,
 	icon: <AiOutlineFolderOpen fontSize={20} />,
 };
 
@@ -33,13 +39,6 @@ const MBKMProgramMenu = {
 	title: "Program MBKM",
 	path: "/mbkm-programs",
 	icon: <AiOutlineFolderOpen fontSize={20} />,
-	child: [
-		{
-			title: "Program MBKM",
-			path: "/mbkm-programs",
-			icon: <AiOutlineFolderOpen fontSize={20} />,
-		},
-	],
 };
 
 const MBKMProgramProdiMenu = {
@@ -90,12 +89,6 @@ const MataKuliahMenu = {
 	icon: <BiBookOpen fontSize={20} />,
 };
 
-const ManageUserMenu = {
-	title: "Manage User",
-	path: "/manage-users",
-	icon: <BiUser fontSize={20} />,
-};
-
 const LogActivityMenu = {
 	title: "Log aktifitas",
 	path: "/log-activities",
@@ -109,8 +102,8 @@ const FaQMenu = {
 };
 
 export const studentMenus = {
-	persiapan: [HomeMenu, ReportParticipationMenu, RecomendationLetterMenu],
-	pelaksanaan: [MBKMProgramStudentMenu],
+	persiapan: [HomeMenu, MyMbkmProgramMenu, TranskripMenu],
+	pelaksanaan: [ReportParticipationMenu, RecomendationLetterMenu],
 	akhir: [MBKMLogBookMenu, FaQMenu],
 };
 

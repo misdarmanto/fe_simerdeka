@@ -4,33 +4,29 @@ import { useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { MataKuliahCreateRequestTypes } from "../../models/mata-kuliah";
+import { useHttp } from "../../hooks/useHttp";
 
 const MataKuliahCreateView = () => {
 	const [mataKuliahName, setMataKuliahName] = useState("");
 	const [mataKuliahSksTotal, setMataKuliahSksTotal] = useState<number>(0);
 	const navigate = useNavigate();
+	const { handlePostRequest } = useHttp();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		try {
-			const data: MataKuliahCreateRequestTypes = {
-				mataKuliahName,
-				mataKuliahSksTotal,
-			};
-
-			const httpService = new ServiceHttp();
-			await httpService.post({
-				path: "/mata-kuliah",
-				body: data,
-			});
-			navigate("/mata-kuliah");
-		} catch (error: any) {
-			console.error(error.message);
-		}
+		const data: MataKuliahCreateRequestTypes = {
+			mataKuliahName,
+			mataKuliahSksTotal,
+		};
+		await handlePostRequest({
+			path: "/mata-kuliah",
+			body: data,
+		});
+		navigate("/mata-kuliah");
 	};
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{

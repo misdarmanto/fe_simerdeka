@@ -13,7 +13,6 @@ export interface StudentTypes {
 	studentStudyProgramName?: string;
 	studentMbkmProgramId?: string | null;
 	studentTranskripId?: string;
-	studentSksTotal?: number;
 	transkrip?: TranskripTypes[];
 	mbkmProgram?: MbkmProgramTypes;
 }

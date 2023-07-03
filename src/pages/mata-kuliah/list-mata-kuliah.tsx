@@ -3,50 +3,43 @@ import { ReactElement, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import ModalStyle from "../../components/modal";
-import { UserTypes } from "../../models/user";
-import { LogBookTypes } from "../../models/log-book";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { MataKuliahTypes } from "../../models/mata-kuliah";
 
 const MataKuliahListView = () => {
 	const [listMataKuliah, setListMataKuliah] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { currentUser } = useAppContext();
-	const user: UserTypes = currentUser;
+	const { currentUser, errorMessage }: AppContextTypes = useAppContext();
 	const navigate = useNavigate();
-	const httpService = new ServiceHttp();
+	const { handleGetTableDataRequest, handleRemoveRequest } = useHttp();
 
 	const [openModalDelete, setOpenModalDelete] = useState(false);
-	const [modalDeleteData, setModalDeleteData] = useState<LogBookTypes>();
+	const [modalDeleteData, setModalDeleteData] = useState<MataKuliahTypes>();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);
 	};
 
-	const handleModaDataSelected = (item: LogBookTypes) => {
+	const handleModaDataSelected = (item: MataKuliahTypes) => {
 		setModalDeleteData(item);
 	};
 
 	const handleDeleteMataKuliah = async () => {
-		await httpService.remove({
-			path: `/log-books?log-book-id=${modalDeleteData?.logBookId}`,
+		await handleRemoveRequest({
+			path: `/mata-kuliah?mataKuliahId=${modalDeleteData?.mataKuliahId}`,
 		});
+
+		if (errorMessage.isError) return;
 		setOpenModalDelete(false);
 		window.location.reload();
 	};
 
 	const fecthData = async () => {
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/mata-kuliah",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
+		const result = await handleGetTableDataRequest({
+			path: "/mata-kuliah",
 		});
 
 		setListMataKuliah({
@@ -98,7 +91,7 @@ const MataKuliahListView = () => {
 			data: (data: any, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex items-center">
-						{user.userRole === "studyProgram" && (
+						{currentUser.userRole === "studyProgram" && (
 							<ButtonStyle
 								title="Hapus"
 								size="xs"
@@ -119,7 +112,7 @@ const MataKuliahListView = () => {
 	if (isLoading) return <div>loading...</div>;
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{
@@ -150,7 +143,7 @@ const MataKuliahListView = () => {
 						</select>
 					</div>
 
-					{user.userRole === "studyProgram" && (
+					{currentUser.userRole === "studyProgram" && (
 						<ButtonStyle
 							title="Create"
 							color="light"
@@ -165,7 +158,7 @@ const MataKuliahListView = () => {
 
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus mata kuliah ${modalDeleteData?.logBookReportWeek}?`}
+				title={`Apakah anda yakin ingin menghapus mata kuliah ${modalDeleteData?.mataKuliahName}?`}
 				isOpen={openModalDelete}
 				onBtnYesClick={handleDeleteMataKuliah}
 				onOpen={handleModalDelete}

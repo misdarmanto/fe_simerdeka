@@ -6,7 +6,6 @@ import MataKuliahCreateView from "../pages/mata-kuliah/mata-kuliah-create";
 import MataKuliahListView from "../pages/mata-kuliah/list-mata-kuliah";
 import MbkmProgramProdiDetailView from "../pages/mbkm-program-prodi/detail-mbkm-program-prodi";
 import MbkmProgramProdiListView from "../pages/mbkm-program-prodi/list-mbkm-program-prodi";
-import MbkmProgramStudentMyProgramView from "../pages/mbkm-program-student/my-mbkm-program";
 import MbkmProgramCreatView from "../pages/mbkm-program/create-mbkm-program";
 import MbkmProgramDetailView from "../pages/mbkm-program/detail-mbkm-program";
 import MbkmProgramEditView from "../pages/mbkm-program/edit-mbkm-program";
@@ -19,7 +18,8 @@ import ReportParicipationDetailView from "../pages/report-participation/detail-r
 import ReportParticipationListView from "../pages/report-participation/list-report-participation";
 import StudentDetailView from "../pages/student/detail-student";
 import StudentListView from "../pages/student/list-student";
-import StudyProgramListView from "../pages/study-program";
+import StudyProgramListView from "../pages/study-program/list-study-program";
+import StudyProgramDetailView from "../pages/study-program/detail-study-program";
 
 export const departmentRouters = [
 	{
@@ -58,12 +58,6 @@ export const departmentRouters = [
 	{
 		path: "/mbkm-programs/prodi/detail/:mbkmProgramId",
 		element: <MbkmProgramProdiDetailView />,
-	},
-
-	//student program
-	{
-		path: "/mbkm-programs/students/:studentId",
-		element: <MbkmProgramStudentMyProgramView />,
 	},
 
 	//report participation
@@ -134,5 +128,9 @@ export const departmentRouters = [
 	{
 		path: "/study-programs",
 		element: <StudyProgramListView />,
+	},
+	{
+		path: "/study-programs/detail/:studyProgramId",
+		element: <StudyProgramDetailView />,
 	},
 ];

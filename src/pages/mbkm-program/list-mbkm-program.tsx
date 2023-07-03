@@ -14,7 +14,6 @@ import { useAppContext } from "../../context/app.context";
 
 const MbkmProgramListView = () => {
 	const navigate = useNavigate();
-
 	const [listMbkmProgram, setListMbkmProgram] = useState<any>();
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
 	const [semesterId, setSemesterId] = useState<string>("all");
@@ -36,7 +35,6 @@ const MbkmProgramListView = () => {
 	};
 
 	const handleDeleteMbkmProgram = async () => {
-		console.log(modalDeleteData);
 		await httpService.remove({
 			path: `/mbkm-programs?mbkm_program_id=${modalDeleteData?.mbkmProgramId}`,
 		});
@@ -66,9 +64,6 @@ const MbkmProgramListView = () => {
 			size: 10,
 			filters,
 		});
-
-		console.log(result);
-
 		setIsLoading(false);
 	};
 
@@ -106,21 +101,21 @@ const MbkmProgramListView = () => {
 		},
 
 		{
-			title: "Jenis Program",
+			title: "Kategori",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
-					{data.mbkmProgramCategory.length > 10
-						? data.mbkmProgramCategory.slice(0, 10) + "....."
-						: data.mbkmProgramCategory}
+					{data.mbkmProgramCategory}
 				</td>
 			),
 		},
 
 		{
-			title: "Semester",
+			title: "Silabus",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
-				<td key={index + "semester"} className="md:px-6 md:py-3 break-all">
-					{data.semester.semesterName}
+				<td key={index + "silabus"} className="md:px-6 md:py-3 break-all">
+					<a href={data.mbkmProgramSyllabus} target="blank">
+						<ButtonStyle color="light" title={`Lihat file`} />
+					</a>
 				</td>
 			),
 		},
@@ -131,22 +126,13 @@ const MbkmProgramListView = () => {
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex">
-						<Link to={`/mbkm-programs/detail/${data.mbkmProgramId}`}>
-							<ButtonStyle
-								title="Detail"
-								size="xs"
-								color="light"
-								className="mx-1"
-							/>
-						</Link>
 						<ButtonStyle
-							title="Hapus"
+							title="edit"
 							size="xs"
 							color="failure"
 							className="mx-2"
 							onClick={() => {
-								handleModalDelete();
-								handleModaDataSelected(data);
+								navigate(`/mbkm-programs/edit/${data.mbkmProgramId}`);
 							}}
 						/>
 					</div>
@@ -158,7 +144,7 @@ const MbkmProgramListView = () => {
 	if (isLoading) return <div>loading...</div>;
 
 	return (
-		<div className="m-5">
+		<div>
 			<BreadcrumbStyle
 				listPath={[
 					{
@@ -200,7 +186,7 @@ const MbkmProgramListView = () => {
 						onChange={(e) => setSemesterId(e.target.value)}
 						className="mx-2"
 					>
-						<option value={"all"}>semua semester</option>
+						<option value={"all"}>semester saat ini</option>
 						{listOfSemester.map((semester: any, index) => (
 							<option key={index} value={semester.semesterId}>
 								{semester.semester_name}
