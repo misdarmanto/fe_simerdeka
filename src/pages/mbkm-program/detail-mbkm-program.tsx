@@ -34,7 +34,6 @@ const MbkmProgramDetailView = () => {
 	};
 
 	const handleDeleteMbkmProgramParticipation = async () => {
-		console.log(modalDeleteData);
 		await httpService.remove({
 			path: `/mbkm-programs/prodi?id=${modalDeleteData?.mbkmProgramProdiId}`,
 		});

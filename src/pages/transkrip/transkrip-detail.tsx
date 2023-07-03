@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
+import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { useHttp } from "../../hooks/useHttp";
 import { Label } from "flowbite-react";
@@ -97,8 +97,9 @@ const TranskripDetailView = () => {
 			/>
 
 			<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
-				<div className="mb-2 block">
+				<div className="mb-2 flex justify-between">
 					<Label value="Transkrip Nilai" />
+					<ButtonStyle title="Download" color="light" />
 				</div>
 				<TableStyle
 					header={tableHeaderMataKuliah}
