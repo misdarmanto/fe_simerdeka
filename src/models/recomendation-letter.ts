@@ -4,12 +4,14 @@ export interface RecomendationLetterTypes {
 	recomendationLetterId: string;
 	recomendationLetterStudentTranskrip: string;
 	recomendationLetterDosenWali: string;
+	recomendationLetterSyllabus: string;
 	recomendationLetterApprovalLetter: string;
 	recomendationLetterFromStudyProgram: string;
 	recomendationLetterFromDepartment: string;
 	recomendationLetterFromLp3m: string;
 	recomendationLetterFromAcademic: string;
 	recomendationLetterProgramName: string;
+	recomendationLetterProgramDescription: string;
 	recomendationLetterProgramCorrelation: string;
 	recomendationLetterStatus: "waiting" | "accepted" | "rejected";
 	recomendationLetterStatusMessage: string;
@@ -27,8 +29,10 @@ export interface RecomendationLetterTypes {
 export interface RecomendationLetterCreateRequestTypes {
 	recomendationLetterStudentTranskrip: string;
 	recomendationLetterDosenWali: string;
+	recomendationLetterSyllabus: string;
 	recomendationLetterApprovalLetter: string;
 	recomendationLetterProgramName: string;
+	recomendationLetterProgramDescription: string;
 	recomendationLetterProgramCorrelation: string;
 }
 

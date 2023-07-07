@@ -92,7 +92,7 @@ const RecomendationLetterList = () => {
 		},
 
 		{
-			title: "Status",
+			title: "di teruskan ke",
 			data: (data: RecomendationLetterTypes, index: number): ReactElement => {
 				if (data.recomendationLetterStatus === "rejected") {
 					return (
@@ -103,6 +103,7 @@ const RecomendationLetterList = () => {
 						</td>
 					);
 				}
+
 				if (data.recomendationLetterStatus === "accepted") {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
@@ -112,19 +113,6 @@ const RecomendationLetterList = () => {
 						</td>
 					);
 				}
-				return (
-					<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
-						<Badge color="warning" className="w-20 text-center">
-							menunggu
-						</Badge>
-					</td>
-				);
-			},
-		},
-
-		{
-			title: "di teruskan ke",
-			data: (data: RecomendationLetterTypes, index: number): ReactElement => {
 				if (data.recomendationLetterAssignToAcademic) {
 					return (
 						<td key={index + "s"} className="md:px-6 md:py-3 break-all ">

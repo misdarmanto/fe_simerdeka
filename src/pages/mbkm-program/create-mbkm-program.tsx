@@ -7,18 +7,20 @@ import { listProgramType } from "../../data/program-type";
 import { MbkmProgramCreateTypes } from "../../models/mbkm-program";
 import { SemesterTypes } from "../../models/semester";
 import ButtonUploadFile from "../../components/button/button-upload";
+import { useHttp } from "../../hooks/useHttp";
 
 const MbkmProgramCreatView = () => {
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
 	const [mbkmProgramSyllabus, setMbkmProgramSyllabus] = useState("");
 	const [mbkmProgramName, setMbkmProgramName] = useState("");
 	const [mbkmProgramCategory, setMbkmProgramCategory] = useState("");
+	const { handleGetRequest } = useHttp();
 
 	const navigate = useNavigate();
 	const httpService = new ServiceHttp();
 
 	const fecthSemester = async () => {
-		const result = await httpService.get({
+		const result = await handleGetRequest({
 			path: "/semesters?semester_status=active",
 		});
 		if (result) {
