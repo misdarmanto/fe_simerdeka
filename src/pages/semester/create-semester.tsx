@@ -2,16 +2,17 @@ import { Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { SemesterTypes } from "../../models/semester";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const SemesterCreateView = () => {
 	const [semesterName, setSemesterName] = useState<string>("");
 	const [semesterStatus, setSemesterStatus] = useState<string>("active");
-	const { currentUser } = useAppContext();
-
+	const { currentUser }: AppContextTypes = useAppContext();
 	const navigate = useNavigate();
+	const { handlePostRequest } = useHttp();
 
 	const handleSelectSemester = (status: string) => {
 		setSemesterStatus(status);
@@ -19,22 +20,18 @@ const SemesterCreateView = () => {
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		try {
-			const data: SemesterTypes = {
-				semesterName: semesterName,
-				semesterCreatedBy: currentUser.userRole,
-				semesterStatus: semesterStatus,
-			};
 
-			const httpService = new ServiceHttp();
-			await httpService.post({
-				path: "/semesters",
-				body: data,
-			});
-			navigate("/semesters");
-		} catch (error: any) {
-			console.error(error.message);
-		}
+		const payload: SemesterTypes = {
+			semesterName: semesterName,
+			semesterCreatedBy: currentUser.userRole,
+			semesterStatus: semesterStatus,
+		};
+
+		await handlePostRequest({
+			path: apiUrlPath.semesters.post,
+			body: payload,
+		});
+		navigate("/semesters");
 	};
 
 	return (

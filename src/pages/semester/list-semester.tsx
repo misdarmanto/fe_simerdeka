@@ -1,14 +1,14 @@
 import { Badge, TextInput } from "flowbite-react";
-import { ReactElement, useContext, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { converDateTimeFromDB } from "../../utils/convert";
 import ModalStyle from "../../components/modal";
 import { SemesterTypes } from "../../models/semester";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const SemesterListView = () => {
 	const [listSemester, setListSemester] = useState<any>();
@@ -16,7 +16,7 @@ const SemesterListView = () => {
 	const navigate = useNavigate();
 	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [modalDeleteData, setModalDeleteData] = useState<SemesterTypes>();
-	const httpService = new ServiceHttp();
+	const { handleRemoveRequest, handleGetTableDataRequest } = useHttp();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);
@@ -27,22 +27,16 @@ const SemesterListView = () => {
 	};
 
 	const handleDeleteSemester = async () => {
-		await httpService.remove({
-			path: `/semesters?semester_id=${modalDeleteData?.semesterId}`,
+		await handleRemoveRequest({
+			path: `${apiUrlPath.semesters.delete}?semester_id=${modalDeleteData?.semesterId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
 	};
 
 	const fecthData = async () => {
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/semesters",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
+		const result = await handleGetTableDataRequest({
+			path: apiUrlPath.semesters.get,
 		});
 
 		setListSemester({

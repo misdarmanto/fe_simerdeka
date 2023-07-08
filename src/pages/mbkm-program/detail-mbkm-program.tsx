@@ -10,20 +10,21 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import ModalSelectStudyProgram from "./modal-add-study-program";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 import ModalStyle from "../../components/modal";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const MbkmProgramDetailView = () => {
 	const [listOfStudyProgramRegistered, setListOfStudyProgramRegistered] =
 		useState<any>();
 	const [mbkmProgram, setMbkmProgram] = useState<MbkmProgramTypes>();
-
 	const [openModalSelectStudyProgram, setOpenModalSelectStudyProgram] = useState(false);
+	const [openModalDelete, setOpenModalDelete] = useState(false);
+	const [modalDeleteData, setModalDeleteData] = useState<MbkmProgramProdiTypes>();
 
 	const [isLoading, setIsLoading] = useState(true);
 	const { mbkmProgramId } = useParams();
-	const httpService = new ServiceHttp();
-
-	const [openModalDelete, setOpenModalDelete] = useState(false);
-	const [modalDeleteData, setModalDeleteData] = useState<MbkmProgramProdiTypes>();
+	const { handleGetRequest, handleRemoveRequest, handleGetTableDataRequest } =
+		useHttp();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);
@@ -34,38 +35,27 @@ const MbkmProgramDetailView = () => {
 	};
 
 	const handleDeleteMbkmProgramParticipation = async () => {
-		await httpService.remove({
-			path: `/mbkm-programs/prodi?id=${modalDeleteData?.mbkmProgramProdiId}`,
+		await handleRemoveRequest({
+			path: `${apiUrlPath.mbkmProgramProdi}?id=${modalDeleteData?.mbkmProgramProdiId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
 	};
 
 	const fecthDetailMbkmProgram = async () => {
-		const result = await httpService.get({
-			path: `/mbkm-programs/detail/${mbkmProgramId}`,
+		const result = await handleGetRequest({
+			path: `${apiUrlPath.mbkmPrograms}/detail/${mbkmProgramId}`,
 		});
 		setMbkmProgram(result);
 	};
 
 	const fecthStudyPrograms = async () => {
-		const httpService = new ServiceHttp();
-		const result = await httpService.getTableData({
-			url:
-				CONFIG.base_url_api +
-				`/mbkm-programs/prodi?program_id=${mbkmProgramId}&&`,
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
+		const result = await handleGetTableDataRequest({
+			path: `${apiUrlPath.mbkmProgramProdi}?program_id=${mbkmProgramId}&&`,
 		});
 
-		console.log(result);
-
 		setListOfStudyProgramRegistered({
-			link: `/mbkm-programs/prodi?program_id=${mbkmProgramId}&&`,
+			link: `${apiUrlPath.mbkmProgramProdi}?program_id=${mbkmProgramId}&&`,
 			data: result,
 			page: 0,
 			size: 10,

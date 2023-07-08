@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import ListItemStyle from "../../components/list";
 import { converDateTimeFromDB } from "../../utils/convert";
 import { LogBookTypes } from "../../models/log-book";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const LogBookDetailView = () => {
 	const [logBook, setLogBook] = useState<LogBookTypes>();
 	const { logBookId } = useParams();
-	const httpService = new ServiceHttp();
+	const { handleGetRequest } = useHttp();
 
 	const fecthLogBook = async () => {
-		const result = await httpService.get({
-			path: `/log-books/detail/${logBookId}`,
+		const result = await handleGetRequest({
+			path: `${apiUrlPath.logBooks.get}/${logBookId}`,
 		});
 		setLogBook(result);
 	};

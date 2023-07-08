@@ -1,27 +1,24 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import ListItemStyle from "../../components/list";
 import { Label, TextInput } from "flowbite-react";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 import ModalStyle from "../../components/modal";
 import ModalAddStudent from "./modal-add-student";
 import { StudentTypes } from "../../models/student";
 import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const MbkmProgramProdiDetailView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
 	const [mbkmProgram, setMbkmProgram] = useState<MbkmProgramProdiTypes>();
 	const [openModalAddStudent, setOpenModalAddStudent] = useState(false);
-
 	const [isLoading, setIsLoading] = useState(true);
 	const { mbkmProgramId } = useParams();
 	const { handleGetRequest, handleUpdateRequest, handleGetTableDataRequest } =
 		useHttp();
-
 	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [modalDeleteData, setModalDeleteData] = useState<StudentTypes>();
 
@@ -35,7 +32,7 @@ const MbkmProgramProdiDetailView = () => {
 
 	const handleChangeMbkmProgramStudent = async () => {
 		await handleUpdateRequest({
-			path: `/students`,
+			path: apiUrlPath.students.patch,
 			body: {
 				studentId: modalDeleteData?.studentId,
 				studentMbkmProgramId: null,
@@ -48,14 +45,14 @@ const MbkmProgramProdiDetailView = () => {
 
 	const fecthDetailMbkmProgram = async () => {
 		const result = await handleGetRequest({
-			path: `/mbkm-programs/prodi/detail/${mbkmProgramId}`,
+			path: `${apiUrlPath.mbkmProgramProdi.getDetail}/${mbkmProgramId}`,
 		});
 		setMbkmProgram(result);
 	};
 
 	const fecthStudents = async () => {
 		const result = await handleGetTableDataRequest({
-			path: `/students?mbkmProgramId=${mbkmProgramId}&&`,
+			path: `${apiUrlPath.semesters.get}?mbkmProgramId=${mbkmProgramId}&&`,
 		});
 
 		setListOfStudent({

@@ -2,7 +2,6 @@ import { Textarea, Timeline } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { BiCalendar } from "react-icons/bi";
 import {
 	RecomendationLetterTypes,
@@ -13,6 +12,7 @@ import ListItemStyle from "../../components/list";
 import FileUploadButton from "../../components/button/button-upload";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const RecomendationLetterDetail = () => {
 	const [recomendationLetter, setRecomendationLetter] =
@@ -29,7 +29,7 @@ const RecomendationLetterDetail = () => {
 
 	const fecthRecomendationLetter = async () => {
 		const result = await handleGetRequest({
-			path: `/recomendation-letters/detail/${recomendationLetterId}`,
+			path: `${apiUrlPath.recomendDatationLetters.getDetail}/${recomendationLetterId}`,
 		});
 		setRecomendationLetter(result);
 	};
@@ -39,12 +39,10 @@ const RecomendationLetterDetail = () => {
 			recomendationLetterId,
 			recomendationLetterApprovalLetter,
 		};
-
 		await handleUpdateRequest({
-			path: `/recomendation-letters/change-status`,
+			path: apiUrlPath.recomendDatationLetters.changeStatusAssignment,
 			body: payload,
 		});
-
 		navigation("/recomendation-letters");
 	};
 
@@ -57,7 +55,7 @@ const RecomendationLetterDetail = () => {
 			recomendationLetterStatusMessage,
 		};
 		await handleUpdateRequest({
-			path: `/recomendation-letters/change-status`,
+			path: apiUrlPath.recomendDatationLetters.changeStatusApproval,
 			body: payload,
 		});
 		navigation("/recomendation-letters");

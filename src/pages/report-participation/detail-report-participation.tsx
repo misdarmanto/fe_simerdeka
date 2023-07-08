@@ -2,41 +2,42 @@ import { Label, Textarea } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import {
 	ReportParticipationDetailTypes,
 	ReportParticipationUpdateTypes,
 } from "../../models/report-participation";
 import ListItemStyle from "../../components/list";
 import { convertStatusName } from "../../utils/convert";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const ReportParicipationDetailView = () => {
 	const [reportParticipation, setReportParticipation] =
 		useState<ReportParticipationDetailTypes>();
 	const [statusMessage, setStatusMessage] = useState<string>("");
 	const { reportParticipationId } = useParams();
-	const { currentUser } = useAppContext();
+	const { currentUser }: AppContextTypes = useAppContext();
 	const navigation = useNavigate();
-	const httpService = new ServiceHttp();
+	const { handleGetRequest, handleUpdateRequest } = useHttp();
 
 	const fecthReportParticipationLetter = async () => {
-		const result = await httpService.get({
-			path: `/report-participations/detail/${reportParticipationId}`,
+		const result = await handleGetRequest({
+			path: `${apiUrlPath.reportParticipations.getDetail}/${reportParticipationId}`,
 		});
 		setReportParticipation(result);
 	};
 
 	const handleChangeStatusApproval = async (status: "accepted" | "rejected") => {
-		const body: ReportParticipationUpdateTypes = {
+		const payload: ReportParticipationUpdateTypes = {
 			reportParticipationId: reportParticipationId,
 			reportParticipationStatus: status,
 			reportParticipationStatusMessage: statusMessage,
 		};
 
-		await httpService.patch({
-			path: `/report-participations`,
-			body: body,
+		await handleUpdateRequest({
+			path: apiUrlPath.reportParticipations.patch,
+			body: payload,
 		});
 		navigation("/report-participations");
 	};

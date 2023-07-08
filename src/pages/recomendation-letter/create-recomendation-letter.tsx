@@ -5,13 +5,13 @@ import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RecomendationLetterCreateRequestTypes } from "../../models/recomendation-letter";
 import { UserTypes } from "../../models/user";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
 import FileUploadButton from "../../components/button/button-upload";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const RecomendationLetterCreate = () => {
-	const { currentUser } = useAppContext();
-	const user: UserTypes = currentUser;
-
+	const { currentUser }: AppContextTypes = useAppContext();
 	const [recomendatationStudentTranskrip, setRecomendatationStudentTranskrip] =
 		useState<string>("");
 	const [dosenWali, setDosenWali] = useState<string>("");
@@ -22,36 +22,31 @@ const RecomendationLetterCreate = () => {
 	const [programCorrelationDescription, setprogramCorrelationDescription] =
 		useState<string>("");
 	const [syllabus, setSyllabus] = useState("");
-
 	const navigate = useNavigate();
+	const { handlePostRequest } = useHttp();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		try {
-			const data: RecomendationLetterCreateRequestTypes = {
-				recomendationLetterStudentTranskrip: recomendatationStudentTranskrip,
-				recomendationLetterDosenWali: dosenWali,
-				recomendationLetterSyllabus: syllabus,
-				recomendationLetterApprovalLetter: suratPersetujuanDosenWali,
-				recomendationLetterProgramName: programName,
-				recomendationLetterProgramCorrelation: programCorrelationDescription,
-				recomendationLetterProgramDescription: programDescription,
-			};
-			console.log(data);
 
-			const httpService = new ServiceHttp();
-			await httpService.post({
-				path: "/recomendation-letters",
-				body: data,
-			});
-			navigate("/recomendation-letters");
-		} catch (error: any) {
-			console.error(error.message);
-		}
+		const data: RecomendationLetterCreateRequestTypes = {
+			recomendationLetterStudentTranskrip: recomendatationStudentTranskrip,
+			recomendationLetterDosenWali: dosenWali,
+			recomendationLetterSyllabus: syllabus,
+			recomendationLetterApprovalLetter: suratPersetujuanDosenWali,
+			recomendationLetterProgramName: programName,
+			recomendationLetterProgramCorrelation: programCorrelationDescription,
+			recomendationLetterProgramDescription: programDescription,
+		};
+
+		await handlePostRequest({
+			path: apiUrlPath.reportParticipations.post,
+			body: data,
+		});
+		navigate("/recomendation-letters");
 	};
 
 	useEffect(() => {
-		if (user.userRole !== "student") {
+		if (currentUser.userRole !== "student") {
 			navigate("/recomendation-letters");
 		}
 	}, []);
@@ -148,7 +143,7 @@ const RecomendationLetterCreate = () => {
 
 					<div className="flex gap-5 items-center">
 						<div className="mb-2 block">
-							<label htmlFor="file">Silabus</label>
+							<label htmlFor="file">Silabus MBKM</label>
 						</div>
 						<FileUploadButton onUpload={setSyllabus} />
 					</div>

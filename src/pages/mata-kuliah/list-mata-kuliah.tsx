@@ -8,6 +8,7 @@ import ModalStyle from "../../components/modal";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
 import { MataKuliahTypes } from "../../models/mata-kuliah";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const MataKuliahListView = () => {
 	const [listMataKuliah, setListMataKuliah] = useState<any>();
@@ -29,7 +30,7 @@ const MataKuliahListView = () => {
 
 	const handleDeleteMataKuliah = async () => {
 		await handleRemoveRequest({
-			path: `/mata-kuliah?mataKuliahId=${modalDeleteData?.mataKuliahId}`,
+			path: `${apiUrlPath.mataKuliah.get}?mataKuliahId=${modalDeleteData?.mataKuliahId}`,
 		});
 
 		if (errorMessage.isError) return;
@@ -39,11 +40,11 @@ const MataKuliahListView = () => {
 
 	const fecthData = async () => {
 		const result = await handleGetTableDataRequest({
-			path: "/mata-kuliah",
+			path: apiUrlPath.mataKuliah.get,
 		});
 
 		setListMataKuliah({
-			link: "/mata-kuliah",
+			link: apiUrlPath.mataKuliah.get,
 			data: result,
 			page: 0,
 			size: 10,

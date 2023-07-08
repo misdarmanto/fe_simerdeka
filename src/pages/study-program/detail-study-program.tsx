@@ -1,7 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import ListItemStyle from "../../components/list";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudyProgramTypes } from "../../models/study-program";

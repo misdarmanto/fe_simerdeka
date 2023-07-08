@@ -3,22 +3,20 @@ import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { converDateTimeFromDB } from "../../utils/convert";
 import ModalStyle from "../../components/modal";
-import { UserTypes } from "../../models/user";
 import { LogBookTypes } from "../../models/log-book";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const LogBookListView = () => {
 	const [listLogBook, setListLogBook] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { currentUser } = useAppContext();
-	const user: UserTypes = currentUser;
+	const { currentUser }: AppContextTypes = useAppContext();
 	const navigate = useNavigate();
-	const httpService = new ServiceHttp();
+	const { handleRemoveRequest, handleGetTableDataRequest } = useHttp();
 
 	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [modalDeleteData, setModalDeleteData] = useState<LogBookTypes>();
@@ -32,26 +30,20 @@ const LogBookListView = () => {
 	};
 
 	const handleDeleteLogBook = async () => {
-		await httpService.remove({
-			path: `/log-books?logBook_id=${modalDeleteData?.logBookId}`,
+		await handleRemoveRequest({
+			path: `${apiUrlPath.logBooks.delete}?logBook_id=${modalDeleteData?.logBookId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
 	};
 
 	const fecthData = async () => {
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/log-books",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
+		const result = await handleGetTableDataRequest({
+			path: apiUrlPath.logBooks.get,
 		});
 
 		setListLogBook({
-			link: "/log-books",
+			link: apiUrlPath.logBooks.get,
 			data: result,
 			page: 0,
 			size: 10,
@@ -136,7 +128,7 @@ const LogBookListView = () => {
 						<Link to={`/log-books/detail/${data.logBookId}`}>
 							<ButtonStyle title="Detail" size="xs" color="light" />
 						</Link>
-						{user.userRole === "student" && (
+						{currentUser.userRole === "student" && (
 							<ButtonStyle
 								title="Hapus"
 								size="xs"
@@ -171,7 +163,7 @@ const LogBookListView = () => {
 				]}
 				icon={BASE_ICON.MENU.MbkmSummaryIcon}
 			/>
-
+			<h1 className="mb-5">Tabel Log Book</h1>
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
 				<div className="flex items-center">
 					<div className="w-full mr-2 flex flex-row justify-between md:justify-start">
@@ -188,7 +180,7 @@ const LogBookListView = () => {
 						</select>
 					</div>
 
-					{user.userRole === "student" && (
+					{currentUser.userRole === "student" && (
 						<ButtonStyle
 							title="Create"
 							color="light"

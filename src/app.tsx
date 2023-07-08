@@ -16,6 +16,8 @@ export default function App() {
 		const result = await handleGetRequest({
 			path: "/users",
 		});
+		console.log("_______users");
+		console.log(result);
 		setCurrentUser(result);
 	};
 

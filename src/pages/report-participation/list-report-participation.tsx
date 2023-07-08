@@ -3,44 +3,32 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactElement, useEffect, useState } from "react";
-import { CONFIG } from "../../configs";
-import { ServiceHttp } from "../../services/api";
 import { ReportParticipationTypes } from "../../models/report-participation";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const ReportParticipationListView = () => {
 	const [listProgram, setListProgram] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const navigate = useNavigate();
-	const { currentUser, setErrorMessage }: AppContextTypes = useAppContext();
-	const httpService = new ServiceHttp();
+	const { currentUser }: AppContextTypes = useAppContext();
+	const { handleGetTableDataRequest } = useHttp();
 
 	const fecthData = async () => {
-		try {
-			const result = await httpService.getTableData({
-				url: CONFIG.base_url_api + "/report-participations",
-				pagination: true,
-				page: 0,
-				size: 10,
-				filters: {
-					search: "",
-				},
-			});
-			setListProgram({
-				link: "report-participations",
-				data: result,
-				page: 0,
-				size: 10,
-				filter: {
-					search: "",
-				},
-			});
-		} catch (error: any) {
-			setErrorMessage({
-				isError: true,
-				message: error.message,
-			});
-		}
+		const result = await handleGetTableDataRequest({
+			path: apiUrlPath.reportParticipations.get,
+		});
+
+		setListProgram({
+			link: "report-participations",
+			data: result,
+			page: 0,
+			size: 10,
+			filter: {
+				search: "",
+			},
+		});
 
 		setIsLoading(false);
 	};
@@ -159,7 +147,7 @@ const ReportParticipationListView = () => {
 				icon={BASE_MENU_ICON.ReportParicipationIcon}
 			/>
 
-			<h1 className="mb-5">Tabel Surat Rekomendasi</h1>
+			<h1 className="mb-5">Tabel Lapor Keikut Sertaan</h1>
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
 				<div className="flex items-center">
 					<div className="w-full mr-2 flex flex-row justify-between md:justify-start itemes-center gap-5">

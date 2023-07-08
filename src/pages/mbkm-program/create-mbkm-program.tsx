@@ -8,20 +8,19 @@ import { MbkmProgramCreateTypes } from "../../models/mbkm-program";
 import { SemesterTypes } from "../../models/semester";
 import ButtonUploadFile from "../../components/button/button-upload";
 import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const MbkmProgramCreatView = () => {
 	const [listOfSemester, setListOfSemester] = useState<SemesterTypes[]>([]);
 	const [mbkmProgramSyllabus, setMbkmProgramSyllabus] = useState("");
 	const [mbkmProgramName, setMbkmProgramName] = useState("");
 	const [mbkmProgramCategory, setMbkmProgramCategory] = useState("");
-	const { handleGetRequest } = useHttp();
-
+	const { handleGetRequest, handlePostRequest } = useHttp();
 	const navigate = useNavigate();
-	const httpService = new ServiceHttp();
 
 	const fecthSemester = async () => {
 		const result = await handleGetRequest({
-			path: "/semesters?semester_status=active",
+			path: `${apiUrlPath.semesters.get}?semester_status=active`,
 		});
 		if (result) {
 			setListOfSemester(result.items);
@@ -38,10 +37,9 @@ const MbkmProgramCreatView = () => {
 				mbkmProgramSyllabus: mbkmProgramSyllabus,
 				mbkmProgramSemesterId: listOfSemester[0].semesterId + "",
 			};
-			console.log(data);
 
-			await httpService.post({
-				path: "/mbkm-programs",
+			await handlePostRequest({
+				path: apiUrlPath.mbkmPrograms.post,
 				body: data,
 			});
 			navigate("/mbkm-programs");

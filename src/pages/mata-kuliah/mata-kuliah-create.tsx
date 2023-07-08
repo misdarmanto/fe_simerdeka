@@ -2,9 +2,9 @@ import { Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { MataKuliahCreateRequestTypes } from "../../models/mata-kuliah";
 import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const MataKuliahCreateView = () => {
 	const [mataKuliahName, setMataKuliahName] = useState("");
@@ -19,7 +19,7 @@ const MataKuliahCreateView = () => {
 			mataKuliahSksTotal,
 		};
 		await handlePostRequest({
-			path: "/mata-kuliah",
+			path: apiUrlPath.mataKuliah.post,
 			body: data,
 		});
 		navigate("/mata-kuliah");
