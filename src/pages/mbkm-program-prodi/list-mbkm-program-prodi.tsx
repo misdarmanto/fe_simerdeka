@@ -80,8 +80,12 @@ const MbkmProgramProdiListView = () => {
 			title: "Silabus",
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "silabus"} className="md:px-6 md:py-3 break-all">
-					<a href={data.mbkmPrograms.mbkmProgramSyllabus} target="blank">
-						<ButtonStyle color="light" title={`Lihat file`} />
+					<a
+						href={data.mbkmPrograms.mbkmProgramSyllabus}
+						target="blank"
+						className="underline"
+					>
+						lihat file
 					</a>
 				</td>
 			),

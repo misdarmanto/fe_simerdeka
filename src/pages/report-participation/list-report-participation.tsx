@@ -166,7 +166,7 @@ const ReportParticipationListView = () => {
 
 					{currentUser.userRole === "student" && (
 						<ButtonStyle
-							title="Create"
+							title="Buat"
 							color="light"
 							onClick={() => navigate("/report-participations/create")}
 						/>

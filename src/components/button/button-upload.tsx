@@ -4,6 +4,9 @@ import { storage } from "../../configs/firebase";
 import { uploadImageToFirebase } from "../../utils/firebase";
 import { Button } from "flowbite-react";
 import { RiUpload2Fill } from "react-icons/ri";
+import { useHttp } from "../../hooks/useHttp";
+import axios from "axios";
+import { CONFIG } from "../../configs";
 
 interface ButtonUploadFileTypes {
 	onUpload: (url: string) => void;
@@ -15,16 +18,42 @@ const ButtonUploadFile = ({ onUpload }: ButtonUploadFileTypes) => {
 	const [fileName, setFileName] = useState("");
 
 	const handleFileUpload = async () => {
-		const file = fileInputRef.current.files[0];
-		const imageRef = ref(storage, "request-Lor/" + file.name);
+		const selectedFile = fileInputRef.current.files[0];
+
+		if (!selectedFile) {
+			alert("Please select a file to upload.");
+			return;
+		}
+
+		setFileName(selectedFile.name);
+
+		const formData = new FormData();
+		formData.append("file", selectedFile);
+
+		console.log("________form data_________");
+		console.log(formData);
+
 		try {
-			setIsLoading(true);
-			const url = await uploadImageToFirebase({ imageRef, file });
-			onUpload(url);
-			setFileName(file.name);
+			const result = await axios.post(
+				CONFIG.base_url_api + "/upload-file",
+				{ file: fileInputRef.current.files[0] },
+				{
+					headers: {
+						"Content-Type": "multipart/form-data",
+					},
+					auth: {
+						username: CONFIG.authorization.username,
+						password: CONFIG.authorization.passsword,
+					},
+				}
+			);
+
 			setIsLoading(false);
+			console.log(result.data);
+			alert("File uploaded successfully!");
 		} catch (error) {
-			console.error(error);
+			console.log(error);
+			alert("Error uploading the file.");
 		}
 	};
 

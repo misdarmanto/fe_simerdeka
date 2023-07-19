@@ -52,7 +52,7 @@ const MbkmProgramProdiDetailView = () => {
 
 	const fecthStudents = async () => {
 		const result = await handleGetTableDataRequest({
-			path: `${apiUrlPath.semesters.get}?mbkmProgramId=${mbkmProgramId}&&`,
+			path: `${apiUrlPath.students.get}?mbkmProgramId=${mbkmProgramId}&&`,
 		});
 
 		setListOfStudent({

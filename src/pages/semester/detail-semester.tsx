@@ -15,10 +15,11 @@ const SemesterDetail = () => {
 	const navigate = useNavigate();
 	const { handleUpdateRequest, handleGetRequest } = useHttp();
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+	const handleUpdateSemester = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		try {
 			const data: SemesterTypes = {
+				semesterId: semesterId,
 				semesterName: semesterName,
 				semesterCreatedBy: currentUser.userRole,
 				semesterStatus: "active",
@@ -62,7 +63,7 @@ const SemesterDetail = () => {
 				icon={BASE_ICON.MENU.SemesterIcon}
 			/>
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
-				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+				<form className="flex flex-col gap-4" onSubmit={handleUpdateSemester}>
 					<div>
 						<div className="mb-2 block">
 							<Label htmlFor="name" value="Nama" />

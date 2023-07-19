@@ -39,7 +39,7 @@ const RecomendationLetterCreate = () => {
 		};
 
 		await handlePostRequest({
-			path: apiUrlPath.reportParticipations.post,
+			path: apiUrlPath.recomendDatationLetters.post,
 			body: data,
 		});
 		navigate("/recomendation-letters");

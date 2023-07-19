@@ -1,12 +1,11 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, memo, useEffect, useState } from "react";
 import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { MbkmProgramTypes } from "../../models/mbkm-program";
 import { Modal, TextInput } from "flowbite-react";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudyProgramTypes } from "../../models/study-program";
 import { MbkmProgramProdiCreateRequestTypes } from "../../models/mbkm-program-prodi";
+import { useHttp } from "../../hooks/useHttp";
 
 interface ModalSelectStudyProgramTypes {
 	onOpen: (item: boolean) => void;
@@ -21,13 +20,11 @@ const ModalSelectStudyProgram = ({
 }: ModalSelectStudyProgramTypes) => {
 	const [listOfStudyProgramRegistered, setListOfStudyProgramRegistered] =
 		useState<any>();
-
 	const [studyProgramSelected, setStudyProgramSelected] = useState<
 		MbkmProgramProdiCreateRequestTypes[]
 	>([]);
-
 	const [isLoading, setIsLoading] = useState(true);
-	const httpService = new ServiceHttp();
+	const { handleGetTableDataRequest, handlePostRequest } = useHttp();
 
 	const handleSelectStudyProgram = (studyProgram: StudyProgramTypes) => {
 		const check = studyProgramSelected.find((item) => {
@@ -43,13 +40,12 @@ const ModalSelectStudyProgram = ({
 			setStudyProgramSelected(newData);
 		} else {
 			const data: MbkmProgramProdiCreateRequestTypes = {
-				mbkmProgramProdiProgramId: mbkmProgram?.mbkmProgramId || "",
-				mbkmProgramProdiProgramName: mbkmProgram?.mbkmProgramName || "",
-				mbkmProgramProdiStudyProgramId: studyProgram.studyProgramId,
-				mbkmProgramProdiStudyProgramName: studyProgram.studyProgramName,
-				mbkmProgramProdiDepartmentId: studyProgram.studyProgramDepartmentId,
-				mbkmProgramProdiDepartmentName: studyProgram.studyProgramDepartmentName,
-				mbkmProgramProdiSemesterId: mbkmProgram?.mbkmProgramSemesterId || "",
+				mbkmProgramProdiProgramId: mbkmProgram?.mbkmProgramId + "",
+				mbkmProgramProdiStudyProgramId: studyProgram?.studyProgramId + "",
+				mbkmProgramProdiStudyProgramName: studyProgram?.studyProgramName + "",
+				mbkmProgramProdiDepartmentId: studyProgram?.studyProgramDepartmentId + "",
+				mbkmProgramProdiDepartmentName:
+					studyProgram?.studyProgramDepartmentName + "",
 			};
 
 			setStudyProgramSelected([...studyProgramSelected, data]);
@@ -58,7 +54,7 @@ const ModalSelectStudyProgram = ({
 
 	const handleSubmit = async () => {
 		if (studyProgramSelected.length !== 0) {
-			await httpService.post({
+			await handlePostRequest({
 				path: `/mbkm-programs/prodi`,
 				body: studyProgramSelected,
 			});
@@ -68,15 +64,8 @@ const ModalSelectStudyProgram = ({
 	};
 
 	const fecthStudyPrograms = async () => {
-		const httpService = new ServiceHttp();
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + `/study-programs?registered=true`,
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
+		const result = await handleGetTableDataRequest({
+			path: `/study-programs?registered=true`,
 		});
 
 		setListOfStudyProgramRegistered({
@@ -201,4 +190,4 @@ const ModalSelectStudyProgram = ({
 	);
 };
 
-export default ModalSelectStudyProgram;
+export default memo(ModalSelectStudyProgram);

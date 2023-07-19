@@ -2,7 +2,6 @@ import { Label, Select, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { listProgramType } from "../../data/program-type";
 import { MbkmProgramCreateTypes } from "../../models/mbkm-program";
 import { SemesterTypes } from "../../models/semester";

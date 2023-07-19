@@ -110,8 +110,12 @@ const MbkmProgramListView = () => {
 			title: "Silabus",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "silabus"} className="md:px-6 md:py-3 break-all">
-					<a href={data.mbkmProgramSyllabus} target="blank">
-						<ButtonStyle color="light" title={`Lihat file`} />
+					<a
+						href={data.mbkmProgramSyllabus}
+						target="blank"
+						className="underline"
+					>
+						lihat file
 					</a>
 				</td>
 			),
@@ -124,14 +128,17 @@ const MbkmProgramListView = () => {
 				<td key={index + "action"}>
 					<div className="flex">
 						<ButtonStyle
-							title="edit"
-							size="xs"
-							color="failure"
+							title="Ubah"
+							color="light"
 							className="mx-2"
 							onClick={() => {
 								navigate(`/mbkm-programs/edit/${data.mbkmProgramId}`);
 							}}
 						/>
+
+						<Link to={`/mbkm-programs/detail/${data.mbkmProgramId}`}>
+							<ButtonStyle title="Detail" color="light" />
+						</Link>
 					</div>
 				</td>
 			),

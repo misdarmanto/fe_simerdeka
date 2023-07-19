@@ -8,6 +8,7 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudentTypes } from "../../models/student";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 interface ModalAddStudentTypes {
 	onOpen: (item: boolean) => void;
@@ -39,7 +40,7 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 	const handleSubmit = async () => {
 		if (studentSelected) {
 			await handleUpdateRequest({
-				path: `/students`,
+				path: apiUrlPath.students.patch,
 				body: studentSelected,
 			});
 		}
@@ -69,21 +70,19 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 				</td>
 			),
 		},
-
+		{
+			title: "nim",
+			data: (data: StudentTypes, index: number): ReactElement => (
+				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
+					{data.studentNim}
+				</td>
+			),
+		},
 		{
 			title: "Nama",
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
 					{data.studentName}
-				</td>
-			),
-		},
-
-		{
-			title: "total sks",
-			data: (data: StudentTypes, index: number): ReactElement => (
-				<td key={index + "sks"} className="md:px-6 md:py-3 break-all">
-					{data.studentEmail}
 				</td>
 			),
 		},

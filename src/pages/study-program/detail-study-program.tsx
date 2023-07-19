@@ -1,30 +1,19 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
+import { BASE_MENU_ICON, BreadcrumbStyle } from "../../components";
 import ListItemStyle from "../../components/list";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudyProgramTypes } from "../../models/study-program";
-import { AppContextTypes, useAppContext } from "../../context/app.context";
-import ModalStyle from "../../components/modal";
 import { Label } from "flowbite-react";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
-import ModalSelectMbkmProgram from "./modal-add-mbkm-program";
 import { useHttp } from "../../hooks/useHttp";
 
 const StudyProgramDetailView = () => {
 	const [detailStudyProgram, setDetailStudyProgram] = useState<StudyProgramTypes>();
-	const [openModalDelete, setOpenModalDelete] = useState(false);
-	const [modalDeleteData, setModalDeleteData] = useState<MbkmProgramProdiTypes>();
 	const [mbkmPrograms, setMbkmPrograms] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
 	const { studyProgramId } = useParams();
-	const { currentUser }: AppContextTypes = useAppContext();
-	const [openModalAddMbkmProgram, setOpenModalAddMbkmProgram] = useState(false);
-	const { handleGetRequest, handleRemoveRequest } = useHttp();
-
-	const handleOpenModalAddMbkmProgram = () => {
-		setOpenModalAddMbkmProgram(!openModalAddMbkmProgram);
-	};
+	const { handleGetRequest } = useHttp();
 
 	const fecthMbkmProdi = async () => {
 		const result = await handleGetRequest({
@@ -62,22 +51,6 @@ const StudyProgramDetailView = () => {
 		fecthData();
 	}, []);
 
-	const handleModalDelete = () => {
-		setOpenModalDelete(!openModalDelete);
-	};
-
-	const handleModaDataSelected = (item: MbkmProgramProdiTypes) => {
-		setModalDeleteData(item);
-	};
-
-	const handleDeleteMbkmProdiPrgram = async () => {
-		await handleRemoveRequest({
-			path: `/mbkm-programs/prodi?id=${modalDeleteData?.mbkmPrograms.mbkmProgramId}`,
-		});
-		window.location.reload();
-		setOpenModalDelete(false);
-	};
-
 	const header: TableHeader[] = [
 		{
 			title: "No",
@@ -108,27 +81,6 @@ const StudyProgramDetailView = () => {
 			),
 		},
 	];
-
-	if (currentUser.userRole === "lp3m") {
-		header.push({
-			title: "Action",
-			action: true,
-			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<ButtonStyle
-						title="Hapus"
-						size="xs"
-						color="failure"
-						className="mx-2"
-						onClick={() => {
-							handleModalDelete();
-							handleModaDataSelected(data);
-						}}
-					/>
-				</td>
-			),
-		});
-	}
 
 	if (isLoading) return <p>loading...</p>;
 
@@ -169,29 +121,8 @@ const StudyProgramDetailView = () => {
 				<div className="mb-2 block">
 					<Label value="Daftar program MBKM yang diikuti" />
 				</div>
-				{currentUser.userRole === "lp3m" && (
-					<ButtonStyle
-						title="Tambah Program"
-						color="light"
-						onClick={handleOpenModalAddMbkmProgram}
-						className="flex-start w-36"
-					/>
-				)}
 				<TableStyle header={header} table={mbkmPrograms} />
 			</div>
-			<ModalStyle
-				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.mbkmPrograms?.mbkmProgramName}`}
-				isOpen={openModalDelete}
-				onBtnYesClick={handleDeleteMbkmProdiPrgram}
-				onOpen={handleModalDelete}
-			/>
-
-			<ModalSelectMbkmProgram
-				isOpen={openModalAddMbkmProgram}
-				onOpen={handleOpenModalAddMbkmProgram}
-				studyProgram={detailStudyProgram}
-			/>
 		</div>
 	);
 };

@@ -43,12 +43,9 @@ const ReportParicipationCreateView = () => {
 
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-					<div>
+					<div className="flex items-center gap-2">
 						<div className="mb-2 block">
-							<Label
-								htmlFor="file"
-								value="upload bukti surat keikutsertaan"
-							/>
+							<Label htmlFor="file" value="upload bukti keikutsertaan : " />
 						</div>
 						<FileUploadButton onUpload={setReportParticipationFile} />
 					</div>

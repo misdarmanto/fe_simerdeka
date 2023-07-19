@@ -1,17 +1,16 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, lazy, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { MbkmProgramTypes } from "../../models/mbkm-program";
 import ListItemStyle from "../../components/list";
 import { Label, TextInput } from "flowbite-react";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import ModalSelectStudyProgram from "./modal-add-study-program";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 import ModalStyle from "../../components/modal";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+const ModalSelectStudyProgram = lazy(() => import("./modal-add-study-program"));
 
 const MbkmProgramDetailView = () => {
 	const [listOfStudyProgramRegistered, setListOfStudyProgramRegistered] =
@@ -20,11 +19,11 @@ const MbkmProgramDetailView = () => {
 	const [openModalSelectStudyProgram, setOpenModalSelectStudyProgram] = useState(false);
 	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [modalDeleteData, setModalDeleteData] = useState<MbkmProgramProdiTypes>();
-
 	const [isLoading, setIsLoading] = useState(true);
 	const { mbkmProgramId } = useParams();
 	const { handleGetRequest, handleRemoveRequest, handleGetTableDataRequest } =
 		useHttp();
+	const { currentUser }: AppContextTypes = useAppContext();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);
@@ -35,8 +34,9 @@ const MbkmProgramDetailView = () => {
 	};
 
 	const handleDeleteMbkmProgramParticipation = async () => {
+		const programId = modalDeleteData?.mbkmProgramProdiProgramId;
 		await handleRemoveRequest({
-			path: `${apiUrlPath.mbkmProgramProdi}?id=${modalDeleteData?.mbkmProgramProdiId}`,
+			path: `${apiUrlPath.mbkmProgramProdi.delete}?programId=${programId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
@@ -44,18 +44,17 @@ const MbkmProgramDetailView = () => {
 
 	const fecthDetailMbkmProgram = async () => {
 		const result = await handleGetRequest({
-			path: `${apiUrlPath.mbkmPrograms}/detail/${mbkmProgramId}`,
+			path: `${apiUrlPath.mbkmPrograms.getDetail}/${mbkmProgramId}`,
 		});
 		setMbkmProgram(result);
 	};
 
-	const fecthStudyPrograms = async () => {
+	const fecthMbkmProgramProdi = async () => {
 		const result = await handleGetTableDataRequest({
-			path: `${apiUrlPath.mbkmProgramProdi}?program_id=${mbkmProgramId}&&`,
+			path: `${apiUrlPath.mbkmProgramProdi.get}?programId=${mbkmProgramId}&&`,
 		});
-
 		setListOfStudyProgramRegistered({
-			link: `${apiUrlPath.mbkmProgramProdi}?program_id=${mbkmProgramId}&&`,
+			link: `${apiUrlPath.mbkmProgramProdi.get}?programId=${mbkmProgramId}&&`,
 			data: result,
 			page: 0,
 			size: 10,
@@ -76,31 +75,22 @@ const MbkmProgramDetailView = () => {
 		},
 
 		{
-			title: "Nama",
+			title: "Prodi",
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mbkmPrograms.mbkmProgramName}
+					{data.mbkmProgramProdiStudyProgramName}
 				</td>
 			),
 		},
 
 		{
-			title: "Prodi",
+			title: "Jurusan",
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
-				<td key={index + "prodi"} className="md:px-6 md:py-3 break-all">
-					{data.mbkmPrograms.mbkmProgramName}
+				<td key={index + "department"} className="md:px-6 md:py-3 break-all">
+					{data.mbkmProgramProdiDepartmentName}
 				</td>
 			),
 		},
-
-		// {
-		// 	title: "jurusan",
-		// 	data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
-		// 		<td key={index + "jurusan"} className="md:px-6 md:py-3 break-all">
-		// 			{data.mbkmPrograms.}
-		// 		</td>
-		// 	),
-		// },
 
 		{
 			title: "Action",
@@ -124,7 +114,7 @@ const MbkmProgramDetailView = () => {
 
 	const fecthData = async () => {
 		await fecthDetailMbkmProgram();
-		await fecthStudyPrograms();
+		await fecthMbkmProgramProdi();
 		setIsLoading(false);
 	};
 
@@ -190,11 +180,14 @@ const MbkmProgramDetailView = () => {
 								<option value="100">100</option>
 							</select>
 						</div>
-						<ButtonStyle
-							title="Tambah Prodi"
-							color="light"
-							onClick={() => setOpenModalSelectStudyProgram(true)}
-						/>
+						{currentUser.userRole === "academic" ||
+							(currentUser.userRole === "lp3m" && (
+								<ButtonStyle
+									title="Tambah Prodi"
+									color="light"
+									onClick={() => setOpenModalSelectStudyProgram(true)}
+								/>
+							))}
 					</div>
 					<div className="mt-1 w-full md:w-1/5">
 						<TextInput type="text" placeholder="search..." />

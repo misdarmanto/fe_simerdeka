@@ -29,9 +29,15 @@ const TranskripMenu = {
 	icon: <BiTask fontSize={20} />,
 };
 
-const MyMbkmProgramMenu = {
+const SksConverionMenu = {
+	title: "Skema Konversi SKS",
+	path: `/sks-converions`,
+	icon: <BiTask fontSize={20} />,
+};
+
+const MbkmProgramStudentMenu = {
 	title: "Program Saya",
-	path: `/my-mbkm-program`,
+	path: `/mbkm-program-students`,
 	icon: <AiOutlineFolderOpen fontSize={20} />,
 };
 
@@ -102,14 +108,14 @@ const FaQMenu = {
 };
 
 export const studentMenus = {
-	persiapan: [HomeMenu, MyMbkmProgramMenu, TranskripMenu],
+	persiapan: [HomeMenu, MbkmProgramStudentMenu, TranskripMenu],
 	pelaksanaan: [ReportParticipationMenu, RecomendationLetterMenu],
 	akhir: [MBKMLogBookMenu, FaQMenu],
 };
 
 export const studyProgramMenus = {
 	persiapan: [HomeMenu, ReportParticipationMenu, RecomendationLetterMenu],
-	pelaksanaan: [StudentMenu, MBKMProgramProdiMenu, MataKuliahMenu],
+	pelaksanaan: [StudentMenu, MBKMProgramProdiMenu, MataKuliahMenu, SksConverionMenu],
 	akhir: [MBKMLogBookMenu, FaQMenu],
 };
 
