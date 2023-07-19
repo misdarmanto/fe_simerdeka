@@ -9,6 +9,8 @@
 // 	mbkmProgramProdiSemesterId: string;
 // }
 
+import { MbkmProgramTypes } from "./mbkm-program";
+
 export interface MbkmProgramProdiCreateRequestTypes {
 	mbkmProgramProdiProgramId: string;
 	mbkmProgramProdiStudyProgramId: string;
@@ -20,12 +22,11 @@ export interface MbkmProgramProdiCreateRequestTypes {
 export interface MbkmProgramProdiSelected extends MbkmProgramProdiCreateRequestTypes {}
 
 export interface MbkmProgramProdiTypes {
+	mbkmProgramProdiDepartmentId: string;
+	mbkmProgramProdiDepartmentName: string;
 	mbkmProgramProdiId: string;
-	mbkmPrograms: {
-		mbkmProgramCategory: string;
-		mbkmProgramCreatedBy: string;
-		mbkmProgramId: string;
-		mbkmProgramName: string;
-		mbkmProgramSyllabus: string;
-	};
+	mbkmProgramProdiProgramId: string;
+	mbkmProgramProdiStudyProgramId: string;
+	mbkmProgramProdiStudyProgramName: string;
+	mbkmPrograms: MbkmProgramTypes;
 }

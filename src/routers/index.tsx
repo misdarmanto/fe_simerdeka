@@ -5,12 +5,11 @@ import { studentRouters } from "./student-routes";
 import { departmentRouters } from "./department-routers";
 import { lp3mRouters } from "./lp3m-routers";
 import { academicRouters } from "./academic-routers";
-import { useAppContext } from "../context/app.context";
-import { studyProgramMenus } from "../layout/listMenu";
+import { AppContextTypes, useAppContext } from "../context/app.context";
 import { studyProgramRouters } from "./study-program-routers";
 
 export default function AppRouters() {
-	const { currentUser } = useAppContext();
+	const { currentUser }: AppContextTypes = useAppContext();
 
 	let router: { path: string; element: JSX.Element }[] = [];
 

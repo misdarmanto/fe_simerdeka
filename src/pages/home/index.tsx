@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { SummariesTypes } from "../../models/summary.model";
 import { useHttp } from "../../hooks/useHttp";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const Home = () => {
 	const [summaries, setSummaries] = useState<SummariesTypes>();
@@ -12,7 +13,7 @@ const Home = () => {
 
 	const fecthSummaries = async () => {
 		const result = await handleGetRequest({
-			path: "/summaries",
+			path: apiUrlPath.summaries.get,
 		});
 		setSummaries(result);
 	};

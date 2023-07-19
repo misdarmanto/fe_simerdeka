@@ -1,32 +1,29 @@
-import { Select, TextInput } from "flowbite-react";
+import { TextInput } from "flowbite-react";
 import { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { TableHeader, TableStyle } from "../../components/table/Table";
-import { SemesterTypes } from "../../models/semester";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
-import ListItemStyle from "../../components/list";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const MbkmProgramProdiListView = () => {
 	const [listMbkmPrograms, setListMbkmPrograms] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const httpService = new ServiceHttp();
-	const { setErrorMessage, currentUser }: AppContextTypes = useAppContext();
+	const { setErrorMessage }: AppContextTypes = useAppContext();
+	const { handleGetRequest } = useHttp();
 
 	const fecthMbkmProdi = async () => {
 		try {
-			const result = await httpService.get({
-				path: `/mbkm-programs/prodi?mbkmProgramProdiStudyProgramId`,
+			const result = await handleGetRequest({
+				path: `${apiUrlPath.mbkmProgramProdi.get}?mbkmProgramProdiStudyProgramId`,
 			});
 
 			result["page"] = 0;
 			result["size"] = 100;
 
-			console.log("________result");
-			console.log(result);
 			setListMbkmPrograms({
 				link: "",
 				data: result,
@@ -83,8 +80,12 @@ const MbkmProgramProdiListView = () => {
 			title: "Silabus",
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "silabus"} className="md:px-6 md:py-3 break-all">
-					<a href={data.mbkmPrograms.mbkmProgramSyllabus} target="blank">
-						<ButtonStyle color="light" title={`Lihat file`} />
+					<a
+						href={data.mbkmPrograms.mbkmProgramSyllabus}
+						target="blank"
+						className="underline"
+					>
+						lihat file
 					</a>
 				</td>
 			),

@@ -1,30 +1,32 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { SemesterTypes } from "../../models/semester";
 import { Label, TextInput } from "flowbite-react";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const SemesterDetail = () => {
 	const [semester, setSemester] = useState<SemesterTypes>();
 	const [semesterName, setSemesterName] = useState<string>();
-	const { currentUser } = useAppContext();
+	const { currentUser }: AppContextTypes = useAppContext();
 	const { semesterId } = useParams();
 	const navigate = useNavigate();
-	const httpService = new ServiceHttp();
+	const { handleUpdateRequest, handleGetRequest } = useHttp();
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+	const handleUpdateSemester = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		try {
 			const data: SemesterTypes = {
+				semesterId: semesterId,
 				semesterName: semesterName,
 				semesterCreatedBy: currentUser.userRole,
 				semesterStatus: "active",
 			};
 
-			await httpService.patch({
-				path: "/semesters",
+			await handleUpdateRequest({
+				path: apiUrlPath.semesters.patch,
 				body: data,
 			});
 			navigate("/semesters");
@@ -34,8 +36,8 @@ const SemesterDetail = () => {
 	};
 
 	const fecthData = async () => {
-		const result = await httpService.get({
-			path: `/semesters/detail/${semesterId}`,
+		const result = await handleGetRequest({
+			path: `${apiUrlPath.semesters.getDetail}/${semesterId}`,
 		});
 		setSemester(result);
 		setSemesterName(result.semesterName + "");
@@ -61,7 +63,7 @@ const SemesterDetail = () => {
 				icon={BASE_ICON.MENU.SemesterIcon}
 			/>
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
-				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+				<form className="flex flex-col gap-4" onSubmit={handleUpdateSemester}>
 					<div>
 						<div className="mb-2 block">
 							<Label htmlFor="name" value="Nama" />

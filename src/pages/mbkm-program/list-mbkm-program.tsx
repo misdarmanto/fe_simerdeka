@@ -10,7 +10,9 @@ import { SemesterTypes } from "../../models/semester";
 import { UserTypes } from "../../models/user";
 import ModalStyle from "../../components/modal";
 import { MbkmProgramTypes } from "../../models/mbkm-program";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const MbkmProgramListView = () => {
 	const navigate = useNavigate();
@@ -21,10 +23,9 @@ const MbkmProgramListView = () => {
 
 	const [openModalDelete, setOpenModalDelete] = useState(false);
 	const [modalDeleteData, setModalDeleteData] = useState<MbkmProgramTypes>();
-	const { currentUser } = useAppContext();
-
-	const user: UserTypes = currentUser;
-	const httpService = new ServiceHttp();
+	const { currentUser }: AppContextTypes = useAppContext();
+	const { handleGetRequest, handleRemoveRequest, handleGetTableDataRequest } =
+		useHttp();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);
@@ -35,8 +36,8 @@ const MbkmProgramListView = () => {
 	};
 
 	const handleDeleteMbkmProgram = async () => {
-		await httpService.remove({
-			path: `/mbkm-programs?mbkm_program_id=${modalDeleteData?.mbkmProgramId}`,
+		await handleRemoveRequest({
+			path: `${apiUrlPath.mbkmPrograms}?mbkm_program_id=${modalDeleteData?.mbkmProgramId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
@@ -49,12 +50,8 @@ const MbkmProgramListView = () => {
 			filters["semester_id"] = semesterId;
 		}
 
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/mbkm-programs",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters,
+		const result = await handleGetTableDataRequest({
+			path: apiUrlPath.mbkmPrograms.get,
 		});
 
 		setListMbkmProgram({
@@ -68,8 +65,8 @@ const MbkmProgramListView = () => {
 	};
 
 	const fecthSemester = async () => {
-		const result = await httpService.get({
-			path: "/semesters",
+		const result = await handleGetRequest({
+			path: apiUrlPath.semesters.get,
 		});
 		if (result) {
 			setListOfSemester(result.items);
@@ -113,8 +110,12 @@ const MbkmProgramListView = () => {
 			title: "Silabus",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "silabus"} className="md:px-6 md:py-3 break-all">
-					<a href={data.mbkmProgramSyllabus} target="blank">
-						<ButtonStyle color="light" title={`Lihat file`} />
+					<a
+						href={data.mbkmProgramSyllabus}
+						target="blank"
+						className="underline"
+					>
+						lihat file
 					</a>
 				</td>
 			),
@@ -127,14 +128,17 @@ const MbkmProgramListView = () => {
 				<td key={index + "action"}>
 					<div className="flex">
 						<ButtonStyle
-							title="edit"
-							size="xs"
-							color="failure"
+							title="Ubah"
+							color="light"
 							className="mx-2"
 							onClick={() => {
 								navigate(`/mbkm-programs/edit/${data.mbkmProgramId}`);
 							}}
 						/>
+
+						<Link to={`/mbkm-programs/detail/${data.mbkmProgramId}`}>
+							<ButtonStyle title="Detail" color="light" />
+						</Link>
 					</div>
 				</td>
 			),
@@ -174,7 +178,7 @@ const MbkmProgramListView = () => {
 							<option value="100">100</option>
 						</select>
 					</div>
-					{user.userRole === "lp3m" && (
+					{currentUser.userRole === "lp3m" && (
 						<ButtonStyle
 							title="Create"
 							color="light"

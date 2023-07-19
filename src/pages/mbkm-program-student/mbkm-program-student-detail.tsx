@@ -5,7 +5,7 @@ import { useHttp } from "../../hooks/useHttp";
 import { StudentTypes } from "../../models/student";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 
-const MyMbkmProgramVies = () => {
+const MbkmProgramStudentVies = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const { currentUser }: AppContextTypes = useAppContext();
 	const studentId = currentUser.userId;
@@ -62,4 +62,4 @@ const MyMbkmProgramVies = () => {
 	);
 };
 
-export default MyMbkmProgramVies;
+export default MbkmProgramStudentVies;

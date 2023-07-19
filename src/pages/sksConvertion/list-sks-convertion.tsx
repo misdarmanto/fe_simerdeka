@@ -1,50 +1,46 @@
-import { TextInput } from "flowbite-react";
+import { Badge, TextInput } from "flowbite-react";
 import { ReactElement, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
 import { TableHeader, TableStyle } from "../../components/table/Table";
+import { converDateTimeFromDB } from "../../utils/convert";
 import ModalStyle from "../../components/modal";
-import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
-import { MataKuliahTypes } from "../../models/mata-kuliah";
 import { apiUrlPath } from "../../configs/apiPath";
+import { SksConvertionTypes } from "../../models/sks-convertion";
 
-const MataKuliahListView = () => {
-	const [listMataKuliah, setListMataKuliah] = useState<any>();
+const SksConvertionView = () => {
+	const [listSksConvertion, setListSksConvertion] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { currentUser, errorMessage }: AppContextTypes = useAppContext();
 	const navigate = useNavigate();
-	const { handleGetTableDataRequest, handleRemoveRequest } = useHttp();
-
 	const [openModalDelete, setOpenModalDelete] = useState(false);
-	const [modalDeleteData, setModalDeleteData] = useState<MataKuliahTypes>();
+	const [modalDeleteData, setModalDeleteData] = useState<SksConvertionTypes>();
+	const { handleRemoveRequest, handleGetTableDataRequest } = useHttp();
 
 	const handleModalDelete = () => {
 		setOpenModalDelete(!openModalDelete);
 	};
 
-	const handleModaDataSelected = (item: MataKuliahTypes) => {
+	const handleModaDataSelected = (item: SksConvertionTypes) => {
 		setModalDeleteData(item);
 	};
 
-	const handleDeleteMataKuliah = async () => {
+	const handleDeleteSemester = async () => {
 		await handleRemoveRequest({
-			path: `${apiUrlPath.mataKuliah.get}?mataKuliahId=${modalDeleteData?.mataKuliahId}`,
+			path: `${apiUrlPath.semesters.delete}?semester_id=${modalDeleteData?.sksConvertionId}`,
 		});
-
-		if (errorMessage.isError) return;
 		setOpenModalDelete(false);
 		window.location.reload();
 	};
 
 	const fecthData = async () => {
 		const result = await handleGetTableDataRequest({
-			path: apiUrlPath.mataKuliah.get,
+			path: "/sks-convertions",
 		});
 
-		setListMataKuliah({
-			link: apiUrlPath.mataKuliah.get,
+		setListSksConvertion({
+			link: "/sks-convertions",
 			data: result,
 			page: 0,
 			size: 10,
@@ -62,7 +58,7 @@ const MataKuliahListView = () => {
 	const header: TableHeader[] = [
 		{
 			title: "No",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "-no"} className="md:px-6 md:py-3 break-all">
 					{index + 1}
 				</td>
@@ -71,17 +67,27 @@ const MataKuliahListView = () => {
 
 		{
 			title: "Nama",
-			data: (data: any, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "name"} className="md:px-6 md:py-3 break-all">
-					{data.mataKuliahName}
+					{data.sksConvertionName}
 				</td>
 			),
 		},
+
 		{
-			title: "total sks",
-			data: (data: any, index: number): ReactElement => (
-				<td key={index + "nim"} className="md:px-6 md:py-3 break-all">
-					{data.mataKuliahSksTotal}
+			title: "Di buat oleh",
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
+				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
+					{data.sksConvertionCreatedBy}
+				</td>
+			),
+		},
+
+		{
+			title: "Di buat pada",
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
+				<td key={index + "created at"} className="md:px-6 md:py-3 break-all">
+					{converDateTimeFromDB(data.createdOn)}
 				</td>
 			),
 		},
@@ -89,21 +95,22 @@ const MataKuliahListView = () => {
 		{
 			title: "Action",
 			action: true,
-			data: (data: any, index: number): ReactElement => (
+			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex items-center">
-						{currentUser.userRole === "studyProgram" && (
-							<ButtonStyle
-								title="Hapus"
-								size="xs"
-								color="failure"
-								className="mx-2"
-								onClick={() => {
-									handleModalDelete();
-									handleModaDataSelected(data);
-								}}
-							/>
-						)}
+						<Link to={`/semesters/detail/${data.sksConvertionId}`}>
+							<ButtonStyle title="Detail" size="xs" color="light" />
+						</Link>
+						<ButtonStyle
+							title="Edit"
+							size="xs"
+							color="failure"
+							className="mx-2"
+							onClick={() => {
+								handleModalDelete();
+								handleModaDataSelected(data);
+							}}
+						/>
 					</div>
 				</td>
 			),
@@ -117,15 +124,15 @@ const MataKuliahListView = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/mata-kuliah",
-						title: "Mata Kuliah",
+						link: "/semesters",
+						title: "Semester",
 					},
 					{
-						link: "/mata-kuliah",
+						link: "/semesters",
 						title: "List",
 					},
 				]}
-				icon={BASE_ICON.MENU.MataKuliahIcon}
+				icon={BASE_ICON.MENU.SemesterIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
@@ -144,13 +151,11 @@ const MataKuliahListView = () => {
 						</select>
 					</div>
 
-					{currentUser.userRole === "studyProgram" && (
-						<ButtonStyle
-							title="Create"
-							color="light"
-							onClick={() => navigate("/mata-kuliah/create")}
-						/>
-					)}
+					<ButtonStyle
+						title="Create"
+						color="light"
+						onClick={() => navigate("/semesters/create")}
+					/>
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
 					<TextInput type="text" placeholder="search..." />
@@ -159,14 +164,14 @@ const MataKuliahListView = () => {
 
 			<ModalStyle
 				onBtnNoClick={handleModalDelete}
-				title={`Apakah anda yakin ingin menghapus mata kuliah ${modalDeleteData?.mataKuliahName}?`}
+				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.sksConvertionName}`}
 				isOpen={openModalDelete}
-				onBtnYesClick={handleDeleteMataKuliah}
+				onBtnYesClick={handleDeleteSemester}
 				onOpen={handleModalDelete}
 			/>
-			<TableStyle header={header} table={listMataKuliah} />
+			<TableStyle header={header} table={listSksConvertion} />
 		</div>
 	);
 };
 
-export default MataKuliahListView;
+export default SksConvertionView;

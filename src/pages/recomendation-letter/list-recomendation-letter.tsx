@@ -3,30 +3,24 @@ import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { RecomendationLetterTypes } from "../../models/recomendation-letter";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const RecomendationLetterList = () => {
 	const navigate = useNavigate();
-
 	const [listOfRecomendationLetter, setListOfRecomendationLetter] = useState<any>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { currentUser } = useAppContext();
+	const { currentUser }: AppContextTypes = useAppContext();
+	const { handleGetTableDataRequest } = useHttp();
 
 	const fecthRecomendationLetter = async () => {
-		const httpService = new ServiceHttp();
-		const result = await httpService.getTableData({
-			url: CONFIG.base_url_api + "/recomendation-letters",
-			pagination: true,
-			page: 0,
-			size: 10,
-			filters: {
-				search: "",
-			},
+		const result = await handleGetTableDataRequest({
+			path: apiUrlPath.recomendDatationLetters.get,
 		});
+
 		setListOfRecomendationLetter({
 			link: "recomendation-letters",
 			data: result,
@@ -92,7 +86,7 @@ const RecomendationLetterList = () => {
 		},
 
 		{
-			title: "Status",
+			title: "di teruskan ke",
 			data: (data: RecomendationLetterTypes, index: number): ReactElement => {
 				if (data.recomendationLetterStatus === "rejected") {
 					return (
@@ -103,6 +97,7 @@ const RecomendationLetterList = () => {
 						</td>
 					);
 				}
+
 				if (data.recomendationLetterStatus === "accepted") {
 					return (
 						<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
@@ -112,19 +107,6 @@ const RecomendationLetterList = () => {
 						</td>
 					);
 				}
-				return (
-					<td key={index + "status"} className="md:px-6 md:py-3 break-all ">
-						<Badge color="warning" className="w-20 text-center">
-							menunggu
-						</Badge>
-					</td>
-				);
-			},
-		},
-
-		{
-			title: "di teruskan ke",
-			data: (data: RecomendationLetterTypes, index: number): ReactElement => {
 				if (data.recomendationLetterAssignToAcademic) {
 					return (
 						<td key={index + "s"} className="md:px-6 md:py-3 break-all ">
@@ -209,6 +191,7 @@ const RecomendationLetterList = () => {
 				icon={BASE_ICON.MENU.RecomendationLetterIcon}
 			/>
 
+			<h1 className="mb-5">Tabel Surat Rekomendasi</h1>
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
 				<div className="flex items-center">
 					<div className="w-full mr-2 flex flex-row justify-between md:justify-start">

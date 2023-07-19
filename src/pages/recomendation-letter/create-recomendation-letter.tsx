@@ -1,79 +1,52 @@
-import { ref } from "firebase/storage";
-import { FileInput, Label, Select, TextInput, Textarea } from "flowbite-react";
+import { Label, Select, TextInput, Textarea } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { storage } from "../../configs/firebase";
-import { uploadImageToFirebase } from "../../utils/firebase";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { RecomendationLetterCreateRequestTypes } from "../../models/recomendation-letter";
 import { UserTypes } from "../../models/user";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import FileUploadButton from "../../components/button/button-upload";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const RecomendationLetterCreate = () => {
-	const { currentUser } = useAppContext();
-	const user: UserTypes = currentUser;
-
+	const { currentUser }: AppContextTypes = useAppContext();
 	const [recomendatationStudentTranskrip, setRecomendatationStudentTranskrip] =
 		useState<string>("");
 	const [dosenWali, setDosenWali] = useState<string>("");
 	const [suratPersetujuanDosenWali, setSuratPersetujuanDosenWali] =
 		useState<string>("");
 	const [programName, setProgramName] = useState<string>("");
+	const [programDescription, setProgramDescription] = useState<string>("");
 	const [programCorrelationDescription, setprogramCorrelationDescription] =
 		useState<string>("");
-
+	const [syllabus, setSyllabus] = useState("");
 	const navigate = useNavigate();
+	const { handlePostRequest } = useHttp();
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		try {
-			const data: RecomendationLetterCreateRequestTypes = {
-				recomendationLetterStudentTranskrip: recomendatationStudentTranskrip,
-				recomendationLetterDosenWali: dosenWali,
-				recomendationLetterApprovalLetter: suratPersetujuanDosenWali,
-				recomendationLetterProgramName: programName,
-				recomendationLetterProgramCorrelation: programCorrelationDescription,
-			};
-			console.log(data);
 
-			const httpService = new ServiceHttp();
-			await httpService.post({
-				path: "/recomendation-letters",
-				body: data,
-			});
-			navigate("/recomendation-letters");
-		} catch (error: any) {
-			console.error(error.message);
-		}
-	};
+		const data: RecomendationLetterCreateRequestTypes = {
+			recomendationLetterStudentTranskrip: recomendatationStudentTranskrip,
+			recomendationLetterDosenWali: dosenWali,
+			recomendationLetterSyllabus: syllabus,
+			recomendationLetterApprovalLetter: suratPersetujuanDosenWali,
+			recomendationLetterProgramName: programName,
+			recomendationLetterProgramCorrelation: programCorrelationDescription,
+			recomendationLetterProgramDescription: programDescription,
+		};
 
-	const handleUploadSuratPersetujuanDosen = async (event: any) => {
-		const file = event.target.files[0];
-		const imageRef = ref(storage, "request-Lor/" + file.name);
-		try {
-			const url = await uploadImageToFirebase({ imageRef, file });
-			console.log(url);
-			setSuratPersetujuanDosenWali(url);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	const handleUploadrecomendatationStudentTranskrip = async (event: any) => {
-		const file = event.target.files[0];
-		const imageRef = ref(storage, "request-Lor/" + file.name);
-		try {
-			const url = await uploadImageToFirebase({ imageRef, file });
-			console.log(url);
-			setRecomendatationStudentTranskrip(url);
-		} catch (error) {
-			console.error(error);
-		}
+		await handlePostRequest({
+			path: apiUrlPath.recomendDatationLetters.post,
+			body: data,
+		});
+		navigate("/recomendation-letters");
 	};
 
 	useEffect(() => {
-		if (user.userRole !== "student") {
+		if (currentUser.userRole !== "student") {
 			navigate("/recomendation-letters");
 		}
 	}, []);
@@ -125,7 +98,18 @@ const RecomendationLetterCreate = () => {
 							required={true}
 						/>
 					</div>
-
+					<div>
+						<div className="mb-2 block">
+							<Label htmlFor="comment" value="Deskripsi Program" />
+						</div>
+						<Textarea
+							value={programDescription}
+							onChange={(e) => setProgramDescription(e.target.value)}
+							placeholder="deskripsi..."
+							required={true}
+							rows={4}
+						/>
+					</div>
 					<div>
 						<div className="mb-2 block">
 							<Label
@@ -143,23 +127,25 @@ const RecomendationLetterCreate = () => {
 							rows={4}
 						/>
 					</div>
-					<div>
+
+					<div className="flex gap-5 items-center">
 						<div className="mb-2 block">
-							<Label htmlFor="file" value="Surat Persetujuan Dosen Wali" />
+							<label htmlFor="file">Surat Persetujuan Dosen Wali</label>
 						</div>
-						<FileInput
-							id="file"
-							onChange={handleUploadSuratPersetujuanDosen}
-						/>
+						<FileUploadButton onUpload={setSuratPersetujuanDosenWali} />
 					</div>
-					<div>
+					<div className="flex gap-5 items-center">
 						<div className="mb-2 block">
-							<Label htmlFor="file" value="Transkrip semester 1-4 " />
+							<label htmlFor="file">Transkrip semester 1-4</label>
 						</div>
-						<FileInput
-							id="file"
-							onChange={handleUploadrecomendatationStudentTranskrip}
-						/>
+						<FileUploadButton onUpload={setRecomendatationStudentTranskrip} />
+					</div>
+
+					<div className="flex gap-5 items-center">
+						<div className="mb-2 block">
+							<label htmlFor="file">Silabus MBKM</label>
+						</div>
+						<FileUploadButton onUpload={setSyllabus} />
 					</div>
 
 					<div className="flex justify-end">

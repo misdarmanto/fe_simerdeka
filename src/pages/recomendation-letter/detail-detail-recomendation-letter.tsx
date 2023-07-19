@@ -2,7 +2,6 @@ import { Textarea, Timeline } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { BiCalendar } from "react-icons/bi";
 import {
 	RecomendationLetterTypes,
@@ -10,9 +9,10 @@ import {
 	RequestChangeStatusAssignMentTypes,
 } from "../../models/recomendation-letter";
 import ListItemStyle from "../../components/list";
-import { convertStatusName } from "../../utils/convert";
 import FileUploadButton from "../../components/button/button-upload";
-import { useAppContext } from "../../context/app.context";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
+import { useHttp } from "../../hooks/useHttp";
+import { apiUrlPath } from "../../configs/apiPath";
 
 const RecomendationLetterDetail = () => {
 	const [recomendationLetter, setRecomendationLetter] =
@@ -23,13 +23,13 @@ const RecomendationLetterDetail = () => {
 		useState<string>("");
 
 	const { recomendationLetterId }: any = useParams();
-	const { currentUser } = useAppContext();
+	const { currentUser }: AppContextTypes = useAppContext();
 	const navigation = useNavigate();
-	const httpService = new ServiceHttp();
+	const { handleGetRequest, handleUpdateRequest } = useHttp();
 
 	const fecthRecomendationLetter = async () => {
-		const result = await httpService.get({
-			path: `/recomendation-letters/detail/${recomendationLetterId}`,
+		const result = await handleGetRequest({
+			path: `${apiUrlPath.recomendDatationLetters.getDetail}/${recomendationLetterId}`,
 		});
 		setRecomendationLetter(result);
 	};
@@ -39,12 +39,10 @@ const RecomendationLetterDetail = () => {
 			recomendationLetterId,
 			recomendationLetterApprovalLetter,
 		};
-
-		await httpService.patch({
-			path: `/recomendation-letters/change-status`,
+		await handleUpdateRequest({
+			path: apiUrlPath.recomendDatationLetters.changeStatusAssignment,
 			body: payload,
 		});
-
 		navigation("/recomendation-letters");
 	};
 
@@ -56,8 +54,8 @@ const RecomendationLetterDetail = () => {
 			recomendationLetterStatus,
 			recomendationLetterStatusMessage,
 		};
-		await httpService.patch({
-			path: `/recomendation-letter/change-status`,
+		await handleUpdateRequest({
+			path: apiUrlPath.recomendDatationLetters.changeStatusApproval,
 			body: payload,
 		});
 		navigation("/recomendation-letters");
@@ -85,7 +83,7 @@ const RecomendationLetterDetail = () => {
 				icon={BASE_ICON.MENU.RecomendationLetterIcon}
 			/>
 
-			<div className="bg-white border border-gray-200 rounded-lg shadow my-5 p-10 sm:p-8">
+			<div className="bg-white border border-gray-200 rounded-lg shadow mb-5 p-10 sm:p-8">
 				<Timeline horizontal={true}>
 					{recomendationLetter?.recomendationLetterAssignToStudyProgram && (
 						<Timeline.Item>
@@ -136,23 +134,9 @@ const RecomendationLetterDetail = () => {
 				</Timeline>
 			</div>
 
-			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
+			<div className="bg-white border border-2 mb-5 border-gray-200 rounded-lg p-10">
 				<div className="sm:flex justify-between gap-5">
 					<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
-						<ListItemStyle
-							title="Status"
-							description={convertStatusName(
-								recomendationLetter?.recomendationLetterStatus
-							)}
-						/>
-
-						<ListItemStyle
-							title="Pesan"
-							description={
-								recomendationLetter?.recomendationLetterStatusMessage
-							}
-						/>
-
 						<ListItemStyle
 							title="Nama"
 							description={recomendationLetter?.student?.studentName}
@@ -186,6 +170,12 @@ const RecomendationLetterDetail = () => {
 							}
 						/>
 						<ListItemStyle
+							title="Deskripsi"
+							description={
+								recomendationLetter?.recomendationLetterProgramDescription
+							}
+						/>
+						<ListItemStyle
 							title="Keterkaitan Pembelajaran Dengan Program Studi"
 							description={
 								recomendationLetter?.recomendationLetterProgramCorrelation
@@ -197,11 +187,15 @@ const RecomendationLetterDetail = () => {
 							title="Transkrip semester 1-4"
 							url={recomendationLetter?.recomendationLetterStudentTranskrip}
 						/>
+
 						<ListItemStyle
 							title="Surat Persetujuan Dosen Wali"
 							url={recomendationLetter?.recomendationLetterStatus}
 						/>
-
+						<ListItemStyle
+							title="Silabus"
+							url={recomendationLetter?.recomendationLetterSyllabus}
+						/>
 						<ListItemStyle
 							title="Surat Pengantar Prodi"
 							url={recomendationLetter?.recomendationLetterFromStudyProgram}
@@ -226,8 +220,19 @@ const RecomendationLetterDetail = () => {
 				</div>
 			</div>
 
+			{recomendationLetter?.recomendationLetterStatusMessage && (
+				<div className="bg-white mb-5 border border-2 border-gray-200 rounded-lg p-5 px-10">
+					<ListItemStyle
+						title="Pesan"
+						description={
+							recomendationLetter?.recomendationLetterStatusMessage
+						}
+					/>
+				</div>
+			)}
+
 			{currentUser.userRole !== "student" && (
-				<div className="bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
+				<div className="bg-white border border-2 border-gray-200 rounded-lg p-10 mb-5">
 					<div className="flex gap-5 items-center">
 						<div className="mb-2 block">
 							<label htmlFor="file">
