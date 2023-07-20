@@ -14,7 +14,7 @@ const LogBookDetailView = () => {
 
 	const fecthLogBook = async () => {
 		const result = await handleGetRequest({
-			path: `${apiUrlPath.logBooks.get}/${logBookId}`,
+			path: `${apiUrlPath.logBooks.getDetail}/${logBookId}`,
 		});
 		setLogBook(result);
 	};

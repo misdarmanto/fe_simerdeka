@@ -2,9 +2,7 @@ import { Label, Select, TextInput, Textarea } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
 import { RecomendationLetterCreateRequestTypes } from "../../models/recomendation-letter";
-import { UserTypes } from "../../models/user";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 import FileUploadButton from "../../components/button/button-upload";
 import { useHttp } from "../../hooks/useHttp";
@@ -51,6 +49,7 @@ const RecomendationLetterCreate = () => {
 		}
 	}, []);
 
+	console.log(suratPersetujuanDosenWali);
 	return (
 		<div>
 			<BreadcrumbStyle

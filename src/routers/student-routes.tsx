@@ -10,6 +10,7 @@ import RecomendationLetterDetail from "../pages/recomendation-letter/detail-deta
 import RecomendationLetterList from "../pages/recomendation-letter/list-recomendation-letter";
 import TranskripDetailView from "../pages/transkrip/transkrip-detail";
 import MbkmProgramStudentVies from "../pages/mbkm-program-student/mbkm-program-student-detail";
+import LogBookCreateView from "../pages/log-book/create-log-book";
 
 export const studentRouters = [
 	{
@@ -55,7 +56,7 @@ export const studentRouters = [
 	},
 	{
 		path: "/log-books/create",
-		element: <LogBookListView />,
+		element: <LogBookCreateView />,
 	},
 	{
 		path: "/log-books/detail/:logBookId",
