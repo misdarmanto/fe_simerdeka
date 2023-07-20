@@ -30,9 +30,6 @@ const ButtonUploadFile = ({ onUpload }: ButtonUploadFileTypes) => {
 		const formData = new FormData();
 		formData.append("file", selectedFile);
 
-		console.log("________form data_________");
-		console.log(formData);
-
 		try {
 			const result = await axios.post(
 				CONFIG.base_url_api + "/upload-file",
@@ -49,8 +46,7 @@ const ButtonUploadFile = ({ onUpload }: ButtonUploadFileTypes) => {
 			);
 
 			setIsLoading(false);
-			console.log(result.data);
-			alert("File uploaded successfully!");
+			onUpload(result.data.fileUrl);
 		} catch (error) {
 			console.log(error);
 			alert("Error uploading the file.");

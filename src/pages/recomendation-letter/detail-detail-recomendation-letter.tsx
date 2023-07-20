@@ -190,7 +190,7 @@ const RecomendationLetterDetail = () => {
 
 						<ListItemStyle
 							title="Surat Persetujuan Dosen Wali"
-							url={recomendationLetter?.recomendationLetterStatus}
+							url={recomendationLetter?.recomendationLetterApprovalLetter}
 						/>
 						<ListItemStyle
 							title="Silabus"
