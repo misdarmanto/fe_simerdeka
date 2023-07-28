@@ -5,15 +5,13 @@ import { BASE_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { MataKuliahTypes } from "../../models/mata-kuliah";
 import ModalAddMataKuliah from "./modal-add-mata-kuliah";
 import { useHttp } from "../../hooks/useHttp";
-import { TranskripCreateRequestTypes } from "../../models/transkrip";
+import { SksConvertionCreateTypes } from "../../models/sks-convertion";
 
-const StudentCreateSksView = () => {
+const SksConversionCreateView = () => {
 	const [openModalAddMataKuliah, setOpenModalAddMataKuliah] = useState(false);
 	const [mataKuliahSelected, setMataKuliahSelected] = useState<MataKuliahTypes>();
-	const [mataKuliahGrade, setMataKuliahGrade] = useState("A");
 	const navigate = useNavigate();
-	const { handlePostRequest, handleUpdateRequest } = useHttp();
-	const { studentId } = useParams();
+	const { handlePostRequest } = useHttp();
 
 	const handleModalAddMataKuliah = () => {
 		setOpenModalAddMataKuliah(!openModalAddMataKuliah);
@@ -22,17 +20,18 @@ const StudentCreateSksView = () => {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const data: TranskripCreateRequestTypes = {
-			transkripStudentId: studentId + "",
-			transkripMataKuliahId: mataKuliahSelected?.mataKuliahId + "",
-			transkripMataKuliahGrade: mataKuliahGrade,
+		const data: SksConvertionCreateTypes = {
+			sksConvertionName: "",
+			sksConvertionCreatedBy: "",
+			sksConvertionStudyProgramId: "",
+			sksConvertionMbkmProgramId: "",
 		};
 
 		await handlePostRequest({
-			path: "/transkrip",
+			path: "/sks-convertions",
 			body: data,
 		});
-		navigate(`/students/detail/${studentId}`);
+		navigate(`/sks-convertions`);
 	};
 
 	return (
@@ -40,15 +39,15 @@ const StudentCreateSksView = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/students",
-						title: "Mahasiswa",
+						link: "/sks-convertions",
+						title: "Konversi SKS",
 					},
 					{
-						link: "/students/create-sks-convertion",
+						link: "/sks-convertions/create",
 						title: "Buat Konversi SKS",
 					},
 				]}
-				icon={BASE_ICON.MENU.MataKuliahIcon}
+				icon={BASE_ICON.MENU.SksConvertionIcon}
 			/>
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -71,21 +70,6 @@ const StudentCreateSksView = () => {
 							</ListGroup.Item>
 						</ListGroup>
 					)}
-					<Label value="Nilai" />
-					<Select
-						id="nilai"
-						required
-						defaultValue="A"
-						onChange={(e) => setMataKuliahGrade(e.target.value)}
-					>
-						<option value="A">A</option>
-						<option value="AB">AB</option>
-						<option value="B">B</option>
-						<option value="BC">BC</option>
-						<option value="C">C</option>
-						<option value="D">D</option>
-						<option value="E">E</option>
-					</Select>
 
 					<div className="flex justify-end">
 						<ButtonStyle
@@ -107,4 +91,4 @@ const StudentCreateSksView = () => {
 	);
 };
 
-export default StudentCreateSksView;
+export default SksConversionCreateView;

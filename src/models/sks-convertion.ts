@@ -1,8 +1,4 @@
 export interface SksConvertionTypes {
-	// sksConvertionId?: string;
-	// sksConvertionTotal?: number;
-	// sksConvertionStudentId?: string;
-	// sksConvertionMbkmProgramId?: string;
 	sksConvertionId: string;
 	sksConvertionName: string;
 	sksConvertionCreatedBy: string;
@@ -12,7 +8,15 @@ export interface SksConvertionTypes {
 }
 
 export interface SksConvertionCreateTypes {
-	sksConvertionTotal: number;
-	sksConvertionStudentId: string;
+	sksConvertionName: string;
+	sksConvertionCreatedBy: string;
+	sksConvertionStudyProgramId: string;
 	sksConvertionMbkmProgramId: string;
+}
+
+export interface SksConvertionSchemaTypes {
+	sksConvertionSchemaSksConvertionId: string;
+	sksConvertionSchemaMatkulId: string;
+	sksConvertionSchemaStudyProgramId: string;
+	sksConvertionSchemaMbkmProgramId: string;
 }

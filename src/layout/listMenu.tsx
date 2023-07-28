@@ -31,7 +31,7 @@ const TranskripMenu = {
 
 const SksConverionMenu = {
 	title: "Skema Konversi SKS",
-	path: `/sks-converions`,
+	path: `/sks-convertions`,
 	icon: <BiTask fontSize={20} />,
 };
 

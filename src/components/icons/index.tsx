@@ -6,7 +6,7 @@ import {
 	AiOutlineHome,
 	AiOutlineSearch,
 } from "react-icons/ai";
-import { BiBookOpen, BiUser } from "react-icons/bi";
+import { BiBookOpen, BiTask, BiUser } from "react-icons/bi";
 import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
 import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
@@ -24,6 +24,7 @@ export const ManageUserIcon = BiUser;
 export const SemesterIcon = FaRegListAlt;
 export const LogActivityIcon = AiOutlineSearch;
 export const ReportParicipationIcon = BsPersonVcard;
+export const SksConvertionIcon = BiTask;
 
 export const BASE_MENU_ICON = {
 	HomeIcon,
@@ -39,6 +40,7 @@ export const BASE_MENU_ICON = {
 	ManageUserIcon,
 	LogActivityIcon,
 	ReportParicipationIcon,
+	SksConvertionIcon,
 };
 
 export const BASE_ICON = {
@@ -57,5 +59,6 @@ export const BASE_ICON = {
 		LogActivityIcon: AiOutlineSearch,
 		ReportParicipationIcon: BsPersonVcard,
 		MataKuliahIcon: BiBookOpen,
+		SksConvertionIcon,
 	},
 };
