@@ -93,16 +93,15 @@ const MataKuliahListView = () => {
 				<td key={index + "action"}>
 					<div className="flex items-center">
 						{currentUser.userRole === "studyProgram" && (
-							<ButtonStyle
-								title="Hapus"
-								size="xs"
-								color="failure"
-								className="mx-2"
+							<button
 								onClick={() => {
 									handleModalDelete();
 									handleModaDataSelected(data);
 								}}
-							/>
+								className="bg-transparent text-sm m-1 hover:bg-red-500 text-red-700 hover:text-white py-1 px-3 border border-red-500 hover:border-transparent rounded-md"
+							>
+								Hapus
+							</button>
 						)}
 					</div>
 				</td>

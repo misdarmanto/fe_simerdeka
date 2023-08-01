@@ -100,7 +100,10 @@ const MbkmProgramListView = () => {
 		{
 			title: "Kategori",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
-				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
+				<td
+					key={index + "programtype"}
+					className="md:px-6 md:py-3 break-all"
+				>
 					{data.mbkmProgramCategory}
 				</td>
 			),
@@ -109,7 +112,10 @@ const MbkmProgramListView = () => {
 		{
 			title: "Silabus",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
-				<td key={index + "silabus"} className="md:px-6 md:py-3 break-all">
+				<td
+					key={index + "silabus"}
+					className="md:px-6 md:py-3 break-all"
+				>
 					<a
 						href={data.mbkmProgramSyllabus}
 						target="blank"
@@ -127,17 +133,18 @@ const MbkmProgramListView = () => {
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
 					<div className="flex">
-						<ButtonStyle
-							title="Ubah"
-							color="light"
-							className="mx-2"
-							onClick={() => {
-								navigate(`/mbkm-programs/edit/${data.mbkmProgramId}`);
-							}}
-						/>
+						<Link to={`/mbkm-programs/edit/${data.mbkmProgramId}`}>
+							<button className="bg-transparent text-sm m-1 hover:bg-teal-500 text-teal-700 hover:text-white py-1 px-3 border border-teal-500 hover:border-transparent rounded-md">
+								Ubah
+							</button>
+						</Link>
 
-						<Link to={`/mbkm-programs/detail/${data.mbkmProgramId}`}>
-							<ButtonStyle title="Detail" color="light" />
+						<Link
+							to={`/mbkm-programs/detail/${data.mbkmProgramId}`}
+						>
+							<button className="bg-transparent text-sm m-1 hover:bg-teal-500 text-teal-700 hover:text-white py-1 px-3 border border-teal-500 hover:border-transparent rounded-md">
+								Detail
+							</button>
 						</Link>
 					</div>
 				</td>

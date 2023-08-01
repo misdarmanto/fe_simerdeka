@@ -29,6 +29,60 @@ export const TableStyle = ({
 	header: TableHeader[];
 	table: TableAttributes;
 }) => {
+	const renderTableHeader = (
+		<thead className="bg-gray-100">
+			<tr>
+				{header?.map((value: any, i: number) => {
+					if (value) {
+						return (
+							<th
+								scope="col"
+								className="px-6 py-4 text-left text-sm font-medium font-extrabold uppercase tracking-wider"
+								key={i}
+							>
+								{value.title}
+							</th>
+						);
+					}
+				})}
+			</tr>
+		</thead>
+	);
+
+	const renderTableBody = (
+		<tbody>
+			{table.data.items?.map((value: any, i: number) => (
+				<tr
+					key={i}
+					className={`${i % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
+				>
+					{header.map((head, j) => {
+						if (typeof head.data !== "string") {
+							return head.data(value, i);
+						} else {
+							if (value[head.data]) {
+								return (
+									<td
+										key={j}
+										className="hidden md:block px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
+									>
+										{value[head.data]}
+									</td>
+								);
+							} else {
+								return (
+									<td
+										key={j}
+										className="hidden md:block px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
+									></td>
+								);
+							}
+						}
+					})}
+				</tr>
+			))}
+		</tbody>
+	);
 	return (
 		<>
 			<div className="flex flex-col">
@@ -37,57 +91,8 @@ export const TableStyle = ({
 						{/* Desktop only  */}
 						<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg hidden md:block">
 							<table className="min-w-full divide-y overflow-scroll divide-gray-200">
-								<thead className="bg-gray-100">
-									<tr>
-										{header?.map((value: any, i: number) => {
-											if (value) {
-												return (
-													<th
-														scope="col"
-														className="px-6 py-4 text-left text-sm font-medium font-extrabold uppercase tracking-wider"
-														key={i}
-													>
-														{value.title}
-													</th>
-												);
-											}
-										})}
-									</tr>
-								</thead>
-								<tbody>
-									{table.data.items?.map((value: any, i: number) => (
-										<tr
-											key={i}
-											className={`${
-												i % 2 === 0 ? "bg-white" : "bg-gray-100"
-											}`}
-										>
-											{header.map((head, j) => {
-												if (typeof head.data !== "string") {
-													return head.data(value, i);
-												} else {
-													if (value[head.data]) {
-														return (
-															<td
-																key={j}
-																className="hidden md:block px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
-															>
-																{value[head.data]}
-															</td>
-														);
-													} else {
-														return (
-															<td
-																key={j}
-																className="hidden md:block px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
-															></td>
-														);
-													}
-												}
-											})}
-										</tr>
-									))}
-								</tbody>
+								{renderTableHeader}
+								{renderTableBody}
 							</table>
 						</div>
 						{table.data.items.length < 1 ? (
@@ -105,11 +110,14 @@ export const TableStyle = ({
 									className={`my-2 bg-gray-300 pr-2 pb-2 rounded-lg`}
 								>
 									<div className="bg-white rounded-lg">
-										<div className={`flex justify-end px-4 pt-2`}>
+										<div
+											className={`flex justify-end px-4 pt-2`}
+										>
 											{header.map((head, j) => {
 												if (
 													head.action &&
-													typeof head.data == "function"
+													typeof head.data ==
+														"function"
 												) {
 													return head.data(value, i);
 												} else {
@@ -120,8 +128,14 @@ export const TableStyle = ({
 										<div className="px-4 pb-4 divide-y flex flex-col justify-between">
 											{header.map((head, j) => {
 												if (!head.action) {
-													if (typeof head.data !== "string") {
-														return head.data(value, i);
+													if (
+														typeof head.data !==
+														"string"
+													) {
+														return head.data(
+															value,
+															i
+														);
 													} else {
 														if (value[head.data]) {
 															return (
@@ -129,9 +143,18 @@ export const TableStyle = ({
 																	key={i + j}
 																	className="block md:hidden columns-2  break-all"
 																>
-																	<p>{head.title}</p>
+																	<p>
+																		{
+																			head.title
+																		}
+																	</p>
 																	<p className="break-inside-avoid-column">
-																		{value[head.data]}
+																		{
+																			value[
+																				head
+																					.data
+																			]
+																		}
 																	</p>
 																</div>
 															);
@@ -141,7 +164,11 @@ export const TableStyle = ({
 																	key={j + i}
 																	className="block md:hidden columns-2  break-all"
 																>
-																	<p>{head.title}</p>
+																	<p>
+																		{
+																			head.title
+																		}
+																	</p>
 																	<p className="break-inside-avoid-column">
 																		-
 																	</p>
@@ -156,10 +183,11 @@ export const TableStyle = ({
 								</div>
 							))}
 						</div>
-						<div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 rounded-lg">
+						<div className="bg-white py-3 flex items-center justify-between border-t border-gray-200 rounded-lg">
 							<Pagination table={table} />
 							<div>
-								{table.data.items.length} dari {table.data.total_items}
+								{table.data.items.length} dari{" "}
+								{table.data.total_items}
 							</div>
 						</div>
 					</div>
@@ -231,7 +259,11 @@ export const Pagination = ({ table }: { table: any }) => {
 	}
 	visiblePages.map((page, index) =>
 		pagesComponents.push(
-			<Link to={`/${table.link}?page=${page - 1}&size=${table.size}&${filters}`}>
+			<Link
+				to={`/${table.link}?page=${page - 1}&size=${
+					table.size
+				}&${filters}`}
+			>
 				<button
 					key={`${index}-center`}
 					className={`z-10 ${
