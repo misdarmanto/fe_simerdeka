@@ -91,6 +91,7 @@ export const apiUrlPath = {
 	semesters: {
 		get: "/semesters",
 		getDetail: "/semesters/detail",
+		getActiveSemester: "/semesters/active",
 		post: "/semesters",
 		patch: "/semesters",
 		delete: "/semesters",

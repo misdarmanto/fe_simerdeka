@@ -9,6 +9,7 @@ import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
 import { TranskripTypes } from "../../models/transkrip";
 import ModalStyle from "../../components/modal";
+import ButtonTable from "../../components/button/ButtonTable";
 
 interface SksConvertionTypes {
 	mataKuliah: {
@@ -127,11 +128,9 @@ const StudentDetailView = () => {
 			action: true,
 			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
-					<ButtonStyle
+					<ButtonTable
 						title="Hapus"
-						size="xs"
-						color="failure"
-						className="mx-2"
+						variant="danger"
 						onClick={() => {
 							handleModalDelete();
 							handleModaDataSelected(data);

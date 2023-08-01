@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ReactElement, useEffect, useState } from "react";
 import { StudentTypes } from "../../models/student";
 import { useHttp } from "../../hooks/useHttp";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const StudentListView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
@@ -97,10 +98,10 @@ const StudentListView = () => {
 			title: "Action",
 			action: true,
 			data: (data: StudentTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<div>
+				<td key={index + "action"} className="md:px-6 md:py-3">
+					<div className="flex items-center gap-1">
 						<Link to={`/students/detail/${data.studentId}`}>
-							<ButtonStyle title="Detail" color="light" />
+							<ButtonTable title="Detail" variant="primary" />
 						</Link>
 					</div>
 				</td>

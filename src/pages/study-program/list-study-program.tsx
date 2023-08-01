@@ -5,6 +5,7 @@ import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudyProgramTypes } from "../../models/study-program";
 import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/useHttp";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const StudyProgramListView = () => {
 	const [listStudyProgram, setListStudyProgram] = useState<any>();
@@ -72,10 +73,10 @@ const StudyProgramListView = () => {
 			title: "Action",
 			action: true,
 			data: (data: StudyProgramTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<div className="flex items-center">
+				<td key={index + "action"} className="md:px-6 md:py-3">
+					<div className="flex items-center gap-1">
 						<Link to={`/study-programs/detail/${data.studyProgramId}`}>
-							<ButtonStyle title="Detail" size="xs" color="light" />
+							<ButtonTable title="Detail" variant="primary" />
 						</Link>
 					</div>
 				</td>

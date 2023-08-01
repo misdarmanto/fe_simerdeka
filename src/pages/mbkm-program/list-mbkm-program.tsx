@@ -3,16 +3,14 @@ import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
 import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { SemesterTypes } from "../../models/semester";
-import { UserTypes } from "../../models/user";
 import ModalStyle from "../../components/modal";
 import { MbkmProgramTypes } from "../../models/mbkm-program";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const MbkmProgramListView = () => {
 	const navigate = useNavigate();
@@ -100,10 +98,7 @@ const MbkmProgramListView = () => {
 		{
 			title: "Kategori",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
-				<td
-					key={index + "programtype"}
-					className="md:px-6 md:py-3 break-all"
-				>
+				<td key={index + "programtype"} className="md:px-6 md:py-3 break-all">
 					{data.mbkmProgramCategory}
 				</td>
 			),
@@ -112,10 +107,7 @@ const MbkmProgramListView = () => {
 		{
 			title: "Silabus",
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
-				<td
-					key={index + "silabus"}
-					className="md:px-6 md:py-3 break-all"
-				>
+				<td key={index + "silabus"} className="md:px-6 md:py-3 break-all">
 					<a
 						href={data.mbkmProgramSyllabus}
 						target="blank"
@@ -131,20 +123,14 @@ const MbkmProgramListView = () => {
 			title: "Action",
 			action: true,
 			data: (data: MbkmProgramTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<div className="flex">
+				<td key={index + "action"} className="md:px-6 md:py-3">
+					<div className="flex items-center gap-1">
 						<Link to={`/mbkm-programs/edit/${data.mbkmProgramId}`}>
-							<button className="bg-transparent text-sm m-1 hover:bg-teal-500 text-teal-700 hover:text-white py-1 px-3 border border-teal-500 hover:border-transparent rounded-md">
-								Ubah
-							</button>
+							<ButtonTable title="Ubah" variant="primary" />
 						</Link>
 
-						<Link
-							to={`/mbkm-programs/detail/${data.mbkmProgramId}`}
-						>
-							<button className="bg-transparent text-sm m-1 hover:bg-teal-500 text-teal-700 hover:text-white py-1 px-3 border border-teal-500 hover:border-transparent rounded-md">
-								Detail
-							</button>
+						<Link to={`/mbkm-programs/detail/${data.mbkmProgramId}`}>
+							<ButtonTable title="Detail" variant="primary" />
 						</Link>
 					</div>
 				</td>

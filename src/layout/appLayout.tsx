@@ -1,6 +1,6 @@
 import Logo from "../assets/logos/bgw_simerdeka.jpeg";
 import { UserTypes } from "../models/user";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavbarItemGroup from "./navbar-item";
 import {
 	AcademicMenus,
@@ -18,6 +18,8 @@ import { FaUser } from "react-icons/fa";
 import { BiMenu } from "react-icons/bi";
 import { AppContextTypes, useAppContext } from "../context/app.context";
 import { HiInformationCircle } from "react-icons/hi";
+import { useHttp } from "../hooks/useHttp";
+import { apiUrlPath } from "../configs/apiPath";
 
 const AppLayout: React.FC = () => {
 	const {
@@ -28,13 +30,33 @@ const AppLayout: React.FC = () => {
 		setErrorMessage,
 	}: AppContextTypes = useAppContext();
 
+	const { handleGetRequest } = useHttp();
 	const [openSideBar, setOpenSideBar] = useState(false);
+	const [semesterName, setSemesterName] = useState<string>("");
+	const [isMobileView, setIsMobileView] = useState(true);
+	const navigate = useNavigate();
+
+	React.useEffect(() => {
+		window.addEventListener(
+			"resize",
+			() => window.innerWidth >= 960 && setIsMobileView(false)
+		);
+	}, []);
+
+	const getCurrentSemester = async () => {
+		const result = await handleGetRequest({
+			path: apiUrlPath.semesters.getActiveSemester,
+		});
+		setSemesterName(result.semesterName);
+	};
+
+	useEffect(() => {
+		getCurrentSemester();
+	}, []);
 
 	const handleOpenSideBar = () => {
 		setOpenSideBar(!openSideBar);
 	};
-
-	const navigate = useNavigate();
 
 	const handleSaveUserCredential = (selectedUser: UserTypes) => {
 		const user = LIST_USER.find((user: UserTypes) => {
@@ -81,7 +103,7 @@ const AppLayout: React.FC = () => {
 	}
 
 	return (
-		<div className="max-w-full">
+		<div>
 			<div className="flex items-center mx-auto">
 				<img className="p-1 mx-2" src={Logo} alt="Logo" />
 			</div>
@@ -93,7 +115,7 @@ const AppLayout: React.FC = () => {
 							<BiMenu size={"30px"} onClick={handleOpenSideBar} />
 						</div>
 						<p className="text-white text-sm hidden sm:block">
-							Semester Aktif: 2022/2023 Genap
+							Semester Aktif: {semesterName}
 						</p>
 					</div>
 				</div>
@@ -122,16 +144,22 @@ const AppLayout: React.FC = () => {
 			<div className="flex gap-5 p-5">
 				<div
 					className={`${
-						openSideBar ? "absolute w-1/3 z-50" : "hidden"
+						openSideBar ? "absolute bg-white w-full z-50" : "hidden"
 					} sm:block min-h-screen duration-100`}
 				>
-					<NavbarItemGroup title="Menu Utama" items={MENUS?.persiapan || []} />
+					<NavbarItemGroup
+						title="Menu Utama"
+						onClickItem={isMobileView ? handleOpenSideBar : () => null}
+						items={MENUS?.persiapan || []}
+					/>
 					<NavbarItemGroup
 						title="Persiapan MBKM"
+						onClickItem={isMobileView ? handleOpenSideBar : () => null}
 						items={MENUS?.pelaksanaan || []}
 					/>
 					<NavbarItemGroup
 						title="Laporan Kegiatan"
+						onClickItem={isMobileView ? handleOpenSideBar : () => null}
 						items={MENUS?.akhir || []}
 					/>
 				</div>
