@@ -10,6 +10,7 @@ import ModalStyle from "../../components/modal";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
+import ButtonTable from "../../components/button/ButtonTable";
 const ModalSelectStudyProgram = lazy(() => import("./modal-add-study-program"));
 
 const MbkmProgramDetailView = () => {
@@ -97,11 +98,9 @@ const MbkmProgramDetailView = () => {
 			action: true,
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
-					<ButtonStyle
+					<ButtonTable
 						title="Hapus"
-						size="xs"
-						color="failure"
-						className="mx-2"
+						variant="danger"
 						onClick={() => {
 							handleModalDelete();
 							handleModaDataSelected(data);

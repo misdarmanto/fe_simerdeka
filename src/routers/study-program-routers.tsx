@@ -16,6 +16,7 @@ import StudentDetailView from "../pages/student/detail-student";
 import StudentListView from "../pages/student/list-student";
 import StudentCreateSksView from "../pages/student/create-sks-convertion";
 import SksConvertionView from "../pages/sksConvertion/list-sks-convertion";
+import SksConversionCreateView from "../pages/sksConvertion/createSksConvertionView";
 
 export const studyProgramRouters = [
 	{
@@ -108,7 +109,11 @@ export const studyProgramRouters = [
 	//sks convertion
 
 	{
-		path: "/sks-converions",
+		path: "/sks-convertions",
 		element: <SksConvertionView />,
+	},
+	{
+		path: "/sks-convertions/create",
+		element: <SksConversionCreateView />,
 	},
 ];

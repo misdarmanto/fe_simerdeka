@@ -7,6 +7,7 @@ import { RiUpload2Fill } from "react-icons/ri";
 import { useHttp } from "../../hooks/useHttp";
 import axios from "axios";
 import { CONFIG } from "../../configs";
+import { BiFolder } from "react-icons/bi";
 
 interface ButtonUploadFileTypes {
 	onUpload: (url: string) => void;
@@ -54,15 +55,16 @@ const ButtonUploadFile = ({ onUpload }: ButtonUploadFileTypes) => {
 	};
 
 	return (
-		<div>
+		<div className="flex items-center">
 			<Button color="light" onClick={() => fileInputRef.current.click()}>
-				<RiUpload2Fill size={20} />
-				<p className="mx-2">{isLoading ? "Loading..." : "Upload File"} </p>
+				<RiUpload2Fill size={16} />
+				<p className="mx-2">{isLoading ? "Loading..." : "Browse"} </p>
 			</Button>
-			<p className="mx-2 my-2 text-gray-500">{fileName} </p>
+			<p className="mx-2 my-1 text-gray-500">{fileName} </p>
 			<input
 				type="file"
 				className="absolute top-0 left-0 opacity-0"
+				accept="application/pdf"
 				ref={fileInputRef}
 				onChange={handleFileUpload}
 			/>

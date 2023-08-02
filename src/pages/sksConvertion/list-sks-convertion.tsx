@@ -9,6 +9,7 @@ import ModalStyle from "../../components/modal";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
 import { SksConvertionTypes } from "../../models/sks-convertion";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const SksConvertionView = () => {
 	const [listSksConvertion, setListSksConvertion] = useState<any>();
@@ -26,9 +27,9 @@ const SksConvertionView = () => {
 		setModalDeleteData(item);
 	};
 
-	const handleDeleteSemester = async () => {
+	const handleDeleteSksKonversion = async () => {
 		await handleRemoveRequest({
-			path: `${apiUrlPath.semesters.delete}?semester_id=${modalDeleteData?.sksConvertionId}`,
+			path: `${apiUrlPath.sksConvertions.delete}?sksKonvertion_id=${modalDeleteData?.sksConvertionId}`,
 		});
 		setOpenModalDelete(false);
 		window.location.reload();
@@ -96,16 +97,14 @@ const SksConvertionView = () => {
 			title: "Action",
 			action: true,
 			data: (data: SksConvertionTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<div className="flex items-center">
+				<td key={index + "action"} className="md:px-6 md:py-3">
+					<div className="flex items-center gap-1">
 						<Link to={`/semesters/detail/${data.sksConvertionId}`}>
-							<ButtonStyle title="Detail" size="xs" color="light" />
+							<ButtonTable title="Detail" variant="primary" />
 						</Link>
-						<ButtonStyle
-							title="Edit"
-							size="xs"
-							color="failure"
-							className="mx-2"
+						<ButtonTable
+							title="Hapus"
+							variant="danger"
 							onClick={() => {
 								handleModalDelete();
 								handleModaDataSelected(data);
@@ -124,15 +123,15 @@ const SksConvertionView = () => {
 			<BreadcrumbStyle
 				listPath={[
 					{
-						link: "/semesters",
-						title: "Semester",
+						link: "/sks-convertions",
+						title: "Konversi SKS",
 					},
 					{
-						link: "/semesters",
-						title: "List",
+						link: "/sks-convertions",
+						title: "Daftar",
 					},
 				]}
-				icon={BASE_ICON.MENU.SemesterIcon}
+				icon={BASE_ICON.MENU.SksConvertionIcon}
 			/>
 
 			<div className="flex flex-col md:flex-row justify-between md:px-0">
@@ -154,7 +153,7 @@ const SksConvertionView = () => {
 					<ButtonStyle
 						title="Create"
 						color="light"
-						onClick={() => navigate("/semesters/create")}
+						onClick={() => navigate("/sks-convertions/create")}
 					/>
 				</div>
 				<div className="mt-1 w-full md:w-1/5">
@@ -166,7 +165,7 @@ const SksConvertionView = () => {
 				onBtnNoClick={handleModalDelete}
 				title={`Apakah anda yakin ingin menghapus ${modalDeleteData?.sksConvertionName}`}
 				isOpen={openModalDelete}
-				onBtnYesClick={handleDeleteSemester}
+				onBtnYesClick={handleDeleteSksKonversion}
 				onOpen={handleModalDelete}
 			/>
 			<TableStyle header={header} table={listSksConvertion} />

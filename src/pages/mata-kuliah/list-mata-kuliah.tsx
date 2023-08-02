@@ -9,6 +9,7 @@ import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
 import { MataKuliahTypes } from "../../models/mata-kuliah";
 import { apiUrlPath } from "../../configs/apiPath";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const MataKuliahListView = () => {
 	const [listMataKuliah, setListMataKuliah] = useState<any>();
@@ -90,14 +91,12 @@ const MataKuliahListView = () => {
 			title: "Action",
 			action: true,
 			data: (data: any, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<div className="flex items-center">
+				<td key={index + "action"} className="md:px-6 md:py-3">
+					<div className="flex items-center gap-1">
 						{currentUser.userRole === "studyProgram" && (
-							<ButtonStyle
+							<ButtonTable
 								title="Hapus"
-								size="xs"
-								color="failure"
-								className="mx-2"
+								variant="danger"
 								onClick={() => {
 									handleModalDelete();
 									handleModaDataSelected(data);

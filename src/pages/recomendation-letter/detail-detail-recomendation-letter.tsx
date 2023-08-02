@@ -13,6 +13,7 @@ import FileUploadButton from "../../components/button/button-upload";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const RecomendationLetterDetail = () => {
 	const [recomendationLetter, setRecomendationLetter] =
@@ -262,18 +263,18 @@ const RecomendationLetterDetail = () => {
 							rows={4}
 						/>
 					</div>
-					<div className="flex justify-end items-center mt-5">
-						<ButtonStyle
-							onClick={() => handleChangeStatusApproval("rejected")}
+					<div className="flex justify-end items-center mt-5 gap-2">
+						<ButtonTable
 							title="Tolak"
-							color="failure"
-							className="mx-2"
+							variant="danger"
+							onClick={() => handleChangeStatusApproval("rejected")}
 						/>
-						<ButtonStyle
+
+						<ButtonTable
 							title="Terima"
-							disabled={recomendationLetterApprovalLetter === ""}
-							className="mx-2"
+							variant="primary"
 							onClick={handleChangeStatusAssignMent}
+							isDisagele={recomendationLetterApprovalLetter === ""}
 						/>
 					</div>
 				</div>

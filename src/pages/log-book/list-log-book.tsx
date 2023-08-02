@@ -10,6 +10,7 @@ import { LogBookTypes } from "../../models/log-book";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const LogBookListView = () => {
 	const [listLogBook, setListLogBook] = useState<any>();
@@ -123,17 +124,15 @@ const LogBookListView = () => {
 			title: "Action",
 			action: true,
 			data: (data: LogBookTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<div className="flex items-center">
+				<td key={index + "action"} className="md:px-6 md:py-3">
+					<div className="flex items-center gap-1">
 						<Link to={`/log-books/detail/${data.logBookId}`}>
-							<ButtonStyle title="Detail" size="xs" color="light" />
+							<ButtonTable title="Detail" variant="primary" />
 						</Link>
 						{currentUser.userRole === "student" && (
-							<ButtonStyle
+							<ButtonTable
 								title="Hapus"
-								size="xs"
-								color="failure"
-								className="mx-2"
+								variant="danger"
 								onClick={() => {
 									handleModalDelete();
 									handleModaDataSelected(data);

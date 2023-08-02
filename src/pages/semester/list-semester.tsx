@@ -9,6 +9,7 @@ import ModalStyle from "../../components/modal";
 import { SemesterTypes } from "../../models/semester";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const SemesterListView = () => {
 	const [listSemester, setListSemester] = useState<any>();
@@ -119,16 +120,14 @@ const SemesterListView = () => {
 			title: "Action",
 			action: true,
 			data: (data: SemesterTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<div className="flex items-center">
+				<td key={index + "action"} className="md:px-6 md:py-3">
+					<div className="flex items-center gap-1">
 						<Link to={`/semesters/detail/${data.semesterId}`}>
-							<ButtonStyle title="Detail" size="xs" color="light" />
+							<ButtonTable title="Detail" variant="primary" />
 						</Link>
-						<ButtonStyle
-							title="Edit"
-							size="xs"
-							color="failure"
-							className="mx-2"
+						<ButtonTable
+							title="Hapus"
+							variant="danger"
 							onClick={() => {
 								handleModalDelete();
 								handleModaDataSelected(data);

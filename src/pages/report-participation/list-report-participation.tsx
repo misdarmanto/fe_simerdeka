@@ -7,6 +7,7 @@ import { ReportParticipationTypes } from "../../models/report-participation";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const ReportParticipationListView = () => {
 	const [listProgram, setListProgram] = useState<any>();
@@ -116,12 +117,12 @@ const ReportParticipationListView = () => {
 			title: "Action",
 			action: true,
 			data: (data: ReportParticipationTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<div>
+				<td key={index + "action"} className="md:px-6 md:py-3">
+					<div className="flex items-center gap-1">
 						<Link
 							to={`/report-participations/detail/${data.reportParticipationId}`}
 						>
-							<ButtonStyle title="Detail" color="light" />
+							<ButtonTable title="Detail" variant="primary" />
 						</Link>
 					</div>
 				</td>

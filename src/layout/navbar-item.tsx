@@ -6,9 +6,10 @@ type MenuItems = { title: string; path: string; icon: any };
 interface NavbarItemGroupTypes {
 	title: String;
 	items: MenuItems[];
+	onClickItem?: () => void;
 }
 
-const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
+const NavbarItemGroup = ({ title, items, onClickItem }: NavbarItemGroupTypes) => {
 	const customTheme: CustomFlowbiteTheme["listGroup"] = {
 		root: {
 			base: "list-none rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-700 text-left",
@@ -37,7 +38,7 @@ const NavbarItemGroup = ({ title, items }: NavbarItemGroupTypes) => {
 			</div>
 
 			{items.map((item: MenuItems, index) => (
-				<Link to={item.path}>
+				<Link to={item.path} onClick={onClickItem}>
 					<div className="flex gap-5 p-2 hover:bg-yellow-100 border rounded-sm">
 						<div>{item.icon}</div>
 						<div>{item.title}</div>

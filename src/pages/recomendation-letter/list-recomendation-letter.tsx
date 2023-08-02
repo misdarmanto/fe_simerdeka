@@ -8,6 +8,7 @@ import { RecomendationLetterTypes } from "../../models/recomendation-letter";
 import { AppContextTypes, useAppContext } from "../../context/app.context";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const RecomendationLetterList = () => {
 	const navigate = useNavigate();
@@ -160,12 +161,12 @@ const RecomendationLetterList = () => {
 			title: "Action",
 			action: true,
 			data: (data: RecomendationLetterTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
-					<div>
+				<td key={index + "action"} className="md:px-6 md:py-3">
+					<div className="flex items-center gap-1">
 						<Link
 							to={`/recomendation-letters/detail/${data.recomendationLetterId}`}
 						>
-							<ButtonStyle title="Detail" color="light" />
+							<ButtonTable title="Detail" variant="primary" />
 						</Link>
 					</div>
 				</td>

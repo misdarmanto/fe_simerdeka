@@ -10,6 +10,7 @@ import ModalAddStudent from "./modal-add-student";
 import { StudentTypes } from "../../models/student";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
+import ButtonTable from "../../components/button/ButtonTable";
 
 const MbkmProgramProdiDetailView = () => {
 	const [listOfStudent, setListOfStudent] = useState<any>();
@@ -55,6 +56,9 @@ const MbkmProgramProdiDetailView = () => {
 			path: `${apiUrlPath.students.get}?mbkmProgramId=${mbkmProgramId}&&`,
 		});
 
+		console.log("__________Detail Student__________");
+		console.log(result);
+
 		setListOfStudent({
 			link: `/students`,
 			data: result,
@@ -99,11 +103,9 @@ const MbkmProgramProdiDetailView = () => {
 			action: true,
 			data: (data: StudentTypes, index: number): ReactElement => (
 				<td key={index + "action"}>
-					<ButtonStyle
+					<ButtonTable
 						title="Hapus"
-						size="xs"
-						color="failure"
-						className="mx-2"
+						variant="danger"
 						onClick={() => {
 							handleModalDelete();
 							handleModaDataSelected(data);
