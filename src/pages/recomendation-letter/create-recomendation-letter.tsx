@@ -127,20 +127,20 @@ const RecomendationLetterCreate = () => {
 						/>
 					</div>
 
-					<div className="flex gap-5 items-center">
+					<div className="grid grid-cols-4 items-center">
 						<div className="mb-2 block">
 							<label htmlFor="file">Surat Persetujuan Dosen Wali</label>
 						</div>
 						<FileUploadButton onUpload={setSuratPersetujuanDosenWali} />
 					</div>
-					<div className="flex gap-5 items-center">
+					<div className="grid grid-cols-4 items-center">
 						<div className="mb-2 block">
 							<label htmlFor="file">Transkrip semester 1-4</label>
 						</div>
 						<FileUploadButton onUpload={setRecomendatationStudentTranskrip} />
 					</div>
 
-					<div className="flex gap-5 items-center">
+					<div className="grid grid-cols-4 items-center">
 						<div className="mb-2 block">
 							<label htmlFor="file">Silabus MBKM</label>
 						</div>

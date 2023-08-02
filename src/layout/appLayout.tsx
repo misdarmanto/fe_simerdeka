@@ -149,17 +149,17 @@ const AppLayout: React.FC = () => {
 				>
 					<NavbarItemGroup
 						title="Menu Utama"
-						onClickItem={isMobileView ? handleOpenSideBar : () => null}
+						// onClickItem={isMobileView ? handleOpenSideBar : () => null}
 						items={MENUS?.persiapan || []}
 					/>
 					<NavbarItemGroup
 						title="Persiapan MBKM"
-						onClickItem={isMobileView ? handleOpenSideBar : () => null}
+						// onClickItem={isMobileView ? handleOpenSideBar : () => null}
 						items={MENUS?.pelaksanaan || []}
 					/>
 					<NavbarItemGroup
 						title="Laporan Kegiatan"
-						onClickItem={isMobileView ? handleOpenSideBar : () => null}
+						// onClickItem={isMobileView ? handleOpenSideBar : () => null}
 						items={MENUS?.akhir || []}
 					/>
 				</div>
