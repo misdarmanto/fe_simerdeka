@@ -55,7 +55,6 @@ const StudentCreateSksView = () => {
 					<Label value="Pilih Mata Kuliah" />
 					<ButtonStyle
 						title="Tambah Mata Kuliah"
-						color="light"
 						onClick={handleModalAddMataKuliah}
 					/>
 
@@ -91,7 +90,6 @@ const StudentCreateSksView = () => {
 						<ButtonStyle
 							title="Buat"
 							type="submit"
-							color="dark"
 							disabled={!mataKuliahSelected}
 						/>
 					</div>

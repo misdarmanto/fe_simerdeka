@@ -122,7 +122,7 @@ const ReportParicipationDetailView = () => {
 						<ButtonStyle
 							onClick={() => handleChangeStatusApproval("rejected")}
 							title="Tolak"
-							color="failure"
+							color="red"
 							className="mx-2"
 						/>
 						<ButtonStyle

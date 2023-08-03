@@ -56,9 +56,6 @@ const MbkmProgramProdiDetailView = () => {
 			path: `${apiUrlPath.students.get}?mbkmProgramId=${mbkmProgramId}&&`,
 		});
 
-		console.log("__________Detail Student__________");
-		console.log(result);
-
 		setListOfStudent({
 			link: `/students`,
 			data: result,
@@ -102,7 +99,7 @@ const MbkmProgramProdiDetailView = () => {
 			title: "Action",
 			action: true,
 			data: (data: StudentTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
+				<td key={index + "action"} className="md:px-6 md:py-3">
 					<ButtonTable
 						title="Hapus"
 						variant="danger"
@@ -182,7 +179,6 @@ const MbkmProgramProdiDetailView = () => {
 						</div>
 						<ButtonStyle
 							title="Tambah Mahasiswa"
-							color="light"
 							onClick={() => setOpenModalAddStudent(true)}
 						/>
 					</div>

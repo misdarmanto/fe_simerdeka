@@ -116,4 +116,8 @@ export const studyProgramRouters = [
 		path: "/sks-convertions/create",
 		element: <SksConversionCreateView />,
 	},
+	{
+		path: "/sks-convertions/detail/:sksConvertionId",
+		element: <SksConversionCreateView />,
+	},
 ];
