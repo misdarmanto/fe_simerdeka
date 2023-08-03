@@ -1,9 +1,9 @@
-import { ref } from "firebase/storage";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "flowbite-react";
 import { RiUpload2Fill } from "react-icons/ri";
 import axios from "axios";
 import { CONFIG } from "../../configs";
+import { AppContextTypes, useAppContext } from "../../context/app.context";
 
 interface ButtonUploadFileTypes {
 	onUpload: (url: string) => void;
@@ -14,11 +14,27 @@ const ButtonUploadFile = ({ onUpload }: ButtonUploadFileTypes) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [fileName, setFileName] = useState("");
 
+	const { setErrorMessage }: AppContextTypes = useAppContext();
+
 	const handleFileUpload = async () => {
 		const selectedFile = fileInputRef.current.files[0];
+		const MAX_FILE_SIZE = 2048; // 2MB
 
 		if (!selectedFile) {
-			alert("Please select a file to upload.");
+			setErrorMessage({
+				message: "silahkan pilih file terlebih dahulu",
+				isError: true,
+			});
+			return;
+		}
+
+		const fileSizeKiloBytes = selectedFile.size / 1024;
+
+		if (fileSizeKiloBytes > MAX_FILE_SIZE) {
+			setErrorMessage({
+				message: "maksimum file 2mb",
+				isError: true,
+			});
 			return;
 		}
 
@@ -44,9 +60,13 @@ const ButtonUploadFile = ({ onUpload }: ButtonUploadFileTypes) => {
 
 			setIsLoading(false);
 			onUpload(result.data.fileUrl);
-		} catch (error) {
+		} catch (error: any) {
 			console.log(error);
-			alert("Error uploading the file.");
+			setErrorMessage({
+				message:
+					"tidak dapat mengunggah file " + error.response.data.error_message,
+				isError: true,
+			});
 		}
 	};
 
@@ -56,7 +76,7 @@ const ButtonUploadFile = ({ onUpload }: ButtonUploadFileTypes) => {
 				<RiUpload2Fill size={16} />
 				<p className="mx-2">{isLoading ? "Loading..." : "Browse"} </p>
 			</Button>
-			<p className="mx-2 my-1 text-gray-500">{fileName} </p>
+			<p className="mx-2 my-1 text-gray-500">{fileName ? fileName : "Max 2mb"} </p>
 			<input
 				type="file"
 				className="absolute top-0 left-0 opacity-0"

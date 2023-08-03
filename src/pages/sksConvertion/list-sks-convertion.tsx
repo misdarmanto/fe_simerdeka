@@ -1,4 +1,4 @@
-import { Badge, TextInput } from "flowbite-react";
+import { TextInput } from "flowbite-react";
 import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
