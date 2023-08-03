@@ -1,13 +1,9 @@
 import { ref } from "firebase/storage";
 import React, { useRef, useState } from "react";
-import { storage } from "../../configs/firebase";
-import { uploadImageToFirebase } from "../../utils/firebase";
 import { Button } from "flowbite-react";
 import { RiUpload2Fill } from "react-icons/ri";
-import { useHttp } from "../../hooks/useHttp";
 import axios from "axios";
 import { CONFIG } from "../../configs";
-import { BiFolder } from "react-icons/bi";
 
 interface ButtonUploadFileTypes {
 	onUpload: (url: string) => void;

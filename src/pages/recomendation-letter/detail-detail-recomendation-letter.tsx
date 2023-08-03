@@ -18,9 +18,16 @@ import ButtonTable from "../../components/button/ButtonTable";
 const RecomendationLetterDetail = () => {
 	const [recomendationLetter, setRecomendationLetter] =
 		useState<RecomendationLetterTypes>();
-	const [recomendationLetterStatusMessage, setRecomendationLetterStatusMessage] =
-		useState<string>("");
-	const [recomendationLetterApprovalLetter, setRecomendationLetterApprovalLetter] =
+	const [
+		recomendationLetterStatusMessage,
+		setRecomendationLetterStatusMessage,
+	] = useState<string>("");
+	const [
+		recomendationLetterApprovalLetter,
+		setRecomendationLetterApprovalLetter,
+	] = useState<string>("");
+
+	const [recomendationLetterSptjmLetter, setRecomendationLetterSptjmLetter] =
 		useState<string>("");
 
 	const { recomendationLetterId }: any = useParams();
@@ -39,6 +46,7 @@ const RecomendationLetterDetail = () => {
 		const payload: RequestChangeStatusAssignMentTypes = {
 			recomendationLetterId,
 			recomendationLetterApprovalLetter,
+			recomendationLetterSptjmLetter,
 		};
 		await handleUpdateRequest({
 			path: apiUrlPath.recomendDatationLetters.changeStatusAssignment,
@@ -90,8 +98,12 @@ const RecomendationLetterDetail = () => {
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
-								<Timeline.Title>Diteruskan ke prodi</Timeline.Title>
-								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
+								<Timeline.Title>
+									Diteruskan ke prodi
+								</Timeline.Title>
+								<Timeline.Time>
+									{dateTime.toDateString()}
+								</Timeline.Time>
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
@@ -99,8 +111,12 @@ const RecomendationLetterDetail = () => {
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
-								<Timeline.Title>Diteruskan ke Jurusan</Timeline.Title>
-								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
+								<Timeline.Title>
+									Diteruskan ke Jurusan
+								</Timeline.Title>
+								<Timeline.Time>
+									{dateTime.toDateString()}
+								</Timeline.Time>
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
@@ -108,8 +124,12 @@ const RecomendationLetterDetail = () => {
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
-								<Timeline.Title>Diteruskan ke LP3M</Timeline.Title>
-								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
+								<Timeline.Title>
+									Diteruskan ke LP3M
+								</Timeline.Title>
+								<Timeline.Time>
+									{dateTime.toDateString()}
+								</Timeline.Time>
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
@@ -117,18 +137,25 @@ const RecomendationLetterDetail = () => {
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
-								<Timeline.Title>Diteruskan ke akademik</Timeline.Title>
-								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
+								<Timeline.Title>
+									Diteruskan ke akademik
+								</Timeline.Title>
+								<Timeline.Time>
+									{dateTime.toDateString()}
+								</Timeline.Time>
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
 
-					{recomendationLetter?.recomendationLetterStatus === "accepted" && (
+					{recomendationLetter?.recomendationLetterStatus ===
+						"accepted" && (
 						<Timeline.Item>
 							<Timeline.Point icon={BiCalendar} />
 							<Timeline.Content>
 								<Timeline.Title>Selesai</Timeline.Title>
-								<Timeline.Time>{dateTime.toDateString()}</Timeline.Time>
+								<Timeline.Time>
+									{dateTime.toDateString()}
+								</Timeline.Time>
 							</Timeline.Content>
 						</Timeline.Item>
 					)}
@@ -140,22 +167,28 @@ const RecomendationLetterDetail = () => {
 					<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
 						<ListItemStyle
 							title="Nama"
-							description={recomendationLetter?.student?.studentName}
+							description={
+								recomendationLetter?.student?.studentName
+							}
 						/>
 						<ListItemStyle
 							title="NIM"
-							description={recomendationLetter?.student?.studentNim}
+							description={
+								recomendationLetter?.student?.studentNim
+							}
 						/>
 						<ListItemStyle
 							title="Prodi"
 							description={
-								recomendationLetter?.student?.studentStudyProgramName
+								recomendationLetter?.student
+									?.studentStudyProgramName
 							}
 						/>
 						<ListItemStyle
 							title="Jurusan"
 							description={
-								recomendationLetter?.student?.studentDepartmentName
+								recomendationLetter?.student
+									?.studentDepartmentName
 							}
 						/>
 						<ListItemStyle
@@ -186,36 +219,58 @@ const RecomendationLetterDetail = () => {
 					<dl className="max-w-md sm:w-1/2 text-gray-900 divide-y divide-gray-200">
 						<ListItemStyle
 							title="Transkrip semester 1-4"
-							url={recomendationLetter?.recomendationLetterStudentTranskrip}
+							url={
+								recomendationLetter?.recomendationLetterStudentTranskrip
+							}
 						/>
 
 						<ListItemStyle
 							title="Surat Persetujuan Dosen Wali"
-							url={recomendationLetter?.recomendationLetterApprovalLetter}
+							url={
+								recomendationLetter?.recomendationLetterApprovalLetter
+							}
 						/>
 						<ListItemStyle
 							title="Silabus"
-							url={recomendationLetter?.recomendationLetterSyllabus}
+							url={
+								recomendationLetter?.recomendationLetterSyllabus
+							}
 						/>
 						<ListItemStyle
 							title="Surat Pengantar Prodi"
-							url={recomendationLetter?.recomendationLetterFromStudyProgram}
+							url={
+								recomendationLetter?.recomendationLetterFromStudyProgram
+							}
 						/>
 
 						<ListItemStyle
 							title="Surat Pengantar Jurusan"
-							url={recomendationLetter?.recomendationLetterFromDepartment}
+							url={
+								recomendationLetter?.recomendationLetterFromDepartment
+							}
 						/>
 
 						<ListItemStyle
 							title="Surat Pengantar LP3M"
-							url={recomendationLetter?.recomendationLetterFromLp3m}
+							url={
+								recomendationLetter?.recomendationLetterFromLp3m
+							}
 						/>
 
 						<ListItemStyle
 							title="Download Surat Rekomendasi"
 							isDownloadButton={true}
-							url={recomendationLetter?.recomendationLetterFromAcademic}
+							url={
+								recomendationLetter?.recomendationLetterFromAcademic
+							}
+						/>
+
+						<ListItemStyle
+							title="SPTJM"
+							isDownloadButton={true}
+							url={
+								recomendationLetter?.recomendationLetterSptjmLetter
+							}
 						/>
 					</dl>
 				</div>
@@ -238,7 +293,7 @@ const RecomendationLetterDetail = () => {
 						<div className="mb-2 block">
 							<label htmlFor="file">
 								{currentUser.userRole === "academic"
-									? "surat rekomendasi"
+									? "surat rekomendasi dan SPTJM"
 									: "surat pengantar"}
 								:
 							</label>
@@ -246,6 +301,16 @@ const RecomendationLetterDetail = () => {
 						<FileUploadButton
 							onUpload={setRecomendationLetterApprovalLetter}
 						/>
+						{currentUser.userRole === "academic" && (
+							<>
+								<div className="mb-2 block">
+									<label htmlFor="file">SPTJM</label>
+								</div>
+								<FileUploadButton
+									onUpload={setRecomendationLetterSptjmLetter}
+								/>
+							</>
+						)}
 					</div>
 
 					<div id="textarea" className="mt-5 flex gap-5 items-center">
@@ -258,7 +323,9 @@ const RecomendationLetterDetail = () => {
 							required={true}
 							value={recomendationLetterStatusMessage}
 							onChange={(e) =>
-								setRecomendationLetterStatusMessage(e.target.value)
+								setRecomendationLetterStatusMessage(
+									e.target.value
+								)
 							}
 							rows={4}
 						/>
@@ -267,14 +334,18 @@ const RecomendationLetterDetail = () => {
 						<ButtonTable
 							title="Tolak"
 							variant="danger"
-							onClick={() => handleChangeStatusApproval("rejected")}
+							onClick={() =>
+								handleChangeStatusApproval("rejected")
+							}
 						/>
 
 						<ButtonTable
 							title="Terima"
 							variant="primary"
 							onClick={handleChangeStatusAssignMent}
-							isDisagele={recomendationLetterApprovalLetter === ""}
+							isDisagele={
+								recomendationLetterApprovalLetter === ""
+							}
 						/>
 					</div>
 				</div>
