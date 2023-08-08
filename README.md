@@ -1,17 +1,17 @@
-
-# umkm-frontend
-
-## Link
-aplikasi yang sudah di deploy
-- [Lihat Live Demo](https://umkm-app-deploy-ytr7.vercel.app/)
-
-## Deskripsi
-website UMKM restorant
+# simerdeka frontend
 
 ## Instalasi
+
 ```
 $ npm install
 
 ```
 
+## copy env.example to .env
 
+## run the app in development mode
+
+```
+$ npm run dev
+
+```
