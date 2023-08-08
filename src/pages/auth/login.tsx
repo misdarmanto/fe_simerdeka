@@ -1,6 +1,6 @@
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 
-const Login = () => {
+const LoginView = () => {
 	const handleLogin = () => {};
 	return (
 		<div className="flex justify-center items-center h-screen bg-gray-100">
@@ -21,4 +21,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default LoginView;

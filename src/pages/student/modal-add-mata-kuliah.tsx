@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { ButtonStyle } from "../../components";
-import { Modal, TextInput } from "flowbite-react";
+import { Checkbox, Modal, TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { MataKuliahTypes } from "../../models/mata-kuliah";
 import { useHttp } from "../../hooks/useHttp";
@@ -79,12 +79,9 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, onSelect }: ModalAddMataKuliahType
 			title: "Action",
 			action: true,
 			data: (data: MataKuliahTypes, index: number): ReactElement => {
-				const isActive = data.mataKuliahId === mataKuliahSelected?.mataKuliahId;
 				return (
 					<td key={index + "action"}>
-						<ButtonStyle
-							title="pilih"
-							color={isActive ? "dark" : "light"}
+						<Checkbox
 							onClick={() => {
 								handleSelectMataKuliah(data);
 							}}

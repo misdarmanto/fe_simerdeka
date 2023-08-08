@@ -121,7 +121,7 @@ const RecomendationLetterCreate = () => {
 							onChange={(e) =>
 								setprogramCorrelationDescription(e.target.value)
 							}
-							placeholder="Leave a comment..."
+							placeholder="Deskripsi..."
 							required={true}
 							rows={4}
 						/>
@@ -148,7 +148,7 @@ const RecomendationLetterCreate = () => {
 					</div>
 
 					<div className="flex justify-end">
-						<ButtonStyle title="Submit" type="submit" color="dark" />
+						<ButtonStyle title="Submit" type="submit" />
 					</div>
 				</form>
 			</div>

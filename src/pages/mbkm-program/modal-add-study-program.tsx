@@ -1,7 +1,7 @@
 import { ReactElement, memo, useEffect, useState } from "react";
 import { ButtonStyle } from "../../components";
 import { MbkmProgramTypes } from "../../models/mbkm-program";
-import { Modal, TextInput } from "flowbite-react";
+import { Checkbox, Modal, TextInput } from "flowbite-react";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudyProgramTypes } from "../../models/study-program";
 import { MbkmProgramProdiCreateRequestTypes } from "../../models/mbkm-program-prodi";
@@ -127,9 +127,7 @@ const ModalSelectStudyProgram = ({
 				return (
 					<td key={index + "action"}>
 						<div>
-							<ButtonStyle
-								title="pilih"
-								color={isButtonActive ? "dark" : "light"}
+							<Checkbox
 								onClick={() => {
 									handleSelectStudyProgram(data);
 								}}
@@ -178,12 +176,7 @@ const ModalSelectStudyProgram = ({
 				</div>
 				<TableStyle header={header} table={listOfStudyProgramRegistered} />
 				<div className="flex justify-end">
-					<ButtonStyle
-						title="Buat"
-						type="submit"
-						color="dark"
-						onClick={handleSubmit}
-					/>
+					<ButtonStyle title="Buat" type="submit" onClick={handleSubmit} />
 				</div>
 			</Modal.Body>
 		</Modal>

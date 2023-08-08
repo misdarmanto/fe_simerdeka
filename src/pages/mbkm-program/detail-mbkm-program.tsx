@@ -97,7 +97,7 @@ const MbkmProgramDetailView = () => {
 			title: "Action",
 			action: true,
 			data: (data: MbkmProgramProdiTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
+				<td key={index + "action"} className="md:px-6 md:py-3">
 					<ButtonTable
 						title="Hapus"
 						variant="danger"
@@ -183,7 +183,6 @@ const MbkmProgramDetailView = () => {
 							(currentUser.userRole === "lp3m" && (
 								<ButtonStyle
 									title="Tambah Prodi"
-									color="light"
 									onClick={() => setOpenModalSelectStudyProgram(true)}
 								/>
 							))}

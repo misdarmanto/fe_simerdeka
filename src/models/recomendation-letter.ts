@@ -6,6 +6,7 @@ export interface RecomendationLetterTypes {
 	recomendationLetterDosenWali: string;
 	recomendationLetterSyllabus: string;
 	recomendationLetterApprovalLetter: string;
+	recomendationLetterSptjmLetter: string
 	recomendationLetterFromStudyProgram: string;
 	recomendationLetterFromDepartment: string;
 	recomendationLetterFromLp3m: string;
@@ -39,6 +40,7 @@ export interface RecomendationLetterCreateRequestTypes {
 export interface RequestChangeStatusAssignMentTypes {
 	recomendationLetterId: string;
 	recomendationLetterApprovalLetter: string;
+	recomendationLetterSptjmLetter: string
 }
 
 export interface RequestChangeStatusApprovalTypes {

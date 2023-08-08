@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { ButtonStyle } from "../../components";
 import { ServiceHttp } from "../../services/api";
 import { MbkmProgramTypes } from "../../models/mbkm-program";
-import { Modal, TextInput } from "flowbite-react";
+import { Checkbox, Modal, TextInput } from "flowbite-react";
 import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudentTypes } from "../../models/student";
@@ -94,12 +94,8 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 				const isActive = data.studentId === studentSelected?.studentId;
 				console.log(isActive);
 				return (
-					<td key={index + "action"}>
-						<ButtonStyle
-							title="pilih"
-							size="xs"
-							color={isActive ? "dark" : "light"}
-							className="mx-2"
+					<td key={index + "action"} className="md:px-6 md:py-3">
+						<Checkbox
 							onClick={() => {
 								handleSelectStudent(data);
 							}}
@@ -151,7 +147,6 @@ const ModalAddStudent = ({ onOpen, isOpen, mbkmProgram }: ModalAddStudentTypes) 
 						disabled={!studentSelected}
 						title="Tambahkan"
 						type="submit"
-						color="dark"
 						onClick={handleSubmit}
 					/>
 				</div>

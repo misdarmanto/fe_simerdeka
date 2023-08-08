@@ -27,12 +27,11 @@ export default function App() {
 					JSON.stringify(LIST_USER[0])
 				);
 				setAppRole(LIST_USER[0].userRole);
-				await fecthCurrentUser();
 			} else {
 				const user: UserTypes = JSON.parse(userCredential + "");
 				setAppRole(user.userRole);
-				await fecthCurrentUser();
 			}
+			await fecthCurrentUser();
 			setIsLoading(false);
 		} catch (err: any) {
 			console.log(err.message);

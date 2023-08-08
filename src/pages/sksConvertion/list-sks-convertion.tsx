@@ -1,4 +1,4 @@
-import { Badge, TextInput } from "flowbite-react";
+import { TextInput } from "flowbite-react";
 import { ReactElement, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_ICON, BreadcrumbStyle } from "../../components";
@@ -99,7 +99,7 @@ const SksConvertionView = () => {
 			data: (data: SksConvertionTypes, index: number): ReactElement => (
 				<td key={index + "action"} className="md:px-6 md:py-3">
 					<div className="flex items-center gap-1">
-						<Link to={`/semesters/detail/${data.sksConvertionId}`}>
+						<Link to={`/sks-convertions/detail/${data.sksConvertionId}`}>
 							<ButtonTable title="Detail" variant="primary" />
 						</Link>
 						<ButtonTable
@@ -152,7 +152,6 @@ const SksConvertionView = () => {
 
 					<ButtonStyle
 						title="Create"
-						color="light"
 						onClick={() => navigate("/sks-convertions/create")}
 					/>
 				</div>

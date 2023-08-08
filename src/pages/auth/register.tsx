@@ -1,6 +1,6 @@
 import { Button, TextInput } from "flowbite-react";
 
-const Register = () => {
+const RegisterView = () => {
 	const handleRegister = () => {};
 	return (
 		<div className="flex justify-center items-center h-screen bg-gray-100">
@@ -22,4 +22,4 @@ const Register = () => {
 	);
 };
 
-export default Register;
+export default RegisterView;

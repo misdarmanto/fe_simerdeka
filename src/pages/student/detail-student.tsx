@@ -127,7 +127,7 @@ const StudentDetailView = () => {
 			title: "Action",
 			action: true,
 			data: (data: SksConvertionTypes, index: number): ReactElement => (
-				<td key={index + "action"}>
+				<td key={index + "action"} className="md:px-6 md:py-3">
 					<ButtonTable
 						title="Hapus"
 						variant="danger"
@@ -218,7 +218,6 @@ const StudentDetailView = () => {
 								</div>
 								<ButtonStyle
 									title="Tambah Mata Kuliah"
-									color="light"
 									onClick={() =>
 										navigate(
 											`/students/detail/${studentId}/create-sks-convertion`

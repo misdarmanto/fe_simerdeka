@@ -7,6 +7,7 @@ import { lp3mRouters } from "./lp3m-routers";
 import { academicRouters } from "./academic-routers";
 import { AppContextTypes, useAppContext } from "../context/app.context";
 import { studyProgramRouters } from "./study-program-routers";
+import LoginView from "../pages/auth/login";
 
 export default function AppRouters() {
 	const { currentUser }: AppContextTypes = useAppContext();
@@ -33,13 +34,21 @@ export default function AppRouters() {
 			break;
 	}
 
+	const isAuth = true;
+
 	const routers = createBrowserRouter([
-		{
-			path: "/",
-			element: <AppLayout />,
-			errorElement: <ErrorPage />,
-			children: router,
-		},
+		isAuth
+			? {
+					path: "/",
+					element: <AppLayout />,
+					errorElement: <ErrorPage />,
+					children: router,
+			  }
+			: {
+					path: "/",
+					element: <LoginView />,
+					errorElement: <ErrorPage />,
+			  },
 	]);
 
 	return <RouterProvider router={routers} />;
