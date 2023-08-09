@@ -64,7 +64,7 @@ const SemesterCreateView = () => {
 						/>
 					</div>
 					<div className="flex justify-end">
-						<ButtonStyle title="Buat Semester" type="submit" color="dark" />
+						<ButtonStyle title="Buat Semester" type="submit" />
 					</div>
 				</form>
 			</div>

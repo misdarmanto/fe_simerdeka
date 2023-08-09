@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { CONFIG } from "../configs";
 
 export default function useToken() {
-	const LOCAL_STORAGE_KEY = "simerdeka";
 	const getToken = () => {
-		const tokenString = localStorage.getItem(LOCAL_STORAGE_KEY);
+		const tokenString = localStorage.getItem(CONFIG.local_storage_key);
 		if (tokenString) {
 			return tokenString;
 		} else {
@@ -14,12 +14,12 @@ export default function useToken() {
 	const [token, setToken] = useState<string | null>(getToken());
 
 	const saveToken = (userToken: string) => {
-		localStorage.setItem(LOCAL_STORAGE_KEY, userToken);
+		localStorage.setItem(CONFIG.local_storage_key, userToken);
 		setToken(userToken);
 	};
 
 	const removeToken = () => {
-		localStorage.removeItem(LOCAL_STORAGE_KEY);
+		localStorage.removeItem(CONFIG.local_storage_key);
 	};
 
 	return {

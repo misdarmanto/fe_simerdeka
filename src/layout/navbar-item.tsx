@@ -38,7 +38,7 @@ const NavbarItemGroup = ({ title, items, onClickItem }: NavbarItemGroupTypes) =>
 			</div>
 
 			{items.map((item: MenuItems, index) => (
-				<Link to={item.path} onClick={onClickItem}>
+				<Link key={index} to={item.path} onClick={onClickItem}>
 					<div className="flex gap-5 p-2 hover:bg-yellow-100 border rounded-sm">
 						<div>{item.icon}</div>
 						<div>{item.title}</div>

@@ -211,7 +211,6 @@ const RecomendationLetterList = () => {
 					{currentUser.userRole === "student" && (
 						<ButtonStyle
 							title="Buat"
-							color="light"
 							onClick={() => navigate("/recomendation-letters/create")}
 						/>
 					)}

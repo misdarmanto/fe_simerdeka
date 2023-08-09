@@ -109,7 +109,7 @@ const MbkmProgramCreatView = () => {
 					</div>
 
 					<div className="flex justify-end">
-						<ButtonStyle title="Submit" type="submit" color="dark" />
+						<ButtonStyle title="Submit" type="submit" />
 					</div>
 				</form>
 			</div>
