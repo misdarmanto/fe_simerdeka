@@ -84,7 +84,6 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, onSelect }: ModalAddMataKuliahType
 					<td key={index + "action"}>
 						<ButtonStyle
 							title="pilih"
-							color={isActive ? "dark" : "light"}
 							onClick={() => {
 								handleSelectMataKuliah(data);
 							}}

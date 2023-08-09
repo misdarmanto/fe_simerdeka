@@ -182,7 +182,6 @@ const LogBookListView = () => {
 					{currentUser.userRole === "student" && (
 						<ButtonStyle
 							title="Create"
-							color="light"
 							onClick={() => navigate("/log-books/create")}
 						/>
 					)}

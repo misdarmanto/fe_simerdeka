@@ -174,7 +174,6 @@ const MbkmProgramListView = () => {
 					{currentUser.userRole === "lp3m" && (
 						<ButtonStyle
 							title="Create"
-							color="light"
 							onClick={() => navigate("/mbkm-programs/create")}
 						/>
 					)}

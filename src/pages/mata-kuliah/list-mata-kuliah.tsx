@@ -146,7 +146,6 @@ const MataKuliahListView = () => {
 					{currentUser.userRole === "studyProgram" && (
 						<ButtonStyle
 							title="Create"
-							color="light"
 							onClick={() => navigate("/mata-kuliah/create")}
 						/>
 					)}

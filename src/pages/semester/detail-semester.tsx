@@ -77,7 +77,7 @@ const SemesterDetail = () => {
 						/>
 					</div>
 					<div className="flex justify-end">
-						<ButtonStyle title="Aktifkan" type="submit" color="dark" />
+						<ButtonStyle title="Aktifkan" type="submit" />
 					</div>
 				</form>
 			</div>

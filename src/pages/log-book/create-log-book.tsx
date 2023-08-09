@@ -71,7 +71,6 @@ const LogBookCreateView = () => {
 						<ButtonStyle
 							title="Serahkan"
 							type="submit"
-							color="dark"
 							disabled={!logBookReportFile || !logBookWeek}
 						/>
 					</div>

@@ -175,7 +175,6 @@ const SemesterListView = () => {
 
 					<ButtonStyle
 						title="Create"
-						color="light"
 						onClick={() => navigate("/semesters/create")}
 					/>
 				</div>

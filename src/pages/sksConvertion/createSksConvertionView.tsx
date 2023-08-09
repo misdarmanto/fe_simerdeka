@@ -54,7 +54,6 @@ const SksConversionCreateView = () => {
 					<Label value="Pilih Mata Kuliah" />
 					<ButtonStyle
 						title="Tambah Mata Kuliah"
-						color="light"
 						onClick={handleModalAddMataKuliah}
 					/>
 
@@ -75,7 +74,6 @@ const SksConversionCreateView = () => {
 						<ButtonStyle
 							title="Buat"
 							type="submit"
-							color="dark"
 							disabled={!mataKuliahSelected}
 						/>
 					</div>

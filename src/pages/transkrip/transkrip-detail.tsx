@@ -99,7 +99,7 @@ const TranskripDetailView = () => {
 			<div className="flex flex-col gap-4 bg-white border border-2 border-gray-200 rounded-lg p-10 my-5">
 				<div className="mb-2 flex justify-between">
 					<Label value="Transkrip Nilai" />
-					<ButtonStyle title="Download" color="light" />
+					<ButtonStyle title="Download" />
 				</div>
 				<TableStyle
 					header={tableHeaderMataKuliah}

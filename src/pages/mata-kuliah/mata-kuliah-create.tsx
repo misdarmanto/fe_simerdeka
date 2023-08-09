@@ -72,7 +72,6 @@ const MataKuliahCreateView = () => {
 						<ButtonStyle
 							title="Buat"
 							type="submit"
-							color="dark"
 							disabled={!mataKuliahName || !mataKuliahSksTotal}
 						/>
 					</div>
