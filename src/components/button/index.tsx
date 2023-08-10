@@ -1,35 +1,32 @@
-import { Button } from "flowbite-react";
-
 export interface ButtonStyleTypes {
-	color?: "dark" | "gray" | "light" | "success" | "failure" | "warning";
+	color?: "teal" | "red" | "yelow";
 	className?: string;
 	title: string;
 	type?: "button" | "submit" | "reset" | undefined;
 	onClick?: () => void;
 	onSubmit?: () => void;
 	disabled?: boolean;
-	size?: "xs" | "sm" | "md" | "xl";
 }
 
 export const ButtonStyle = ({
-	color,
+	color = "teal",
 	title,
 	className,
 	type = "button",
 	onClick,
 	disabled = false,
-	size = "sm",
 }: ButtonStyleTypes) => {
 	return (
-		<Button
+		<button
 			onClick={onClick}
 			disabled={disabled}
 			type={type}
-			size={size}
-			className={"h-5 " + className}
-			color={color}
+			className={
+				`bg-transparent m-1 text-sm hover:bg-${color}-500 text-${color}-700 hover:text-white py-1 px-3 border border-${color}-500 hover:border-transparent rounded-md ` +
+				className
+			}
 		>
 			{title}
-		</Button>
+		</button>
 	);
 };

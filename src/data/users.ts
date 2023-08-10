@@ -32,19 +32,19 @@ export const LIST_USER: UserTypes[] = [
 		userId: "b1491aae-9753-4bde-9934-2c8fb987d8c8",
 		userName: "Prodi Teknik Geomatika",
 		userEmail: "T.Geomatika.prodi@mail.com",
-		userRole: "study_program",
+		userRole: "studyProgram",
 	},
 	{
 		userId: "30b3c037-7d11-4a60-a039-ab09b007fd94",
 		userName: "Prodi Matematika",
 		userEmail: "Matematika.prodi@mail.com",
-		userRole: "study_program",
+		userRole: "studyProgram",
 	},
 	{
 		userId: "8db52aa9-b4f4-4909-97d3-43638d48ce2a",
 		userName: "Prodi T.Telekomunikasi",
 		userEmail: "TT.prodi@mail.com",
-		userRole: "study_program",
+		userRole: "studyProgram",
 	},
 
 	//jurusan

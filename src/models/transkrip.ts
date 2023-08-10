@@ -11,7 +11,7 @@ export interface TranskripTypes {
 }
 
 export interface TranskripCreateRequestTypes {
-	transkripStudentId?: string;
-	transkripMataKuliahId?: string;
-	transkripMataKuliahGrade?: string;
+	transkripStudentId: string;
+	transkripMataKuliahId: string;
+	transkripMataKuliahGrade: string;
 }

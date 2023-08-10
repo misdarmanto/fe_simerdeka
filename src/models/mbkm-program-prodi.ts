@@ -1,29 +1,32 @@
-import { DepartmentTypes } from "./department";
-import { MbkmProgramTypes } from "./mbkm-program";
-import { SemesterTypes } from "./semester";
-import { StudyProgramTypes } from "./study-program";
+// export interface MbkmProgramProdiTypes {
+// 	mbkmProgramProdiId: string;
+// 	mbkmProgramProdiProgramId: string;
+// 	mbkmProgramProdiProgramName: string;
+// 	mbkmProgramProdiStudyProgramId: string;
+// 	mbkmProgramProdiStudyProgramName: string;
+// 	mbkmProgramProdiDepartmentId: string;
+// 	mbkmProgramProdiDepartmentName: string;
+// 	mbkmProgramProdiSemesterId: string;
+// }
 
-export interface MbkmProgramProdiTypes {
-	mbkmProgramProdiId: string;
-	mbkmProgramProdiProgramId: string;
-	mbkmProgramProdiProgramName: string;
-	mbkmProgramProdiStudyProgramId: string;
-	mbkmProgramProdiStudyProgramName: string;
-	mbkmProgramProdiDepartmentId: string;
-	mbkmProgramProdiDepartmentName: string;
-	mbkmProgramProdiSemesterId: string;
-	department: DepartmentTypes;
-	studyProgram: StudyProgramTypes;
-	semester: SemesterTypes;
-	mbkmProgram: MbkmProgramTypes;
-}
+import { MbkmProgramTypes } from "./mbkm-program";
 
 export interface MbkmProgramProdiCreateRequestTypes {
 	mbkmProgramProdiProgramId: string;
-	mbkmProgramProdiProgramName: string;
 	mbkmProgramProdiStudyProgramId: string;
 	mbkmProgramProdiStudyProgramName: string;
 	mbkmProgramProdiDepartmentId: string;
 	mbkmProgramProdiDepartmentName: string;
-	mbkmProgramProdiSemesterId: string;
+}
+
+export interface MbkmProgramProdiSelected extends MbkmProgramProdiCreateRequestTypes {}
+
+export interface MbkmProgramProdiTypes {
+	mbkmProgramProdiDepartmentId: string;
+	mbkmProgramProdiDepartmentName: string;
+	mbkmProgramProdiId: string;
+	mbkmProgramProdiProgramId: string;
+	mbkmProgramProdiStudyProgramId: string;
+	mbkmProgramProdiStudyProgramName: string;
+	mbkmPrograms: MbkmProgramTypes;
 }
