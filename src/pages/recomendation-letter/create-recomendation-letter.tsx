@@ -1,5 +1,5 @@
 import { Label, Select, TextInput, Textarea } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_MENU_ICON, BreadcrumbStyle, ButtonStyle } from "../../components";
 import { RecomendationLetterCreateRequestTypes } from "../../models/recomendation-letter";
@@ -7,12 +7,15 @@ import { AppContextTypes, useAppContext } from "../../context/app.context";
 import FileUploadButton from "../../components/button/button-upload";
 import { useHttp } from "../../hooks/useHttp";
 import { apiUrlPath } from "../../configs/apiPath";
+import ModalAddLecture from "./modal-add-lecture";
 
 const RecomendationLetterCreate = () => {
 	const { currentUser }: AppContextTypes = useAppContext();
 	const [recomendatationStudentTranskrip, setRecomendatationStudentTranskrip] =
 		useState<string>("");
-	const [dosenWali, setDosenWali] = useState<string>("");
+	const [openModalAddLecture, setOpenModalAddLecture] = useState<boolean>(false);
+	const [lectureSelected, setLectureSelected] = useState<string>("");
+
 	const [suratPersetujuanDosenWali, setSuratPersetujuanDosenWali] =
 		useState<string>("");
 	const [programName, setProgramName] = useState<string>("");
@@ -28,7 +31,7 @@ const RecomendationLetterCreate = () => {
 
 		const data: RecomendationLetterCreateRequestTypes = {
 			recomendationLetterStudentTranskrip: recomendatationStudentTranskrip,
-			recomendationLetterDosenWali: dosenWali,
+			recomendationLetterDosenWali: lectureSelected,
 			recomendationLetterSyllabus: syllabus,
 			recomendationLetterApprovalLetter: suratPersetujuanDosenWali,
 			recomendationLetterProgramName: programName,
@@ -49,7 +52,6 @@ const RecomendationLetterCreate = () => {
 		}
 	}, []);
 
-	console.log(suratPersetujuanDosenWali);
 	return (
 		<div>
 			<BreadcrumbStyle
@@ -67,35 +69,38 @@ const RecomendationLetterCreate = () => {
 			/>
 			<div className="bg-white border border-2 border-gray-200 rounded-lg p-10">
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-					<div id="select">
-						<div className="mb-2 block">
-							<Label htmlFor="dosen-wali" value="Dosen Wali" />
-						</div>
-						<Select
-							onChange={(e) => setDosenWali(e.target.value)}
-							required={true}
-						>
-							<option value="dosen 1">Dosen 1</option>
-							<option value="dosen 2">Dosen 2</option>
-							<option value="dosen 3">Dosen 3</option>
-							<option value="dosen 4">Dosen 4</option>
-							<option value="dosen 5">Dosen 5</option>
-						</Select>
-					</div>
-					<div>
-						<div className="mb-2 block">
-							<Label
-								htmlFor="Nama Program MBKM yang ingin diikuti "
-								value="Nama Program MBKM yang ingin diikuti "
+					<div className="grid md:grid-cols-2 md:gap-6">
+						<div id="select">
+							<div className="mb-2 block">
+								<Label htmlFor="dosen-wali" value="Dosen Wali" />
+							</div>
+							<TextInput
+								type="text"
+								value={lectureSelected}
+								placeholder="search..."
+								onClick={() => setOpenModalAddLecture(true)}
+							/>
+							<ModalAddLecture
+								isOpen={openModalAddLecture}
+								onOpen={setOpenModalAddLecture}
+								onSelect={setLectureSelected}
 							/>
 						</div>
-						<TextInput
-							value={programName}
-							onChange={(e) => setProgramName(e.target.value)}
-							type="text"
-							placeholder="Nama Program MBKM yang ingin diikuti ..."
-							required={true}
-						/>
+						<div>
+							<div className="mb-2 block">
+								<Label
+									htmlFor="Nama Program MBKM yang ingin diikuti "
+									value="Nama Program MBKM yang ingin diikuti "
+								/>
+							</div>
+							<TextInput
+								value={programName}
+								onChange={(e) => setProgramName(e.target.value)}
+								type="text"
+								placeholder="Nama Program MBKM yang ingin diikuti ..."
+								required={true}
+							/>
+						</div>
 					</div>
 					<div>
 						<div className="mb-2 block">

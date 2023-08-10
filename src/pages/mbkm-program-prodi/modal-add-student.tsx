@@ -1,9 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import { ButtonStyle } from "../../components";
-import { ServiceHttp } from "../../services/api";
-import { MbkmProgramTypes } from "../../models/mbkm-program";
 import { Checkbox, Modal, TextInput } from "flowbite-react";
-import { CONFIG } from "../../configs";
 import { TableHeader, TableStyle } from "../../components/table/Table";
 import { StudentTypes } from "../../models/student";
 import { MbkmProgramProdiTypes } from "../../models/mbkm-program-prodi";
