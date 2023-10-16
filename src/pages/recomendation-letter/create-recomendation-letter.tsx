@@ -38,13 +38,11 @@ const RecomendationLetterCreate = () => {
       recomendationLetterProgramDescription: programDescription
     }
 
-    console.log(data)
-
-    // await handlePostRequest({
-    // 	path: apiUrlPath.recomendDatationLetters.post,
-    // 	body: data,
-    // });
-    // navigate("/recomendation-letters");
+    await handlePostRequest({
+      path: apiUrlPath.recomendDatationLetters.post,
+      body: data
+    })
+    navigate('/recomendation-letters')
   }
 
   useEffect(() => {
