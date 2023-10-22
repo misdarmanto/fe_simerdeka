@@ -235,7 +235,7 @@ const RecomendationLetterDetail = () => {
             <div className='mb-2 block'>
               <label htmlFor='file'>
                 {currentUser.userRole === 'academic'
-                  ? 'surat rekomendasi dan SPTJM'
+                  ? 'surat rekomendasi'
                   : 'surat pengantar'}
                 :
               </label>
