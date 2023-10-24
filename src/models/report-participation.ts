@@ -12,7 +12,6 @@ export interface ReportParticipationTypes {
   reportParticipationStudentId?: string
   reportParticipationMbkmProgramCategory?: string
   reportParticipationMbkmProgramName?: string
-  reportParticipationLetterOfAcceptance?: string
   reportParticipationRecomendationLetter?: string
   student?: StudentTypes
 }
