@@ -149,7 +149,7 @@ const MataKuliahVerificationListView = () => {
 
       <div className='flex flex-col md:flex-row justify-between md:px-0'>
         <div className='flex items-center'>
-          <div className='w-full mr-2 flex flex-row justify-between md:justify-start'>
+          <div className='w-full flex flex-row justify-between md:justify-start gap-2 '>
             <select
               name='size'
               defaultValue={10}
@@ -161,11 +161,16 @@ const MataKuliahVerificationListView = () => {
               <option value='50'>50</option>
               <option value='100'>100</option>
             </select>
+            {currentUser.userRole === 'academic' && (
+              <ButtonStyle title='Sinkronisasi ke Siakad' />
+            )}
+            {currentUser.userRole === 'studyProgram' && (
+              <ButtonStyle
+                title='Create'
+                onClick={() => navigate('/mata-kuliah/create')}
+              />
+            )}
           </div>
-
-          {currentUser.userRole === 'studyProgram' && (
-            <ButtonStyle title='Create' onClick={() => navigate('/mata-kuliah/create')} />
-          )}
         </div>
         <div className='mt-1 w-full md:w-1/5'>
           <TextInput type='text' placeholder='search...' />

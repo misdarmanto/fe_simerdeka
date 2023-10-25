@@ -32,7 +32,8 @@ const ModalAddMataKuliah = ({ onOpen, isOpen, onSelect }: ModalAddMataKuliahType
       page: 0,
       size: 10,
       filter: {
-        search: ''
+        search: '',
+        verificationStatus: 'accepted'
       }
     })
   }
