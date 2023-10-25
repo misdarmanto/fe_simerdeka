@@ -96,6 +96,12 @@ const MataKuliahMenu = {
   icon: <BiBookOpen fontSize={20} />,
 };
 
+const MataKuliahVerificationMenu = {
+  title: "Verifikasi Mata Kuliah",
+  path: "/mata-kuliah/verification",
+  icon: <BsCheckCircle fontSize={20} />,
+};
+
 const LogActivityMenu = {
   title: "Log aktifitas",
   path: "/log-activities",
@@ -133,12 +139,24 @@ export const departmentMenus = {
 
 export const LP3MMenus = {
   persiapan: [HomeMenu, ReportParticipationMenu, RecomendationLetterMenu],
-  pelaksanaan: [StudentMenu, StudyProgramMenu, SemesterMenu, MBKMProgramMenu],
+  pelaksanaan: [
+    StudentMenu,
+    StudyProgramMenu,
+    SemesterMenu,
+    MBKMProgramMenu,
+    MataKuliahVerificationMenu,
+  ],
   akhir: [MBKMLogBookMenu, LogActivityMenu, FaQMenu],
 };
 
 export const AcademicMenus = {
   persiapan: [HomeMenu, ReportParticipationMenu, RecomendationLetterMenu],
-  pelaksanaan: [StudentMenu, StudyProgramMenu, SemesterMenu, MBKMProgramMenu],
+  pelaksanaan: [
+    StudentMenu,
+    StudyProgramMenu,
+    SemesterMenu,
+    MBKMProgramMenu,
+    MataKuliahVerificationMenu,
+  ],
   akhir: [MBKMLogBookMenu, LogActivityMenu, FaQMenu],
 };
