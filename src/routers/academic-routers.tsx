@@ -24,7 +24,8 @@ import StudentDetailView from "../pages/student/detail-student";
 import StudentListView from "../pages/student/list-student";
 import StudyProgramListView from "../pages/study-program/list-study-program";
 import StudyProgramDetailView from "../pages/study-program/detail-study-program";
-import LogActivityListView from "../pages/log-activity";
+import MataKuliahVerificationListView from "../pages/mata-kuliah-verification/list-verification-mata-kuliah";
+import MataKuliahVerificationDetailView from "../pages/mata-kuliah-verification/detail-verification-mata-kuliah";
 
 export const academicRouters = [
   {
@@ -37,7 +38,7 @@ export const academicRouters = [
   },
   {
     path: "/log-activities",
-    element: <LogActivityListView />,
+    element: <LogActivity />,
   },
 
   //mbkm program
@@ -123,7 +124,14 @@ export const academicRouters = [
     path: "/mata-kuliah/create",
     element: <MataKuliahCreateView />,
   },
-
+  {
+    path: "/mata-kuliah/verification",
+    element: <MataKuliahVerificationListView />,
+  },
+  {
+    path: "/mata-kuliah/verification/detail/:verificationMataKuliahId",
+    element: <MataKuliahVerificationDetailView />,
+  },
   {
     path: "/recomendation-letters",
     element: <RecomendationLetterList />,

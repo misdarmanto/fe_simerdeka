@@ -1,43 +1,21 @@
 import { Badge, TextInput } from 'flowbite-react'
 import { ReactElement, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BASE_ICON, BreadcrumbStyle } from '../../components'
 import { ButtonStyle } from '../../components'
 import { TableHeader, TableStyle } from '../../components/table/Table'
-import ModalStyle from '../../components/modal'
 import { AppContextTypes, useAppContext } from '../../context/app.context'
 import { useHttp } from '../../hooks/useHttp'
 import { MataKuliahTypes } from '../../models/mata-kuliah'
 import { apiUrlPath } from '../../configs/apiPath'
 import ButtonTable from '../../components/button/ButtonTable'
 
-const MataKuliahListView = () => {
+const MataKuliahVerificationListView = () => {
   const [listMataKuliah, setListMataKuliah] = useState<any>()
   const [isLoading, setIsLoading] = useState(true)
   const { currentUser, errorMessage }: AppContextTypes = useAppContext()
   const navigate = useNavigate()
-  const { handleGetTableDataRequest, handleRemoveRequest } = useHttp()
-
-  const [openModalDelete, setOpenModalDelete] = useState(false)
-  const [modalDeleteData, setModalDeleteData] = useState<MataKuliahTypes>()
-
-  const handleModalDelete = () => {
-    setOpenModalDelete(!openModalDelete)
-  }
-
-  const handleModaDataSelected = (item: MataKuliahTypes) => {
-    setModalDeleteData(item)
-  }
-
-  const handleDeleteMataKuliah = async () => {
-    await handleRemoveRequest({
-      path: `${apiUrlPath.mataKuliah.get}?mataKuliahId=${modalDeleteData?.mataKuliahId}`
-    })
-
-    if (errorMessage.isError) return
-    setOpenModalDelete(false)
-    window.location.reload()
-  }
+  const { handleGetTableDataRequest } = useHttp()
 
   const fecthData = async () => {
     const result = await handleGetTableDataRequest({
@@ -46,7 +24,7 @@ const MataKuliahListView = () => {
 
     setListMataKuliah({
       link: apiUrlPath.mataKuliah.get,
-      data: result,
+      data: result || [],
       page: 0,
       size: 10,
       filter: {
@@ -81,8 +59,24 @@ const MataKuliahListView = () => {
     {
       title: 'total sks',
       data: (data: MataKuliahTypes, index: number): ReactElement => (
-        <td key={index + 'nim'} className='md:px-6 md:py-3 break-all'>
+        <td key={index + 'sks'} className='md:px-6 md:py-3 break-all'>
           {data.mataKuliahSksTotal}
+        </td>
+      )
+    },
+    {
+      title: 'Program Studi',
+      data: (data: MataKuliahTypes, index: number): ReactElement => (
+        <td key={index + 'program studi'} className='md:px-6 md:py-3 break-all'>
+          {data.mataKuliahStudyProgramName}
+        </td>
+      )
+    },
+    {
+      title: 'Jurusan',
+      data: (data: MataKuliahTypes, index: number): ReactElement => (
+        <td key={index + 'jurusan'} className='md:px-6 md:py-3 break-all'>
+          {data.mataKuliahDepartmentName}
         </td>
       )
     },
@@ -116,28 +110,24 @@ const MataKuliahListView = () => {
           </td>
         )
       }
-    },
-    {
+    }
+  ]
+
+  if (currentUser.userRole === 'academic') {
+    header.push({
       title: 'Action',
       action: true,
       data: (data: MataKuliahTypes, index: number): ReactElement => (
         <td key={index + 'action'} className='md:px-6 md:py-3'>
           <div className='flex items-center gap-1'>
-            {currentUser.userRole === 'studyProgram' && (
-              <ButtonTable
-                title='Hapus'
-                variant='danger'
-                onClick={() => {
-                  handleModalDelete()
-                  handleModaDataSelected(data)
-                }}
-              />
-            )}
+            <Link to={`/mata-kuliah/verification/detail/${data.mataKuliahId}`}>
+              <ButtonTable title='Detail' variant='primary' />
+            </Link>
           </div>
         </td>
       )
-    }
-  ]
+    })
+  }
 
   if (isLoading) return <div>loading...</div>
 
@@ -146,11 +136,11 @@ const MataKuliahListView = () => {
       <BreadcrumbStyle
         listPath={[
           {
-            link: '/mata-kuliah',
-            title: 'Mata Kuliah'
+            link: '/mata-kuliah/verification',
+            title: 'Verifikasi Mata Kuliah'
           },
           {
-            link: '/mata-kuliah',
+            link: '/mata-kuliah/verification',
             title: 'List'
           }
         ]}
@@ -159,7 +149,7 @@ const MataKuliahListView = () => {
 
       <div className='flex flex-col md:flex-row justify-between md:px-0'>
         <div className='flex items-center'>
-          <div className='w-full mr-2 flex flex-row justify-between md:justify-start'>
+          <div className='w-full flex flex-row justify-between md:justify-start gap-2 '>
             <select
               name='size'
               defaultValue={10}
@@ -171,27 +161,24 @@ const MataKuliahListView = () => {
               <option value='50'>50</option>
               <option value='100'>100</option>
             </select>
+            {currentUser.userRole === 'academic' && (
+              <ButtonStyle title='Sinkronisasi ke Siakad' />
+            )}
+            {currentUser.userRole === 'studyProgram' && (
+              <ButtonStyle
+                title='Create'
+                onClick={() => navigate('/mata-kuliah/create')}
+              />
+            )}
           </div>
-
-          {currentUser.userRole === 'studyProgram' && (
-            <ButtonStyle title='Create' onClick={() => navigate('/mata-kuliah/create')} />
-          )}
         </div>
         <div className='mt-1 w-full md:w-1/5'>
           <TextInput type='text' placeholder='search...' />
         </div>
       </div>
-
-      <ModalStyle
-        onBtnNoClick={handleModalDelete}
-        title={`Apakah anda yakin ingin menghapus mata kuliah ${modalDeleteData?.mataKuliahName}?`}
-        isOpen={openModalDelete}
-        onBtnYesClick={handleDeleteMataKuliah}
-        onOpen={handleModalDelete}
-      />
       <TableStyle header={header} table={listMataKuliah} />
     </div>
   )
 }
 
-export default MataKuliahListView
+export default MataKuliahVerificationListView

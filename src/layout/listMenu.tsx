@@ -5,11 +5,12 @@ import {
   AiOutlineFundProjectionScreen,
   AiOutlineHome,
   AiOutlineSearch,
+  AiOutlineVerified,
 } from "react-icons/ai";
 import { BiBookOpen, BiTask } from "react-icons/bi";
 import { FaRegListAlt, FaUserGraduate } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
-import { BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
+import { BsCheckCircle, BsPersonVcard, BsQuestionCircle } from "react-icons/bs";
 
 const HomeMenu = {
   title: "Beranda",
@@ -57,6 +58,12 @@ const ReportParticipationMenu = {
   title: "Lapor Keikutsertaan",
   path: "/report-participations",
   icon: <BsPersonVcard fontSize={20} />,
+};
+
+const ProgramProposalMenu = {
+  title: "Program Proposal",
+  path: "/program-proposal",
+  icon: <AiOutlineFile fontSize={20} />,
 };
 
 const StudentMenu = {
