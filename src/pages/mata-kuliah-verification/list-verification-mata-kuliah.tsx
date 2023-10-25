@@ -24,7 +24,7 @@ const MataKuliahVerificationListView = () => {
 
     setListMataKuliah({
       link: apiUrlPath.mataKuliah.get,
-      data: result,
+      data: result || [],
       page: 0,
       size: 10,
       filter: {
