@@ -24,147 +24,156 @@ import StudentDetailView from "../pages/student/detail-student";
 import StudentListView from "../pages/student/list-student";
 import StudyProgramListView from "../pages/study-program/list-study-program";
 import StudyProgramDetailView from "../pages/study-program/detail-study-program";
+import MataKuliahVerificationListView from "../pages/mata-kuliah-verification/list-verification-mata-kuliah";
+import MataKuliahVerificationDetailView from "../pages/mata-kuliah-verification/detail-verification-mata-kuliah";
 
 export const academicRouters = [
-	{
-		path: "/",
-		element: <Home />,
-	},
-	{
-		path: "/faq",
-		element: <FaQ />,
-	},
-	{
-		path: "/log-activities",
-		element: <LogActivity />,
-	},
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/faq",
+    element: <FaQ />,
+  },
+  {
+    path: "/log-activities",
+    element: <LogActivity />,
+  },
 
-	//mbkm program
-	{
-		path: "/mbkm-programs",
-		element: <MbkmProgramListView />,
-	},
-	{
-		path: "/mbkm-programs/create",
-		element: <MbkmProgramCreatView />,
-	},
-	{
-		path: "/mbkm-programs/detail/:mbkmProgramId",
-		element: <MbkmProgramDetailView />,
-	},
+  //mbkm program
+  {
+    path: "/mbkm-programs",
+    element: <MbkmProgramListView />,
+  },
+  {
+    path: "/mbkm-programs/create",
+    element: <MbkmProgramCreatView />,
+  },
+  {
+    path: "/mbkm-programs/detail/:mbkmProgramId",
+    element: <MbkmProgramDetailView />,
+  },
 
-	{
-		path: "/mbkm-programs/edit/:mbkmProgramId",
-		element: <MbkmProgramEditView />,
-	},
+  {
+    path: "/mbkm-programs/edit/:mbkmProgramId",
+    element: <MbkmProgramEditView />,
+  },
 
-	//mbkm program prodi
-	{
-		path: "/mbkm-programs/prodi",
-		element: <MbkmProgramProdiListView />,
-	},
-	{
-		path: "/mbkm-programs/prodi/detail/:mbkmProgramId",
-		element: <MbkmProgramProdiDetailView />,
-	},
+  //mbkm program prodi
+  {
+    path: "/mbkm-programs/prodi",
+    element: <MbkmProgramProdiListView />,
+  },
+  {
+    path: "/mbkm-programs/prodi/detail/:mbkmProgramId",
+    element: <MbkmProgramProdiDetailView />,
+  },
 
-	//student program
-	// {
-	// 	path: "/mbkm-programs/students/",
-	// 	element: <MbkmProgramStudentList />,
-	// },
-	// {
-	// 	path: "/mbkm-programs/students/create",
-	// 	element: <MbkmProgramStudentCreat />,
-	// },
-	// {
-	// 	path: "/mbkm-programs/students/:programId",
-	// 	element: <MbkmProgramStudentDetail />,
-	// },
+  //student program
+  // {
+  // 	path: "/mbkm-programs/students/",
+  // 	element: <MbkmProgramStudentList />,
+  // },
+  // {
+  // 	path: "/mbkm-programs/students/create",
+  // 	element: <MbkmProgramStudentCreat />,
+  // },
+  // {
+  // 	path: "/mbkm-programs/students/:programId",
+  // 	element: <MbkmProgramStudentDetail />,
+  // },
 
-	//report participation
-	{
-		path: "/report-participations",
-		element: <ReportParticipationListView />,
-	},
-	{
-		path: "/report-participations/create",
-		element: <ReportParicipationCreateView />,
-	},
+  //report participation
+  {
+    path: "/report-participations",
+    element: <ReportParticipationListView />,
+  },
+  {
+    path: "/report-participations/create",
+    element: <ReportParicipationCreateView />,
+  },
 
-	{
-		path: "/report-participations/detail/:reportParticipationId",
-		element: <ReportParicipationDetailView />,
-	},
+  {
+    path: "/report-participations/detail/:reportParticipationId",
+    element: <ReportParicipationDetailView />,
+  },
 
-	//log books
+  //log books
 
-	{
-		path: "/log-books",
-		element: <LogBookListView />,
-	},
-	{
-		path: "/log-books/create",
-		element: <LogBookListView />,
-	},
-	{
-		path: "/log-books/detail/:logBookId",
-		element: <LogBookDetailView />,
-	},
+  {
+    path: "/log-books",
+    element: <LogBookListView />,
+  },
+  {
+    path: "/log-books/create",
+    element: <LogBookListView />,
+  },
+  {
+    path: "/log-books/detail/:logBookId",
+    element: <LogBookDetailView />,
+  },
 
-	//mata kuliah
+  //mata kuliah
 
-	{
-		path: "/mata-kuliah",
-		element: <MataKuliahListView />,
-	},
-	{
-		path: "/mata-kuliah/create",
-		element: <MataKuliahCreateView />,
-	},
+  {
+    path: "/mata-kuliah",
+    element: <MataKuliahListView />,
+  },
+  {
+    path: "/mata-kuliah/create",
+    element: <MataKuliahCreateView />,
+  },
+  {
+    path: "/mata-kuliah/verification",
+    element: <MataKuliahVerificationListView />,
+  },
+  {
+    path: "/mata-kuliah/verification/detail/:verificationMataKuliahId",
+    element: <MataKuliahVerificationDetailView />,
+  },
+  {
+    path: "/recomendation-letters",
+    element: <RecomendationLetterList />,
+  },
+  {
+    path: "/recomendation-letters/create",
+    element: <RecomendationLetterCreate />,
+  },
+  {
+    path: "/recomendation-letters/detail/:recomendationLetterId",
+    element: <RecomendationLetterDetail />,
+  },
+  {
+    path: "/semesters",
+    element: <SemesterListView />,
+  },
+  {
+    path: "/semesters/create",
+    element: <SemesterCreateView />,
+  },
+  {
+    path: "/semesters/detail/:semesterId",
+    element: <SemesterDetail />,
+  },
 
-	{
-		path: "/recomendation-letters",
-		element: <RecomendationLetterList />,
-	},
-	{
-		path: "/recomendation-letters/create",
-		element: <RecomendationLetterCreate />,
-	},
-	{
-		path: "/recomendation-letters/detail/:recomendationLetterId",
-		element: <RecomendationLetterDetail />,
-	},
-	{
-		path: "/semesters",
-		element: <SemesterListView />,
-	},
-	{
-		path: "/semesters/create",
-		element: <SemesterCreateView />,
-	},
-	{
-		path: "/semesters/detail/:semesterId",
-		element: <SemesterDetail />,
-	},
+  //student
+  {
+    path: "/students",
+    element: <StudentListView />,
+  },
+  {
+    path: "/students/detail/:studentId",
+    element: <StudentDetailView />,
+  },
 
-	//student
-	{
-		path: "/students",
-		element: <StudentListView />,
-	},
-	{
-		path: "/students/detail/:studentId",
-		element: <StudentDetailView />,
-	},
-
-	//study program
-	{
-		path: "/study-programs",
-		element: <StudyProgramListView />,
-	},
-	{
-		path: "/study-programs/detail/:studyProgramId",
-		element: <StudyProgramDetailView />,
-	},
+  //study program
+  {
+    path: "/study-programs",
+    element: <StudyProgramListView />,
+  },
+  {
+    path: "/study-programs/detail/:studyProgramId",
+    element: <StudyProgramDetailView />,
+  },
 ];
