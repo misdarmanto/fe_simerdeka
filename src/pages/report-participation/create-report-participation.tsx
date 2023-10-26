@@ -52,7 +52,7 @@ const ReportParicipationCreateView = () => {
         <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
           <div>
             <div className='mb-2 block'>
-              <Label htmlFor='name' value='Nama' />
+              <Label htmlFor='name' value='Nama Program' />
             </div>
             <TextInput
               value={mbkmProgramName}
